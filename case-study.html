@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大谷調子メーター | 事例：内容スコアと結果スコアのズレ</title>
+  <title>大谷調子メーター | 事例：2025年8月、打球の質は高いのに結果が出なかった10試合</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <nav>
@@ -12,117 +13,245 @@
     <a href="method.html">指標の考え方</a>
   </nav>
   <main>
-    <h1>事例で見る：結果が振るわない時期の内容スコア</h1>
+    <h1>事例：打球の質は高いのに、結果が出なかった10試合</h1>
 
-    <p>このページでは、大谷メーターが実際の試合期間にどう動いたかを一つの事例で見ていきます。</p>
+    <p>2025年8月下旬、大谷の成績が低迷した時期がありました。</p>
 
-    <p>取り上げるのは「<strong>打席の結果（wOBA）が低迷していたにもかかわらず、スイング内容スコアは高水準を維持していた時期</strong>」です。「結果が悪い＝内容も悪い」とは限らない、ということがこの事例から読み取れます。</p>
-
-    <!-- =============================================
-         以下、データプレースホルダー
-         private repo 側で対象期間を確定後に埋める
-         ============================================= -->
-
-    <h2>対象期間と背景</h2>
-
-    <!-- [DATA] 対象期間: YYYY年MM月〜MM月（約XX試合） -->
-    <!-- [DATA] この時期の外部評価・報道のトーン（任意） -->
-
-    <p><strong>[YYYY年MM月〜MM月]</strong>、大谷のwOBAは[X]を下回り、打席結果スコアは[XX]点台まで低下していました。SNSや一部メディアでも「状態が悪い」という見方が出ていた時期です。</p>
-
-    <p>ただし、同じ期間のスイング内容スコアは[XX]点台を維持しており、2つのスコアの間に大きなズレが生じていました。</p>
+    <p>しかしスイング内容スコアを見ると、<strong>同じ期間に「良好〜平常運転」の水準をおおむね維持していた</strong>という別の景色がありました。打球の質（平均打球速度）はこの時期、シーズンでも最高水準に達していました。</p>
 
     <h2>2つのスコアの推移</h2>
 
-    <!-- [DATA] 週単位または月単位の内容スコア・結果スコアをテーブルまたは箇条書きで記載 -->
+    <p>8月22日から9月10日にかけての内容スコアと結果スコアの動きです。</p>
+
+    <div class="chart-container">
+      <canvas id="scoreChart"></canvas>
+    </div>
 
     <table>
       <thead>
         <tr>
-          <th>時期</th>
-          <th>スイング内容スコア</th>
-          <th>打席結果スコア</th>
+          <th>日付</th>
+          <th>内容スコア</th>
+          <th>結果スコア</th>
+          <th>状態</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>[XX月第X週]</td>
-          <td>[XX]点</td>
-          <td>[XX]点</td>
+          <td>8/22</td>
+          <td class="score-good">76点（良好）</td>
+          <td class="score-normal">70点（平常運転）</td>
+          <td>ほぼ拮抗</td>
         </tr>
         <tr>
-          <td>[XX月第X週]</td>
-          <td>[XX]点</td>
-          <td>[XX]点</td>
+          <td>8/23</td>
+          <td class="score-good">76点（良好）</td>
+          <td class="score-normal">62点（平常運転）</td>
+          <td>乖離が始まる</td>
         </tr>
         <tr>
-          <td>[XX月第X週]</td>
-          <td>[XX]点</td>
-          <td>[XX]点</td>
+          <td>8/27</td>
+          <td class="score-normal">68点（平常運転）</td>
+          <td class="score-normal">59点（平常運転）</td>
+          <td>両方やや低め</td>
         </tr>
         <tr>
-          <td>[XX月第X週（回復期）]</td>
-          <td>[XX]点</td>
-          <td>[XX]点</td>
+          <td>8/29</td>
+          <td class="score-good">81点（良好）</td>
+          <td class="score-watch">57点（やや問題）</td>
+          <td>乖離が最大に</td>
+        </tr>
+        <tr>
+          <td>8/30</td>
+          <td class="score-good">77点（良好）</td>
+          <td class="score-watch">55点（やや問題）</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>8/31</td>
+          <td class="score-normal">71点（平常運転）</td>
+          <td class="score-watch">54点（やや問題）</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>9/3</td>
+          <td class="score-normal">64点（平常運転）</td>
+          <td class="score-normal">69点（平常運転）</td>
+          <td>結果が逆転</td>
+        </tr>
+        <tr>
+          <td>9/7</td>
+          <td class="score-good">73点（良好）</td>
+          <td class="score-good">78点（良好）</td>
+          <td>両方が回復</td>
+        </tr>
+        <tr>
+          <td>9/10</td>
+          <td class="score-good">72点（良好）</td>
+          <td class="score-good">80点（良好）</td>
+          <td>安定回復</td>
         </tr>
       </tbody>
     </table>
 
-    <p>内容スコアが[XX]点以上を保っている一方で、結果スコアが[XX]点台にとどまっていることが分かります。</p>
+    <p>内容スコアは68〜81点（良好〜平常運転）の範囲を保ちながら、結果スコアだけが54〜57点（やや問題水準）まで落ちていた時期があったことが分かります。</p>
 
     <h2>内容スコアは何を示していたか</h2>
 
-    <!-- [DATA] 4指標（チェイス率・空振り率・コンタクト率・打球速度）の具体値と評価 -->
+    <p>低迷期（8/20〜8/31）のスイング内容を見ると、次のような状態でした。</p>
 
-    <p>この時期のスイング内容を4つの側面で見ると、次のような状態でした。</p>
+    <table>
+      <thead>
+        <tr>
+          <th>指標</th>
+          <th>低迷期（8/20〜8/31）</th>
+          <th>回復期（9/1〜9/10）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>平均打球速度（EV）</td>
+          <td class="score-great"><strong>98.7 mph（シーズン最高水準）</strong></td>
+          <td class="score-good">95.0 mph</td>
+        </tr>
+        <tr>
+          <td>BABIP（インプレーの打球がヒットになった割合）</td>
+          <td class="score-poor"><strong>0.185（異常に低い）</strong></td>
+          <td class="score-good">0.381（通常水準）</td>
+        </tr>
+        <tr>
+          <td>本塁打数</td>
+          <td class="score-watch">1本（10試合）</td>
+          <td class="score-good">3本（9試合）</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <ul>
-      <li><strong>チェイス率：</strong>[X.X]%（例年の大谷の水準に比べて[高め/低め/同程度]）</li>
-      <li><strong>空振り率：</strong>[X.X]%（[評価]）</li>
-      <li><strong>コンタクト率：</strong>[XX.X]%（[評価]）</li>
-      <li><strong>平均打球速度：</strong>[XXX.X] mph（[評価]）</li>
-    </ul>
+    <p>平均打球速度98.7 mphはこの時期のシーズン最高水準です。打球の勢いは十分ありました。</p>
 
-    <p>チェイス率・空振り率は抑えられており、コンタクト率・打球速度も大谷の平均的な水準を[上回って/維持して]いました。スイングそのものが崩れていたわけではない、ということがこれらの数値から読み取れます。</p>
+    <h2>なぜ結果が出なかったか</h2>
 
-    <h2>なぜ結果スコアが低かったのか</h2>
+    <p>打球の勢いは最高水準なのに、なぜ結果スコアが低迷したのか。</p>
 
-    <!-- [DATA] 打球の運（BABIP等）・対戦投手の状況など補足情報があれば -->
+    <p>手がかりになるのが BABIP（0.185）という数字です。BABIPとは、三振・本塁打・四球を除いた「フェアゾーンに飛んだ打球」がヒットになった割合のことです。打率とは違い、長打や本塁打を含まない分、打球が野手の守備範囲に入るかどうか——つまり「運」の影響を受けやすい指標とされています。</p>
 
-    <p>結果スコアが低迷した主な要因として、[鋭い打球が野手の正面を突いたケースが多かった / BABIP が[X.XXX]と本来の水準を下回った / 対戦した投手の質が高かった] などが挙げられます。</p>
+    <p>0.185という数字は異常に低く、鋭い打球を打っても野手の正面に飛び続けていた時期だったことが読み取れます。スイングの質が高く、打球の勢いも十分にある。それでもBABIPという「運」の要素が結果スコアを大きく押し下げていました。</p>
 
-    <p>こういったケースでは、結果指標だけを追っていると「状態が悪い」という印象が先行しますが、内容スコアは「スイングそのものに大きな問題はない」という別の情報を示していました。</p>
+    <h2>転換と回復</h2>
 
-    <h2>その後の推移</h2>
+    <p>9月3日を境に、結果スコアが54点台から69点（平常運転水準）へと急改善しました。</p>
 
-    <!-- [DATA] 結果スコアが回復した時期と数値 -->
+    <p>その後、9月7日・10日には内容スコア・結果スコアともに良好水準（72〜80点）で安定。低迷期の間、内容スコアが「良好〜平常運転」を保っていた通りの状態に戻ってきた形です。</p>
 
-    <p>[XX月]以降、打席結果スコアは[XX]点台まで回復しました。内容スコアが高水準を維持していた時期を経て、結果が追いついてきた形です。</p>
-
-    <p>ただし、これは「内容スコアが高ければ必ず回復する」ということを意味しません。<strong>この事例では結果が改善しましたが、それが常に成り立つわけではない</strong>という点は注意してください。</p>
+    <p>回復期（9/1〜9/10）のBABIPは0.381と通常水準に戻り、本塁打も9試合で3本。打球品質に結果が追いついてきた期間でした。</p>
 
     <h2>この事例から読み取れること</h2>
 
-    <p>この時期のデータからは、次のことが読み取れます。</p>
-
     <ul>
-      <li>打席結果が低迷していた時期でも、スイング内容スコアは高水準を維持していた</li>
-      <li>4指標（チェイス率・空振り率・コンタクト率・打球速度）に大きな悪化は見られなかった</li>
-      <li>その後、結果スコアは内容スコアに追いつく形で改善した</li>
+      <li>8月下旬の「成績が低迷した」という見方は、結果スコアだけを見た場合には正確です。</li>
+      <li>しかし同じ期間、内容スコアは良好〜平常運転の水準を維持しており、打球速度はシーズン最高水準でした。</li>
+      <li>9月に入り、結果スコアは10日以内に良好水準まで回復しました。</li>
     </ul>
 
-    <p>大谷メーターはこのような「結果と内容のズレ」を数値で見えるようにするためのツールです。「打率が低い時期 ＝ 状態が悪い」と一律に判断するのではなく、内容スコアを合わせて確認することで、状態の見方が変わることがあります。</p>
+    <p>この時期に「内容スコアが示していたもの」と「結果スコアが示していたもの」は異なっていました。大谷メーターはこの2つを分けて見えるようにするためのツールです。</p>
 
-    <h2>この分析の注意点</h2>
+    <h2>この事例の注意点</h2>
 
     <ul>
-      <li><strong>1つの事例です。</strong> この時期の傾向が常に再現されるわけではありません。参考事例として読んでください。</li>
-      <li><strong>個人が趣味で作った分析です。</strong> 公式統計ではなく、指標の設計や解釈に誤りがある可能性があります。</li>
-      <li><strong>指標の詳細については <a href="method.html">指標の考え方（Method）</a> をご覧ください。</strong></li>
+      <li><strong>1つの事例です。</strong>内容スコアが高ければ必ず回復するという保証ではありません。</li>
+      <li><strong>BABIP は運の影響を強く受ける指標です。</strong>低いBABIPが「不運の証拠」と断定できるわけではなく、打球傾向や相手守備の影響もあります。</li>
+      <li><strong>使用データはStatcast（MLB公式）ですが、スコアの設計・計算は個人によるものです。</strong>指標の解釈や計算に誤りがある可能性があります。</li>
     </ul>
+
+    <p>指標の詳しい仕組みは <a href="method.html">指標の考え方</a> をご覧ください。</p>
 
     <p><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
   </main>
+
+  <script>
+    const bandPlugin = {
+      id: 'bandPlugin',
+      beforeDraw(chart) {
+        const { ctx, chartArea: { top, bottom, left, right }, scales: { y } } = chart;
+        const bands = [
+          { min: 85, max: 100, color: 'rgba(34, 197, 94, 0.10)' },
+          { min: 72, max: 85,  color: 'rgba(134, 239, 172, 0.12)' },
+          { min: 58, max: 72,  color: 'rgba(248, 250, 252, 0.6)' },
+          { min: 42, max: 58,  color: 'rgba(254, 215, 170, 0.18)' },
+          { min: 0,  max: 42,  color: 'rgba(252, 165, 165, 0.18)' },
+        ];
+        bands.forEach(({ min, max, color }) => {
+          const yMin = y.getPixelForValue(min);
+          const yMax = y.getPixelForValue(max);
+          ctx.fillStyle = color;
+          ctx.fillRect(left, yMax, right - left, yMin - yMax);
+        });
+      }
+    };
+
+    const ctx = document.getElementById('scoreChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      plugins: [bandPlugin],
+      data: {
+        labels: ['8/22', '8/23', '8/27', '8/29', '8/30', '8/31', '9/3', '9/7', '9/10'],
+        datasets: [
+          {
+            label: '内容スコア',
+            data: [76, 76, 68, 81, 77, 71, 64, 73, 72],
+            borderColor: '#2563eb',
+            backgroundColor: 'rgba(37, 99, 235, 0.08)',
+            borderWidth: 2.5,
+            pointRadius: 5,
+            pointBackgroundColor: '#2563eb',
+            tension: 0.3,
+            fill: false,
+          },
+          {
+            label: '結果スコア',
+            data: [70, 62, 59, 57, 55, 54, 69, 78, 80],
+            borderColor: '#f97316',
+            backgroundColor: 'rgba(249, 115, 22, 0.08)',
+            borderWidth: 2.5,
+            pointRadius: 5,
+            pointBackgroundColor: '#f97316',
+            tension: 0.3,
+            fill: false,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { font: { size: 13 }, padding: 16 }
+          },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}点`
+            }
+          }
+        },
+        scales: {
+          y: {
+            min: 30,
+            max: 100,
+            ticks: {
+              stepSize: 10,
+              callback: v => `${v}点`
+            },
+            grid: { color: 'rgba(0,0,0,0.06)' }
+          },
+          x: {
+            grid: { color: 'rgba(0,0,0,0.06)' }
+          }
+        }
+      }
+    });
+  </script>
+
   <script data-goatcounter="https://ohtani-meter.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
 </body>

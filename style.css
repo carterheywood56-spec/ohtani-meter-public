@@ -94,6 +94,19 @@ em {
   color: #6b7280;
 }
 
+/* スコア帯の色 */
+.score-great  { background: #dcfce7; }
+.score-good   { background: #f0fdf4; }
+.score-normal { background: #ffffff; }
+.score-watch  { background: #fff7ed; }
+.score-poor   { background: #fef2f2; }
+
+.chart-container {
+  position: relative;
+  margin: 1.5rem 0 2rem;
+  height: 320px;
+}
+
 @media (max-width: 640px) {
   main {
     padding: 32px 16px 56px;
