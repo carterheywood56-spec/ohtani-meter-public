@@ -1,150 +1,209 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>大谷調子メーター | About</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .score-great { background-color: #dcfce7; }
+    .score-good  { background-color: #f0fdf4; }
+    .score-watch { background-color: #fff7ed; }
+    .score-poor  { background-color: #fef2f2; }
+  </style>
 </head>
-<body>
-  <nav>
-    <a href="index.html">About</a>
-    <a href="method.html">指標の考え方</a>
-    <a href="case-study.html">事例</a>
-  </nav>
-  <main>
-    <h1>打席の内容と結果を、分けて測る。</h1>
+<body class="bg-base-200 min-h-screen">
 
-    <p>大谷翔平の打撃状態を、<strong>「スイングの内容（どう打っているか）」と「打席の結果（何を打ったか）」の2つのスコアで分けて継続追跡する</strong>個人分析ツールです。</p>
+  <!-- ナビゲーション -->
+  <div class="navbar bg-base-100 shadow-sm sticky top-0 z-10">
+    <div class="navbar-start"></div>
+    <div class="navbar-center gap-6">
+      <a href="index.html" class="btn btn-ghost btn-sm font-normal">About</a>
+      <a href="method.html" class="btn btn-ghost btn-sm font-normal">指標の考え方</a>
+      <a href="case-study.html" class="btn btn-ghost btn-sm font-normal">事例</a>
+    </div>
+    <div class="navbar-end"></div>
+  </div>
 
-    <p>打率や成績だけを追うと、短期間では「運」の影響を受けやすく、実態とかけ離れた判断になることがあります。このツールは、2つのスコアの<strong>乖離を可視化する</strong>ことで、「内容は維持されているのに結果が出ていない」「逆に内容が崩れているのに結果だけ出ている」という変化を数値で追えるようにしています。</p>
+  <!-- メインコンテンツ -->
+  <main class="max-w-3xl mx-auto px-5 py-12">
 
-    <h2>2つの指標の意味</h2>
+    <h1 class="text-3xl font-bold mb-6 leading-snug">打席の内容と結果を、分けて測る。</h1>
 
-    <h3>スイング内容スコア（0〜100）</h3>
+    <p class="mb-4 leading-relaxed">大谷翔平の打撃状態を、<strong>「スイングの内容（どう打っているか）」と「打席の結果（何を打ったか）」の2つのスコアで分けて継続追跡する</strong>個人分析ツールです。</p>
 
-    <p><strong>ざっくり言うと：</strong>「どれだけ正確にスイングできているか」の目安です。</p>
+    <p class="mb-8 leading-relaxed">打率や成績だけを追うと、短期間では「運」の影響を受けやすく、実態とかけ離れた判断になることがあります。このツールは、2つのスコアの<strong>乖離を可視化する</strong>ことで、「内容は維持されているのに結果が出ていない」「逆に内容が崩れているのに結果だけ出ている」という変化を数値で追えるようにしています。</p>
 
-    <p>以下の4つの側面を組み合わせて計算しています。</p>
+    <div class="divider"></div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>見ている側面</th>
-          <th>見方</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>チェイス率（ボール球に手を出す割合）</td>
-          <td>低いほど良い</td>
-        </tr>
-        <tr>
-          <td>空振り率（スイングして当たらない割合）</td>
-          <td>低いほど良い</td>
-        </tr>
-        <tr>
-          <td>コンタクト率（スイングして当たる割合）</td>
-          <td>高いほど良い</td>
-        </tr>
-        <tr>
-          <td>平均打球速度</td>
-          <td>高いほど良い</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- 2つの指標 -->
+    <h2 class="text-xl font-bold mb-6">2つの指標の意味</h2>
 
-    <p>これらの値を大谷本人の2022〜2024年の月ごとのデータと比べたとき、「今の状態が大谷本人の平均的な月とどれくらい違うか」を0〜100に変換したものです。</p>
+    <!-- スイング内容スコア -->
+    <div class="card bg-base-100 shadow-sm mb-6">
+      <div class="card-body">
+        <h3 class="card-title text-lg">スイング内容スコア（0〜100）</h3>
+        <p class="leading-relaxed"><strong>ざっくり言うと：</strong>「どれだけ正確にスイングできているか」の目安です。</p>
+        <p class="leading-relaxed">以下の4つの側面を組み合わせて計算しています。</p>
 
-    <h3>スコアの目安</h3>
+        <div class="overflow-x-auto mt-2">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>見ている側面</th>
+                <th>見方</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>チェイス率（ボール球に手を出す割合）</td>
+                <td><span class="badge badge-error badge-outline">低いほど良い</span></td>
+              </tr>
+              <tr>
+                <td>空振り率（スイングして当たらない割合）</td>
+                <td><span class="badge badge-error badge-outline">低いほど良い</span></td>
+              </tr>
+              <tr>
+                <td>コンタクト率（スイングして当たる割合）</td>
+                <td><span class="badge badge-success badge-outline">高いほど良い</span></td>
+              </tr>
+              <tr>
+                <td>平均打球速度</td>
+                <td><span class="badge badge-success badge-outline">高いほど良い</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>スコア</th>
-          <th>おおまかな読み方</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>85以上</td>
-          <td>スイング内容がとくに良い状態</td>
-        </tr>
-        <tr>
-          <td>72〜84</td>
-          <td>内容は良好。心配なし</td>
-        </tr>
-        <tr>
-          <td>58〜71</td>
-          <td>大谷本来の水準（平常運転）</td>
-        </tr>
-        <tr>
-          <td>42〜57</td>
-          <td>内容にやや問題がある状態</td>
-        </tr>
-        <tr>
-          <td>42未満</td>
-          <td>内容に明確な問題が出ている状態</td>
-        </tr>
-      </tbody>
-    </table>
+        <p class="leading-relaxed mt-2">これらの値を大谷本人の2022〜2024年の月ごとのデータと比べたとき、「今の状態が大谷本人の平均的な月とどれくらい違うか」を0〜100に変換したものです。</p>
+      </div>
+    </div>
 
-    <p><strong>70前後が大谷にとっての「ふつうの月」のスコアです。</strong>「70点だから悪い」という意味ではありません。</p>
+    <!-- スコアの目安 -->
+    <div class="card bg-base-100 shadow-sm mb-6">
+      <div class="card-body">
+        <h3 class="card-title text-lg">スコアの目安</h3>
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>スコア</th>
+                <th>おおまかな読み方</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="score-great">
+                <td>85以上</td>
+                <td>スイング内容がとくに良い状態</td>
+              </tr>
+              <tr class="score-good">
+                <td>72〜84</td>
+                <td>内容は良好。心配なし</td>
+              </tr>
+              <tr>
+                <td>58〜71</td>
+                <td>大谷本来の水準（平常運転）</td>
+              </tr>
+              <tr class="score-watch">
+                <td>42〜57</td>
+                <td>内容にやや問題がある状態</td>
+              </tr>
+              <tr class="score-poor">
+                <td>42未満</td>
+                <td>内容に明確な問題が出ている状態</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="leading-relaxed mt-2"><strong>70前後が大谷にとっての「ふつうの月」のスコアです。</strong>「70点だから悪い」という意味ではありません。</p>
+      </div>
+    </div>
 
-    <h3>打席結果スコア（0〜100）</h3>
+    <!-- 打席結果スコア -->
+    <div class="card bg-base-100 shadow-sm mb-8">
+      <div class="card-body">
+        <h3 class="card-title text-lg">打席結果スコア（0〜100）</h3>
+        <p class="leading-relaxed"><strong>ざっくり言うと：</strong>「打席の結果がどれくらい出ているか」の目安です。</p>
+        <p class="leading-relaxed">wOBA（加重出塁率）という指標を使っています。wOBAは、単打・二塁打・本塁打・四球などをそれぞれの価値に応じて重み付けした指標で、OPSより少し精緻に打席の成果を測れます。</p>
+        <p class="leading-relaxed">スイング内容スコアと同じように、大谷本人の過去のデータを基準にして0〜100に変換しています。</p>
+      </div>
+    </div>
 
-    <p><strong>ざっくり言うと：</strong>「打席の結果がどれくらい出ているか」の目安です。</p>
+    <div class="divider"></div>
 
-    <p>wOBA（加重出塁率）という指標を使っています。wOBAは、単打・二塁打・本塁打・四球などをそれぞれの価値に応じて重み付けした指標で、OPSより少し精緻に打席の成果を測れます。</p>
+    <!-- 2つのスコアを並べて読む -->
+    <h2 class="text-xl font-bold mb-4">2つのスコアを並べて読む</h2>
 
-    <p>スイング内容スコアと同じように、大谷本人の過去のデータを基準にして0〜100に変換しています。</p>
+    <div class="card bg-base-100 shadow-sm mb-8">
+      <div class="card-body">
+        <p class="leading-relaxed">このツールの本質は、2つのスコアを<strong>並べて比べること</strong>にあります。</p>
 
-    <h2>2つのスコアを並べて読む</h2>
+        <div class="overflow-x-auto mt-2">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>内容スコア</th>
+                <th>結果スコア</th>
+                <th>読み方の例</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="score-great">
+                <td><span class="badge badge-success whitespace-nowrap">高い ↑</span></td>
+                <td><span class="badge badge-success whitespace-nowrap">高い ↑</span></td>
+                <td>本当に良い状態のひとつ</td>
+              </tr>
+              <tr class="score-watch">
+                <td><span class="badge badge-success whitespace-nowrap">高い ↑</span></td>
+                <td><span class="badge badge-error whitespace-nowrap">低い ↓</span></td>
+                <td>結果がまだついていない。過去の傾向では改善しやすいケース（参考）</td>
+              </tr>
+              <tr class="score-watch">
+                <td><span class="badge badge-error whitespace-nowrap">低い ↓</span></td>
+                <td><span class="badge badge-success whitespace-nowrap">高い ↑</span></td>
+                <td>結果が先行している。内容の推移を注意して見たい</td>
+              </tr>
+              <tr class="score-poor">
+                <td><span class="badge badge-error whitespace-nowrap">低い ↓</span></td>
+                <td><span class="badge badge-error whitespace-nowrap">低い ↓</span></td>
+                <td>本来の水準を下回っている。立て直しに注目</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-    <p>このツールの本質は、2つのスコアを<strong>並べて比べること</strong>にあります。</p>
+        <p class="leading-relaxed mt-2">毎回の投稿に添えている補足文は、この組み合わせをわかりやすく言い換えたものです。</p>
+      </div>
+    </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>パターン</th>
-          <th>読み方の例</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>内容も結果も高い</td>
-          <td>本当に良い状態のひとつ</td>
-        </tr>
-        <tr>
-          <td>内容は高いが結果は低い</td>
-          <td>結果がまだついていない。過去の傾向では改善しやすいケース（参考）</td>
-        </tr>
-        <tr>
-          <td>内容は低いが結果は高い</td>
-          <td>結果が先行している。内容の推移を注意して見たい</td>
-        </tr>
-        <tr>
-          <td>内容も結果も低い</td>
-          <td>本来の水準を下回っている。立て直しに注目</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="divider"></div>
 
-    <p>毎回の投稿に添えている補足文は、この組み合わせをわかりやすく言い換えたものです。</p>
+    <!-- 限界と注意点 -->
+    <h2 class="text-xl font-bold mb-4">この指標の限界と注意点</h2>
 
-    <h2>この指標の限界と注意点</h2>
+    <div class="flex flex-col gap-3 mb-8">
+      <div class="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span><strong>参考指標です。確定値ではありません。</strong> スコアは傾向を見るためのものであり、公式統計ではありません。誤りや見落としがある可能性があります。</span>
+      </div>
+      <div class="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span><strong>サンプルが少ないと信頼度が下がります。</strong> シーズン序盤（10〜20試合程度）の数値は変動が大きく、参考程度にとどめてください。</span>
+      </div>
+    </div>
 
-    <ul>
-      <li><strong>参考指標です。確定値ではありません。</strong> スコアは傾向を見るためのものであり、公式統計ではありません。誤りや見落としがある可能性があります。</li>
-      <li><strong>サンプルが少ないと信頼度が下がります。</strong> シーズン序盤（10〜20試合程度）の数値は変動が大きく、参考程度にとどめてください。</li>
-    </ul>
+    <div class="divider"></div>
 
-    <h2>もう少し詳しく知りたい方へ</h2>
+    <!-- もう少し詳しく -->
+    <h2 class="text-xl font-bold mb-4">もう少し詳しく知りたい方へ</h2>
 
-    <p>設計の考え方・信頼性の詳細・データの出所については、<a href="method.html">指標の考え方（Method）</a> で説明しています。</p>
+    <p class="mb-4 leading-relaxed">設計の考え方・信頼性の詳細・データの出所については、<a href="method.html" class="btn btn-outline btn-sm">指標の考え方（Method）</a> で説明しています。</p>
 
-    <p><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
+    <p class="text-sm text-base-content/60 mt-8"><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
+
   </main>
+
   <script data-goatcounter="https://ohtani-meter.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
 </body>
