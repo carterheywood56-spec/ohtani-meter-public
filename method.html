@@ -1,83 +1,130 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>大谷調子メーター | 指標の考え方</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <nav>
-    <a href="index.html">About</a>
-    <a href="method.html">指標の考え方</a>
-    <a href="case-study.html">事例</a>
-  </nav>
-  <main>
-    <h1>指標の考え方</h1>
+<body class="bg-base-200 min-h-screen">
 
-    <p>このページでは「なぜこの測り方をしているのか」「どこまで信頼してよいか」「データの出所」を説明します。2スコアの定義や基本的な読み方は <a href="index.html">About ページ</a> をご覧ください。</p>
+  <!-- ナビゲーション -->
+  <div class="navbar bg-base-100 shadow-sm sticky top-0 z-10">
+    <div class="navbar-start"></div>
+    <div class="navbar-center gap-6">
+      <a href="index.html" class="btn btn-ghost btn-sm font-normal">About</a>
+      <a href="method.html" class="btn btn-ghost btn-sm font-normal">指標の考え方</a>
+      <a href="case-study.html" class="btn btn-ghost btn-sm font-normal">事例</a>
+    </div>
+    <div class="navbar-end"></div>
+  </div>
 
-    <h2>なぜ結果と内容を分けるのか</h2>
+  <!-- メインコンテンツ -->
+  <main class="max-w-3xl mx-auto px-5 py-12">
 
-    <p>打撃の評価によく使われる指標（打率・OPS・wOBAなど）は、打席の最終結果を集計したものです。シーズン全体を通じて見るときには信頼できますが、<strong>数週間〜1か月程度の短い期間では「運」の影響が大きく、実際の打撃の質と乖離することがあります。</strong></p>
+    <h1 class="text-3xl font-bold mb-6 leading-snug">指標の考え方</h1>
 
-    <p>たとえば同じ「打率2割台」でも、鋭い打球を連発しながら野手の正面を突いている月と、スイングが崩れていて当てるだけになっている月とでは、その後の展開が異なります。結果指標だけを見ていると、この違いが見えません。</p>
+    <p class="mb-8 leading-relaxed">このページでは「なぜこの測り方をしているのか」「どこまで信頼してよいか」「データの出所」を説明します。2スコアの定義や基本的な読み方は <a href="index.html" class="link link-primary">About ページ</a> をご覧ください。</p>
 
-    <p>スイング内容スコアは、ヒットになったかどうかに依存しない指標で構成することで、結果の影響を切り離しています。2つのスコアのズレを見ることが、このツールの主な使い方です。</p>
+    <div class="divider"></div>
 
-    <h2>なぜこの4要素なのか</h2>
+    <!-- なぜ結果と内容を分けるのか -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">なぜ結果と内容を分けるのか</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body gap-3">
+          <p class="leading-relaxed">打撃の評価によく使われる指標（打率・OPS・wOBAなど）は、打席の最終結果を集計したものです。シーズン全体を通じて見るときには信頼できますが、<strong>数週間〜1か月程度の短い期間では「運」の影響が大きく、実際の打撃の質と乖離することがあります。</strong></p>
+          <p class="leading-relaxed">たとえば同じ「打率2割台」でも、鋭い打球を連発しながら野手の正面を突いている月と、スイングが崩れていて当てるだけになっている月とでは、その後の展開が異なります。結果指標だけを見ていると、この違いが見えません。</p>
+          <p class="leading-relaxed">スイング内容スコアは、ヒットになったかどうかに依存しない指標で構成することで、結果の影響を切り離しています。2つのスコアのズレを見ることが、このツールの主な使い方です。</p>
+        </div>
+      </div>
+    </section>
 
-    <p>スイング内容スコアは現在、チェイス率・空振り率・コンタクト率・平均打球速度の4指標を組み合わせています。選定の基準は「打席の最終結果に依存せず、スイングの質を直接反映するか」です。</p>
+    <div class="divider"></div>
 
-    <p><strong>チェイス率・空振り率・コンタクト率</strong>は、選球眼とミートの精度を表します。ヒットが出なかった打席でも計測でき、状態の変化を早めに拾いやすい指標です。</p>
+    <!-- なぜこの4要素なのか -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">なぜこの4要素なのか</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body gap-3">
+          <p class="leading-relaxed">スイング内容スコアは現在、チェイス率・空振り率・コンタクト率・平均打球速度の4指標を組み合わせています。選定の基準は「打席の最終結果に依存せず、スイングの質を直接反映するか」です。</p>
+          <p class="leading-relaxed"><strong>チェイス率・空振り率・コンタクト率</strong>は、選球眼とミートの精度を表します。ヒットが出なかった打席でも計測でき、状態の変化を早めに拾いやすい指標です。</p>
+          <p class="leading-relaxed"><strong>平均打球速度</strong>は、コンタクト率を補完するために加えています。コンタクト率が同じでも、打球に勢いがなければ「当てただけ」の状態である可能性が高く、その差を区別するためです。</p>
+          <p class="leading-relaxed">逆に使っていないのは、「ヒットになったか」「塁に出られたか」のような最終結果です。それらは内容ではなく運の要素を多く含み、内容スコアに混ぜると目的が崩れるためです。</p>
+        </div>
+      </div>
+    </section>
 
-    <p><strong>平均打球速度</strong>は、コンタクト率を補完するために加えています。コンタクト率が同じでも、打球に勢いがなければ「当てただけ」の状態である可能性が高く、その差を区別するためです。</p>
+    <div class="divider"></div>
 
-    <p>逆に使っていないのは、「ヒットになったか」「塁に出られたか」のような最終結果です。それらは内容ではなく運の要素を多く含み、内容スコアに混ぜると目的が崩れるためです。</p>
+    <!-- なぜ本人基準なのか -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">なぜ本人基準なのか</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body gap-3">
+          <p class="leading-relaxed">スコアは0〜100に変換していますが、その基準は<strong>大谷本人の2022〜2024年の月別データ</strong>です。「リーグ平均と比べていくつ」ではなく、「大谷の過去の月と比べてどの位置か」を示しています。</p>
+          <p class="leading-relaxed">この設計には理由があります。大谷は打撃の水準がリーグ内でも高い選手です。リーグ平均を基準にすると「常に高スコア」になり、状態の変化が見えにくくなります。本人の過去データを基準にすることで、<strong>「大谷らしい状態かどうか」の変化を敏感に拾う</strong>ことができます。</p>
+          <p class="leading-relaxed">ただし、これは他の選手との比較には使えない設計です。「70点」は大谷の平均的な月の水準であり、絶対的な良し悪しを示す数字ではありません。</p>
+        </div>
+      </div>
+    </section>
 
-    <h2>なぜ本人基準なのか</h2>
+    <div class="divider"></div>
 
-    <p>スコアは0〜100に変換していますが、その基準は<strong>大谷本人の2022〜2024年の月別データ</strong>です。「リーグ平均と比べていくつ」ではなく、「大谷の過去の月と比べてどの位置か」を示しています。</p>
+    <!-- どこまで信頼してよいか -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">どこまで信頼してよいか</h2>
+      <p class="mb-4 leading-relaxed">このツールが示せることと、示せないことをはっきりさせておきます。</p>
 
-    <p>この設計には理由があります。大谷は打撃の水準がリーグ内でも高い選手です。リーグ平均を基準にすると「常に高スコア」になり、状態の変化が見えにくくなります。本人の過去データを基準にすることで、<strong>「大谷らしい状態かどうか」の変化を敏感に拾う</strong>ことができます。</p>
+      <div class="grid gap-4 md:grid-cols-2">
+        <!-- 信頼してよい -->
+        <div class="card bg-success/10 shadow-sm">
+          <div class="card-body">
+            <h3 class="card-title text-base text-success">信頼してよい使い方</h3>
+            <ul class="space-y-2">
+              <li class="flex gap-2 leading-relaxed"><span class="text-success font-bold shrink-0">✓</span>「今の内容スコアは、過去の大谷と比べてどの位置か」を参照する</li>
+              <li class="flex gap-2 leading-relaxed"><span class="text-success font-bold shrink-0">✓</span>結果スコアと内容スコアのズレを確認し、「慌てるべき状態かどうか」の判断材料にする</li>
+              <li class="flex gap-2 leading-relaxed"><span class="text-success font-bold shrink-0">✓</span>数か月にわたるトレンドの変化を観察する</li>
+            </ul>
+          </div>
+        </div>
 
-    <p>ただし、これは他の選手との比較には使えない設計です。「70点」は大谷の平均的な月の水準であり、絶対的な良し悪しを示す数字ではありません。</p>
+        <!-- 信頼しすぎてはいけない -->
+        <div class="card bg-error/10 shadow-sm">
+          <div class="card-body">
+            <h3 class="card-title text-base text-error">信頼しすぎてはいけない使い方</h3>
+            <ul class="space-y-3">
+              <li class="flex gap-2 leading-relaxed"><span class="text-error font-bold shrink-0">✗</span><span><strong>シーズン序盤（10〜20試合程度）の数値の断定的な読み取り。</strong>サンプルが少ない時期は数値が大きく振れやすく、傾向の判断に向きません。50試合以上のデータが蓄積されると安定度が増します。</span></li>
+              <li class="flex gap-2 leading-relaxed"><span class="text-error font-bold shrink-0">✗</span><span><strong>「内容が良いから必ず回復する」という予測。</strong>内容スコアと結果スコアのズレが縮まるかどうかには個別の事情が影響します。過去にどのようなケースがあったかは、ケーススタディのページで今後具体的に見ていきます。</span></li>
+              <li class="flex gap-2 leading-relaxed"><span class="text-error font-bold shrink-0">✗</span><span><strong>このスコアに含まれない要素の見落とし。</strong>球種・コース別の対応、相手投手の質、身体コンディションなどは反映されていません。スコアに出ない変化がある可能性は常にあります。</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <h2>どこまで信頼してよいか</h2>
+      <div class="alert mt-4">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span><strong>このツールは参考指標です。確定値ではありません。</strong>個人が趣味で作ったものであり、公式統計ではありません。誤りや見落としがある可能性があります。</span>
+      </div>
+    </section>
 
-    <p>このツールが示せることと、示せないことをはっきりさせておきます。</p>
+    <div class="divider"></div>
 
-    <h3>信頼してよい使い方</h3>
-    <ul>
-      <li>「今の内容スコアは、過去の大谷と比べてどの位置か」を参照する</li>
-      <li>結果スコアと内容スコアのズレを確認し、「慌てるべき状態かどうか」の判断材料にする</li>
-      <li>数か月にわたるトレンドの変化を観察する</li>
-    </ul>
+    <!-- データの出所 -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">データの出所</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <p class="leading-relaxed"><a href="https://baseballsavant.mlb.com/" target="_blank" rel="noopener noreferrer" class="link link-primary">Statcast（MLB公式の計測データ）</a> を使用しています。球速・打球速度・スイングの軌道・ゾーン情報など、1球ごとの詳細データが含まれています。</p>
+        </div>
+      </div>
+    </section>
 
-    <h3>信頼しすぎてはいけない使い方</h3>
-    <ul>
-      <li>
-        <strong>シーズン序盤（10〜20試合程度）の数値の断定的な読み取り。</strong>
-        サンプルが少ない時期は数値が大きく振れやすく、傾向の判断に向きません。50試合以上のデータが蓄積されると安定度が増します。
-      </li>
-      <li>
-        <strong>「内容が良いから必ず回復する」という予測。</strong>
-        内容スコアと結果スコアのズレが縮まるかどうかには個別の事情が影響します。過去にどのようなケースがあったかは、ケーススタディのページで今後具体的に見ていきます。
-      </li>
-      <li>
-        <strong>このスコアに含まれない要素の見落とし。</strong>
-        球種・コース別の対応、相手投手の質、身体コンディションなどは反映されていません。スコアに出ない変化がある可能性は常にあります。
-      </li>
-    </ul>
+    <p class="text-sm text-base-content/60 mt-4"><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
 
-    <p><strong>このツールは参考指標です。確定値ではありません。</strong>個人が趣味で作ったものであり、公式統計ではありません。誤りや見落としがある可能性があります。</p>
-
-    <h2>データの出所</h2>
-
-    <p><a href="https://baseballsavant.mlb.com/" target="_blank" rel="noopener noreferrer">Statcast（MLB公式の計測データ）</a> を使用しています。球速・打球速度・スイングの軌道・ゾーン情報など、1球ごとの詳細データが含まれています。</p>
-
-    <p><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
   </main>
+
   <script data-goatcounter="https://ohtani-meter.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
 </body>

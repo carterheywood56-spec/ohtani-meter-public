@@ -1,171 +1,246 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>大谷調子メーター | 事例：2025年8月、打球の質は高いのに結果が出なかった10試合</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    .score-great  { background-color: #dcfce7; }
+    .score-good   { background-color: #f0fdf4; }
+    .score-normal { background-color: #eff6ff; }
+    .score-watch  { background-color: #fff7ed; }
+    .score-poor   { background-color: #fef2f2; }
+  </style>
 </head>
-<body>
-  <nav>
-    <a href="index.html">About</a>
-    <a href="method.html">指標の考え方</a>
-  </nav>
-  <main>
-    <h1>事例：打球の質は高いのに、結果が出なかった10試合</h1>
+<body class="bg-base-200 min-h-screen">
 
-    <p>2025年8月下旬、大谷の成績が低迷した時期がありました。</p>
-
-    <p>しかしスイング内容スコアを見ると、<strong>同じ期間に「良好〜平常運転」の水準をおおむね維持していた</strong>という別の景色がありました。打球の質（平均打球速度）はこの時期、シーズンでも最高水準に達していました。</p>
-
-    <h2>2つのスコアの推移</h2>
-
-    <p>8月22日から9月10日にかけての内容スコアと結果スコアの動きです。</p>
-
-    <div class="chart-container">
-      <canvas id="scoreChart"></canvas>
+  <!-- ナビゲーション -->
+  <div class="navbar bg-base-100 shadow-sm sticky top-0 z-10">
+    <div class="navbar-start"></div>
+    <div class="navbar-center gap-6">
+      <a href="index.html" class="btn btn-ghost btn-sm font-normal">About</a>
+      <a href="method.html" class="btn btn-ghost btn-sm font-normal">指標の考え方</a>
+      <a href="case-study.html" class="btn btn-ghost btn-sm font-normal">事例</a>
     </div>
+    <div class="navbar-end"></div>
+  </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>日付</th>
-          <th>内容スコア</th>
-          <th>結果スコア</th>
-          <th>状態</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>8/22</td>
-          <td class="score-good">76点（良好）</td>
-          <td class="score-normal">70点（平常運転）</td>
-          <td>ほぼ拮抗</td>
-        </tr>
-        <tr>
-          <td>8/23</td>
-          <td class="score-good">76点（良好）</td>
-          <td class="score-normal">62点（平常運転）</td>
-          <td>乖離が始まる</td>
-        </tr>
-        <tr>
-          <td>8/27</td>
-          <td class="score-normal">68点（平常運転）</td>
-          <td class="score-normal">59点（平常運転）</td>
-          <td>両方やや低め</td>
-        </tr>
-        <tr>
-          <td>8/29</td>
-          <td class="score-good">81点（良好）</td>
-          <td class="score-watch">57点（やや問題）</td>
-          <td>乖離が最大に</td>
-        </tr>
-        <tr>
-          <td>8/30</td>
-          <td class="score-good">77点（良好）</td>
-          <td class="score-watch">55点（やや問題）</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>8/31</td>
-          <td class="score-normal">71点（平常運転）</td>
-          <td class="score-watch">54点（やや問題）</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>9/3</td>
-          <td class="score-normal">64点（平常運転）</td>
-          <td class="score-normal">69点（平常運転）</td>
-          <td>結果が逆転</td>
-        </tr>
-        <tr>
-          <td>9/7</td>
-          <td class="score-good">73点（良好）</td>
-          <td class="score-good">78点（良好）</td>
-          <td>両方が回復</td>
-        </tr>
-        <tr>
-          <td>9/10</td>
-          <td class="score-good">72点（良好）</td>
-          <td class="score-good">80点（良好）</td>
-          <td>安定回復</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- メインコンテンツ -->
+  <main class="max-w-3xl mx-auto px-5 py-12">
 
-    <p>内容スコアは68〜81点（良好〜平常運転）の範囲を保ちながら、結果スコアだけが54〜57点（やや問題水準）まで落ちていた時期があったことが分かります。</p>
+    <h1 class="text-3xl font-bold mb-6 leading-snug">事例：打球の質は高いのに、結果が出なかった10試合</h1>
 
-    <h2>内容スコアは何を示していたか</h2>
+    <p class="mb-4 leading-relaxed">2025年8月下旬、大谷の成績が低迷した時期がありました。</p>
+    <p class="mb-8 leading-relaxed">しかしスイング内容スコアを見ると、<strong>同じ期間に「良好〜平常運転」の水準をおおむね維持していた</strong>という別の景色がありました。打球の質（平均打球速度）はこの時期、シーズンでも最高水準に達していました。</p>
 
-    <p>低迷期（8/20〜8/31）のスイング内容を見ると、次のような状態でした。</p>
+    <div class="divider"></div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>指標</th>
-          <th>低迷期（8/20〜8/31）</th>
-          <th>回復期（9/1〜9/10）</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>平均打球速度（EV）</td>
-          <td class="score-great"><strong>98.7 mph（シーズン最高水準）</strong></td>
-          <td class="score-good">95.0 mph</td>
-        </tr>
-        <tr>
-          <td>BABIP（インプレーの打球がヒットになった割合）</td>
-          <td class="score-poor"><strong>0.185（異常に低い）</strong></td>
-          <td class="score-good">0.381（通常水準）</td>
-        </tr>
-        <tr>
-          <td>本塁打数</td>
-          <td class="score-watch">1本（10試合）</td>
-          <td class="score-good">3本（9試合）</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- 2つのスコアの推移 -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">2つのスコアの推移</h2>
+      <p class="mb-4 leading-relaxed">8月22日から9月10日にかけての内容スコアと結果スコアの動きです。</p>
 
-    <p>平均打球速度98.7 mphはこの時期のシーズン最高水準です。打球の勢いは十分ありました。</p>
+      <!-- グラフ -->
+      <div class="card bg-base-100 shadow-sm mb-4">
+        <div class="card-body">
+          <div style="height: 320px;">
+            <canvas id="scoreChart"></canvas>
+          </div>
+        </div>
+      </div>
 
-    <h2>なぜ結果が出なかったか</h2>
+      <!-- スコア推移テーブル -->
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body p-0">
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>日付</th>
+                  <th>内容スコア</th>
+                  <th>結果スコア</th>
+                  <th>状態</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>8/22</td>
+                  <td class="score-good">76点（良好）</td>
+                  <td class="score-normal">70点（平常運転）</td>
+                  <td>ほぼ拮抗</td>
+                </tr>
+                <tr>
+                  <td>8/23</td>
+                  <td class="score-good">76点（良好）</td>
+                  <td class="score-normal">62点（平常運転）</td>
+                  <td>乖離が始まる</td>
+                </tr>
+                <tr>
+                  <td>8/27</td>
+                  <td class="score-normal">68点（平常運転）</td>
+                  <td class="score-normal">59点（平常運転）</td>
+                  <td>両方やや低め</td>
+                </tr>
+                <tr>
+                  <td>8/29</td>
+                  <td class="score-good">81点（良好）</td>
+                  <td class="score-watch">57点（やや問題）</td>
+                  <td>乖離が最大に</td>
+                </tr>
+                <tr>
+                  <td>8/30</td>
+                  <td class="score-good">77点（良好）</td>
+                  <td class="score-watch">55点（やや問題）</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>8/31</td>
+                  <td class="score-normal">71点（平常運転）</td>
+                  <td class="score-watch">54点（やや問題）</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>9/3</td>
+                  <td class="score-normal">64点（平常運転）</td>
+                  <td class="score-normal">69点（平常運転）</td>
+                  <td>結果が逆転</td>
+                </tr>
+                <tr>
+                  <td>9/7</td>
+                  <td class="score-good">73点（良好）</td>
+                  <td class="score-good">78点（良好）</td>
+                  <td>両方が回復</td>
+                </tr>
+                <tr>
+                  <td>9/10</td>
+                  <td class="score-good">72点（良好）</td>
+                  <td class="score-good">80点（良好）</td>
+                  <td>安定回復</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-    <p>打球の勢いは最高水準なのに、なぜ結果スコアが低迷したのか。</p>
+      <p class="mt-4 leading-relaxed">内容スコアは68〜81点（良好〜平常運転）の範囲を保ちながら、結果スコアだけが54〜57点（やや問題水準）まで落ちていた時期があったことが分かります。</p>
+    </section>
 
-    <p>手がかりになるのが BABIP（0.185）という数字です。BABIPとは、三振・本塁打・四球を除いた「フェアゾーンに飛んだ打球」がヒットになった割合のことです。打率とは違い、長打や本塁打を含まない分、打球が野手の守備範囲に入るかどうか——つまり「運」の影響を受けやすい指標とされています。</p>
+    <div class="divider"></div>
 
-    <p>0.185という数字は異常に低く、鋭い打球を打っても野手の正面に飛び続けていた時期だったことが読み取れます。スイングの質が高く、打球の勢いも十分にある。それでもBABIPという「運」の要素が結果スコアを大きく押し下げていました。</p>
+    <!-- 内容スコアは何を示していたか -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">内容スコアは何を示していたか</h2>
+      <p class="mb-4 leading-relaxed">低迷期（8/20〜8/31）のスイング内容を見ると、次のような状態でした。</p>
 
-    <h2>転換と回復</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body p-0">
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>指標</th>
+                  <th>低迷期（8/20〜8/31）</th>
+                  <th>回復期（9/1〜9/10）</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>平均打球速度（EV）</td>
+                  <td class="score-great"><strong>98.7 mph（シーズン最高水準）</strong></td>
+                  <td class="score-good">95.0 mph</td>
+                </tr>
+                <tr>
+                  <td>BABIP（インプレーの打球がヒットになった割合）</td>
+                  <td class="score-poor"><strong>0.185（異常に低い）</strong></td>
+                  <td class="score-good">0.381（通常水準）</td>
+                </tr>
+                <tr>
+                  <td>本塁打数</td>
+                  <td class="score-watch">1本（10試合）</td>
+                  <td class="score-good">3本（9試合）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-    <p>9月3日を境に、結果スコアが54点台から69点（平常運転水準）へと急改善しました。</p>
+      <p class="mt-4 leading-relaxed">平均打球速度98.7 mphはこの時期のシーズン最高水準です。打球の勢いは十分ありました。</p>
+    </section>
 
-    <p>その後、9月7日・10日には内容スコア・結果スコアともに良好水準（72〜80点）で安定。低迷期の間、内容スコアが「良好〜平常運転」を保っていた通りの状態に戻ってきた形です。</p>
+    <div class="divider"></div>
 
-    <p>回復期（9/1〜9/10）のBABIPは0.381と通常水準に戻り、本塁打も9試合で3本。打球品質に結果が追いついてきた期間でした。</p>
+    <!-- なぜ結果が出なかったか -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">なぜ結果が出なかったか</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body gap-3">
+          <p class="leading-relaxed">打球の勢いは最高水準なのに、なぜ結果スコアが低迷したのか。</p>
+          <p class="leading-relaxed">手がかりになるのが BABIP（0.185）という数字です。BABIPとは、三振・本塁打・四球を除いた「フェアゾーンに飛んだ打球」がヒットになった割合のことです。打率とは違い、長打や本塁打を含まない分、打球が野手の守備範囲に入るかどうか——つまり「運」の影響を受けやすい指標とされています。</p>
+          <p class="leading-relaxed">0.185という数字は異常に低く、鋭い打球を打っても野手の正面に飛び続けていた時期だったことが読み取れます。スイングの質が高く、打球の勢いも十分にある。それでもBABIPという「運」の要素が結果スコアを大きく押し下げていました。</p>
+        </div>
+      </div>
+    </section>
 
-    <h2>この事例から読み取れること</h2>
+    <div class="divider"></div>
 
-    <ul>
-      <li>8月下旬の「成績が低迷した」という見方は、結果スコアだけを見た場合には正確です。</li>
-      <li>しかし同じ期間、内容スコアは良好〜平常運転の水準を維持しており、打球速度はシーズン最高水準でした。</li>
-      <li>9月に入り、結果スコアは10日以内に良好水準まで回復しました。</li>
-    </ul>
+    <!-- 転換と回復 -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">転換と回復</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body gap-3">
+          <p class="leading-relaxed">9月3日を境に、結果スコアが54点台から69点（平常運転水準）へと急改善しました。</p>
+          <p class="leading-relaxed">その後、9月7日・10日には内容スコア・結果スコアともに良好水準（72〜80点）で安定。低迷期の間、内容スコアが「良好〜平常運転」を保っていた通りの状態に戻ってきた形です。</p>
+          <p class="leading-relaxed">回復期（9/1〜9/10）のBABIPは0.381と通常水準に戻り、本塁打も9試合で3本。打球品質に結果が追いついてきた期間でした。</p>
+        </div>
+      </div>
+    </section>
 
-    <p>この時期に「内容スコアが示していたもの」と「結果スコアが示していたもの」は異なっていました。大谷メーターはこの2つを分けて見えるようにするためのツールです。</p>
+    <div class="divider"></div>
 
-    <h2>この事例の注意点</h2>
+    <!-- この事例から読み取れること -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">この事例から読み取れること</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <ul class="space-y-2">
+            <li class="flex gap-2 leading-relaxed"><span class="text-base-content/40 shrink-0">—</span>8月下旬の「成績が低迷した」という見方は、結果スコアだけを見た場合には正確です。</li>
+            <li class="flex gap-2 leading-relaxed"><span class="text-base-content/40 shrink-0">—</span>しかし同じ期間、内容スコアは良好〜平常運転の水準を維持しており、打球速度はシーズン最高水準でした。</li>
+            <li class="flex gap-2 leading-relaxed"><span class="text-base-content/40 shrink-0">—</span>9月に入り、結果スコアは10日以内に良好水準まで回復しました。</li>
+          </ul>
+          <p class="mt-4 leading-relaxed">この時期に「内容スコアが示していたもの」と「結果スコアが示していたもの」は異なっていました。大谷メーターはこの2つを分けて見えるようにするためのツールです。</p>
+        </div>
+      </div>
+    </section>
 
-    <ul>
-      <li><strong>1つの事例です。</strong>内容スコアが高ければ必ず回復するという保証ではありません。</li>
-      <li><strong>BABIP は運の影響を強く受ける指標です。</strong>低いBABIPが「不運の証拠」と断定できるわけではなく、打球傾向や相手守備の影響もあります。</li>
-      <li><strong>使用データはStatcast（MLB公式）ですが、スコアの設計・計算は個人によるものです。</strong>指標の解釈や計算に誤りがある可能性があります。</li>
-    </ul>
+    <div class="divider"></div>
 
-    <p>指標の詳しい仕組みは <a href="method.html">指標の考え方</a> をご覧ください。</p>
+    <!-- この事例の注意点 -->
+    <section class="mb-8">
+      <h2 class="text-xl font-bold mb-4">この事例の注意点</h2>
+      <div class="flex flex-col gap-3">
+        <div class="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span><strong>1つの事例です。</strong>内容スコアが高ければ必ず回復するという保証ではありません。</span>
+        </div>
+        <div class="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span><strong>BABIP は運の影響を強く受ける指標です。</strong>低いBABIPが「不運の証拠」と断定できるわけではなく、打球傾向や相手守備の影響もあります。</span>
+        </div>
+        <div class="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span><strong>使用データはStatcast（MLB公式）ですが、スコアの設計・計算は個人によるものです。</strong>指標の解釈や計算に誤りがある可能性があります。</span>
+        </div>
+      </div>
+      <p class="mt-4 leading-relaxed">指標の詳しい仕組みは <a href="method.html" class="link link-primary">指標の考え方</a> をご覧ください。</p>
+    </section>
 
-    <p><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
+    <p class="text-sm text-base-content/60 mt-4"><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
+
   </main>
 
   <script>
