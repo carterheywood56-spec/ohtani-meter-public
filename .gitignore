@@ -1,6 +1,10 @@
 # 内部運用管理ファイル（公開しない）
 progress.md
 public_about_page_draft.md
+docs/
+
+# デザイン検討用バリアント（公開しない）
+index-design*.html
 
 # Claude Code
 .claude/
