@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大谷調子メーター | よくある質問</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-base-200 min-h-screen">
+
+  <!-- ナビゲーション -->
+  <div class="navbar bg-base-100 shadow-sm sticky top-0 z-10">
+    <div class="navbar-start"></div>
+    <div class="navbar-center gap-6">
+      <a href="index.html" class="btn btn-ghost btn-sm font-normal">About</a>
+      <a href="method.html" class="btn btn-ghost btn-sm font-normal">指標の考え方</a>
+      <a href="case-study.html" class="btn btn-ghost btn-sm font-normal">事例</a>
+      <a href="faq.html" class="btn btn-ghost btn-sm font-normal">よくある質問</a>
+    </div>
+    <div class="navbar-end"></div>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <main class="max-w-3xl mx-auto px-5 py-12">
+
+    <h1 class="text-3xl font-bold mb-6 leading-snug">よくある質問</h1>
+
+    <p class="mb-8 leading-relaxed text-base-content/70">このツールについてよく寄せられる疑問をまとめています。詳しい設計の背景は <a href="method.html" class="link link-primary">指標の考え方（Method）</a> で説明しています。</p>
+
+    <div class="divider"></div>
+
+    <!-- Q1 -->
+    <section class="mb-8">
+      <h2 class="text-lg font-bold mb-3">スコアはいつ更新されますか？</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <p class="leading-relaxed">試合後に手動で更新しています。更新のタイミングは試合翌日までに行うことを目安にしていますが、多少遅れる場合があります。</p>
+          <p class="leading-relaxed mt-2">スコアは<strong>直近の試合を含んだローリング集計</strong>で計算されているため、更新のたびに過去のスコアも含めて再計算されます。「前に見たときと数字が違う」場合はこの再計算が理由です。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Q2 -->
+    <section class="mb-8">
+      <h2 class="text-lg font-bold mb-3">Xの投稿のスコアとサイトの数字が違うのはなぜですか？</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <p class="leading-relaxed">投稿した時点のスコアと、サイトに表示されている最新スコアは<strong>一致しないことがあります。</strong></p>
+          <p class="leading-relaxed mt-2">スコアはローリング集計（一定期間の試合データを滑らかに引き継ぎながら計算する方式）で更新されるため、その後の試合データが加わると過去の数字も変化します。Xの投稿は投稿した瞬間のスコアを記録したものです。</p>
+          <p class="leading-relaxed mt-2">最新の状態を知りたい場合は、サイトのスコアを参照してください。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Q3 -->
+    <section class="mb-8">
+      <h2 class="text-lg font-bold mb-3">他の選手には使えませんか？</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <p class="leading-relaxed">このツールは<strong>大谷翔平専用です。</strong>スコアの計算は「大谷本人の2022〜2024年の月別データ」を基準にしているため、他の選手にそのまま当てはめることはできません。</p>
+          <p class="leading-relaxed mt-2">「70点が大谷にとってのふつう」という本人基準の設計にすることで、「80点でも大谷にとっては普通の月なのか、良い月なのか」が分かるようにしています。設計の詳細は <a href="method.html" class="link link-primary">指標の考え方</a> をご覧ください。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Q4 -->
+    <section class="mb-8">
+      <h2 class="text-lg font-bold mb-3">シーズン序盤のスコアはどれくらい信頼できますか？</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <p class="leading-relaxed">サンプル数が少ない序盤（目安として10〜20試合程度）は、スコアの振れ幅が大きく、信頼度が下がります。<strong>序盤の数値は参考程度にとどめる</strong>のが適切です。</p>
+          <p class="leading-relaxed mt-2">試合数が積み上がるほどスコアは安定します。特にシーズン後半（50試合以上）では、スコアの変動が実態をより反映しやすくなります。</p>
+          <p class="leading-relaxed mt-2">信頼性の詳細は <a href="method.html" class="link link-primary">指標の考え方</a> で解説しています。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Q5 -->
+    <section class="mb-8">
+      <h2 class="text-lg font-bold mb-3">「チェイス率」「コンタクト率」とはどういう指標ですか？</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>指標名</th>
+                  <th>意味</th>
+                  <th>良い方向</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-medium">チェイス率</td>
+                  <td>ストライクゾーン外のボール球に対してスイングした割合</td>
+                  <td><span class="badge badge-error badge-outline whitespace-nowrap">低いほど良い</span></td>
+                </tr>
+                <tr>
+                  <td class="font-medium">空振り率</td>
+                  <td>スイングした球に対して空振りした割合</td>
+                  <td><span class="badge badge-error badge-outline whitespace-nowrap">低いほど良い</span></td>
+                </tr>
+                <tr>
+                  <td class="font-medium">コンタクト率</td>
+                  <td>スイングした球にバットが当たった割合</td>
+                  <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
+                </tr>
+                <tr>
+                  <td class="font-medium">平均打球速度</td>
+                  <td>フェアゾーンに飛んだ打球の平均速度（mph）</td>
+                  <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="leading-relaxed mt-3">これら4指標を組み合わせて「スイング内容スコア」を計算しています。詳しくは <a href="index.html" class="link link-primary">About</a> をご覧ください。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Q6 -->
+    <section class="mb-8">
+      <h2 class="text-lg font-bold mb-3">このデータは公式なものですか？</h2>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <p class="leading-relaxed">公式統計ではありません。Baseball Savant（MLB公式の打球データ）などの一般公開データをもとに、個人で集計・計算した<strong>参考指標</strong>です。</p>
+          <p class="leading-relaxed mt-2">誤りや見落としがある可能性があります。公式の成績・記録は MLB 公式サイトを参照してください。データの出所の詳細は <a href="method.html" class="link link-primary">指標の考え方</a> に記載しています。</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <p class="text-sm text-base-content/60 mt-4">他に疑問があれば、<a href="https://x.com/carterheywood56" class="link" target="_blank" rel="noopener noreferrer">X（Twitter）</a>でお知らせください。</p>
+
+    <p class="text-sm text-base-content/60 mt-4"><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
+
+  </main>
+
+  <script data-goatcounter="https://ohtani-meter.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
