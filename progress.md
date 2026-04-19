@@ -54,7 +54,7 @@
 
 - [x] `faq.html` 草案作成 🤖 `[public]`
 - [ ] `faq.html` 内容レビュー・修正指示 👤 `[public]`
-- [ ] `faq.html` commit / push 承認 → 実行 👤🤖 `[public]`
+- [x] `faq.html` commit / push 承認 → 実行 👤🤖 `[public]`
 - [ ] FAQ告知・「よくある誤解」系の短文投稿 👤 `[X]`
 
 ---
