@@ -58,7 +58,7 @@
       <h2 class="text-lg font-bold mb-3">他の選手には使えませんか？</h2>
       <div class="card bg-base-100 shadow-sm">
         <div class="card-body">
-          <p class="leading-relaxed">このツールは<strong>大谷翔平専用です。</strong>スコアの計算は「大谷本人の2022〜2024年の月別データ」を基準にしているため、他の選手にそのまま当てはめることはできません。</p>
+          <p class="leading-relaxed">このツールは<strong>大谷翔平専用です。</strong>スコアの計算は「大谷本人の2022〜2024年の150球ローリング窓」を基準にしているため、他の選手にそのまま当てはめることはできません。</p>
           <p class="leading-relaxed mt-2">「80点前後が大谷にとってのふつう」という本人基準の設計にすることで、87点以上なら「好調」、73点を下回れば「要注意」という変化を追えるようにしています。設計の詳細は <a href="method.html" class="link link-primary">指標の考え方</a> をご覧ください。</p>
         </div>
       </div>
@@ -97,9 +97,9 @@
                   <td><span class="badge badge-error badge-outline whitespace-nowrap">低いほど良い</span></td>
                 </tr>
                 <tr>
-                  <td class="font-medium">空振り率</td>
-                  <td>スイングした球に対して空振りした割合</td>
-                  <td><span class="badge badge-error badge-outline whitespace-nowrap">低いほど良い</span></td>
+                  <td class="font-medium">Z-Swing%</td>
+                  <td>ストライクゾーン内（zone 1〜9）の球に対してスイングした割合（高いほど好球を積極的に振れている）</td>
+                  <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
                 </tr>
                 <tr>
                   <td class="font-medium">コンタクト率</td>
@@ -107,8 +107,8 @@
                   <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
                 </tr>
                 <tr>
-                  <td class="font-medium">平均打球速度</td>
-                  <td>フェアゾーンに飛んだ打球の平均速度（mph）</td>
+                  <td class="font-medium">hard_hit%</td>
+                  <td>打球速度が95mph以上だった打球の比率（高いほど強い当たりが多い）</td>
                   <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
                 </tr>
               </tbody>
