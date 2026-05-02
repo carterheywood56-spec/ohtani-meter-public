@@ -128,6 +128,17 @@
       </div>
 
       <p class="mt-4 leading-relaxed">内容スコアと結果スコアはともに76〜88点（安定〜好調）の範囲で推移しながら、8月後半に内容スコアが先行し8/30に最大12点の乖離が生じ、9月に入ると結果スコアが逆転・回復した動きが分かります。</p>
+
+      <!-- 内容 vs 結果 散布図 -->
+      <div class="card bg-base-100 shadow-sm mt-4">
+        <div class="card-body">
+          <h3 class="font-semibold text-base mb-1">内容スコア vs 結果スコア（散布図）</h3>
+          <p class="text-sm text-base-content/60 mb-3">対角線（点線）より右下 = 内容が結果を上回っている状態。点の色が青 → 橙へ変わるほど時間が進んでいる。</p>
+          <div style="height: 280px;">
+            <canvas id="scatterChart"></canvas>
+          </div>
+        </div>
+      </div>
     </section>
 
     <div class="divider"></div>
@@ -319,6 +330,84 @@
             grid: { color: 'rgba(0,0,0,0.06)' }
           },
           x: {
+            grid: { color: 'rgba(0,0,0,0.06)' }
+          }
+        }
+      }
+    });
+
+    // 内容 vs 結果 散布図
+    const scatterLabels = ['8/22','8/23','8/27','8/29','8/30','8/31','9/3','9/7','9/10'];
+    const scatterPoints = [
+      {x:76,y:84},{x:76,y:81},{x:82,y:78},{x:86,y:77},{x:88,y:76},
+      {x:82,y:76},{x:80,y:78},{x:79,y:82},{x:79,y:83}
+    ];
+    // 青 → 橙のグラデーション（時系列）
+    const ptColors = [
+      '#1d4ed8','#2563eb','#3b82f6','#60a5fa','#f97316',
+      '#ea580c','#fb923c','#f59e0b','#d97706'
+    ];
+    const ctx2 = document.getElementById('scatterChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: '日別スコア',
+            data: scatterPoints,
+            backgroundColor: ptColors,
+            pointRadius: 8,
+            pointHoverRadius: 10,
+          },
+          {
+            // 軌跡（細線）
+            type: 'line',
+            data: scatterPoints,
+            borderColor: 'rgba(100,100,100,0.2)',
+            borderWidth: 1.5,
+            borderDash: [],
+            pointRadius: 0,
+            fill: false,
+            tension: 0.2,
+          },
+          {
+            // 拮抗ライン y=x
+            type: 'line',
+            data: [{x:60,y:60},{x:100,y:100}],
+            borderColor: 'rgba(0,0,0,0.12)',
+            borderWidth: 1,
+            borderDash: [5,4],
+            pointRadius: 0,
+            fill: false,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            filter: item => item.datasetIndex === 0,
+            callbacks: {
+              label: item => {
+                const date = scatterLabels[item.dataIndex];
+                return `${date}：内容 ${item.parsed.x} / 結果 ${item.parsed.y}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            min: 68, max: 95,
+            title: { display: true, text: '内容スコア' },
+            ticks: { stepSize: 5, callback: v => `${v}点` },
+            grid: { color: 'rgba(0,0,0,0.06)' }
+          },
+          y: {
+            min: 68, max: 95,
+            title: { display: true, text: '結果スコア' },
+            ticks: { stepSize: 5, callback: v => `${v}点` },
             grid: { color: 'rgba(0,0,0,0.06)' }
           }
         }

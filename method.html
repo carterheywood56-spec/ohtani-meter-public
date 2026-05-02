@@ -65,6 +65,40 @@
       <div class="card bg-base-100 shadow-sm">
         <div class="card-body gap-3">
           <p class="leading-relaxed">スコアは0〜100に変換していますが、その基準は<strong>大谷本人の2022〜2024年の150球ローリング窓</strong>です。「リーグ平均と比べていくつ」ではなく、「大谷の過去の状態と比べてどの位置か」を示しています。</p>
+
+          <!-- ローリング窓の概念図 -->
+          <div class="bg-base-200 rounded-lg p-4 my-1">
+            <p class="text-xs font-medium text-base-content/60 mb-2">直近150球ローリング窓のイメージ</p>
+            <svg viewBox="0 0 580 78" width="100%" aria-hidden="true">
+              <defs>
+                <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L0,8 L8,4 Z" fill="#16a34a"/>
+                </marker>
+              </defs>
+              <line x1="10" y1="27" x2="570" y2="27" stroke="#d1d5db" stroke-width="1.5"/>
+              <text x="8"   y="47" font-size="10" fill="#9ca3af">← 過去</text>
+              <text x="535" y="47" font-size="10" fill="#9ca3af">今 →</text>
+              <circle cx="45"  cy="27" r="9" fill="#e5e7eb"/>
+              <circle cx="85"  cy="27" r="9" fill="#e5e7eb"/>
+              <circle cx="125" cy="27" r="9" fill="#e5e7eb"/>
+              <circle cx="165" cy="27" r="9" fill="#e5e7eb"/>
+              <circle cx="205" cy="27" r="9" fill="#e5e7eb"/>
+              <circle cx="245" cy="27" r="9" fill="#e5e7eb"/>
+              <circle cx="285" cy="27" r="9" fill="#e5e7eb"/>
+              <circle cx="325" cy="27" r="9" fill="#e5e7eb"/>
+              <rect x="352" y="12" width="218" height="30" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+              <circle cx="372" cy="27" r="9" fill="#4ade80"/>
+              <circle cx="412" cy="27" r="9" fill="#4ade80"/>
+              <circle cx="452" cy="27" r="9" fill="#4ade80"/>
+              <circle cx="492" cy="27" r="9" fill="#4ade80"/>
+              <circle cx="532" cy="27" r="9" fill="#4ade80"/>
+              <text x="461" y="9" text-anchor="middle" font-size="11" fill="#16a34a" font-weight="600">直近150球</text>
+              <line x1="461" y1="44" x2="461" y2="55" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+              <text x="461" y="71" text-anchor="middle" font-size="11" fill="#6b7280">4指標を計算 → z-score変換 → 0〜100点に変換</text>
+            </svg>
+            <p class="text-xs text-base-content/50 mt-1">各丸は試合1試合分。試合が増えるたびに窓が右へスライドし、その時点のスコアが更新される。</p>
+          </div>
+
           <p class="leading-relaxed">この設計には理由があります。大谷は打撃の水準がリーグ内でも高い選手です。リーグ平均を基準にすると「常に高スコア」になり、状態の変化が見えにくくなります。本人の過去データを基準にすることで、<strong>「大谷らしい状態かどうか」の変化を敏感に拾う</strong>ことができます。</p>
           <p class="leading-relaxed">ただし、これは他の選手との比較には使えない設計です。「80点」が大谷の平常水準であり、絶対的な良し悪しを示す数字ではありません。</p>
         </div>
@@ -96,7 +130,34 @@
           <div class="card-body">
             <h3 class="card-title text-base text-error">信頼しすぎてはいけない使い方</h3>
             <ul class="space-y-3">
-              <li class="flex gap-2 leading-relaxed"><span class="text-error font-bold shrink-0">✗</span><span><strong>シーズン序盤（10〜20試合程度）の数値の断定的な読み取り。</strong>サンプルが少ない時期は数値が大きく振れやすく、傾向の判断に向きません。50試合以上のデータが蓄積されると安定度が増します。</span></li>
+              <li class="flex gap-2 leading-relaxed"><span class="text-error font-bold shrink-0">✗</span>
+                <span>
+                  <strong>シーズン序盤（10〜20試合程度）の数値の断定的な読み取り。</strong>サンプルが少ない時期は数値が大きく振れやすく、傾向の判断に向きません。50試合以上のデータが蓄積されると安定度が増します。
+                  <div class="mt-2 space-y-1.5">
+                    <p class="text-xs text-base-content/50">試合数とスコアの安定度（イメージ）</p>
+                    <div class="flex items-center gap-2 text-xs">
+                      <span class="w-14 shrink-0 text-right text-base-content/60">10試合</span>
+                      <progress class="progress progress-warning h-2 w-28" value="18" max="100"></progress>
+                      <span class="text-base-content/50">振れ大</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                      <span class="w-14 shrink-0 text-right text-base-content/60">20試合</span>
+                      <progress class="progress progress-warning h-2 w-28" value="35" max="100"></progress>
+                      <span class="text-base-content/50">振れやすい</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                      <span class="w-14 shrink-0 text-right text-base-content/60">50試合</span>
+                      <progress class="progress progress-success h-2 w-28" value="68" max="100"></progress>
+                      <span class="text-base-content/50">安定</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                      <span class="w-14 shrink-0 text-right text-base-content/60">100試合+</span>
+                      <progress class="progress progress-success h-2 w-28" value="90" max="100"></progress>
+                      <span class="text-base-content/50">十分安定</span>
+                    </div>
+                  </div>
+                </span>
+              </li>
               <li class="flex gap-2 leading-relaxed"><span class="text-error font-bold shrink-0">✗</span><span><strong>「内容が良いから必ず回復する」という予測。</strong>内容スコアと結果スコアのズレが縮まるかどうかには個別の事情が影響します。過去にどのようなケースがあったかは、ケーススタディのページで今後具体的に見ていきます。</span></li>
               <li class="flex gap-2 leading-relaxed"><span class="text-error font-bold shrink-0">✗</span><span><strong>このスコアに含まれない要素の見落とし。</strong>球種・コース別の対応、相手投手の質、身体コンディションなどは反映されていません。スコアに出ない変化がある可能性は常にあります。</span></li>
             </ul>

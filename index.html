@@ -54,24 +54,29 @@
               <tr>
                 <th>見ている側面</th>
                 <th>見方</th>
+                <th class="whitespace-nowrap">平常水準<span class="block text-xs font-normal text-base-content/60">2022〜24中央値</span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>チェイス率（ボール球に手を出す割合）</td>
                 <td><span class="badge badge-error badge-outline whitespace-nowrap">低いほど良い</span></td>
+                <td class="font-mono whitespace-nowrap">約 28%</td>
               </tr>
               <tr>
                 <td>Z-Swing%（ストライクゾーン内へのスイング率）</td>
                 <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
+                <td class="font-mono whitespace-nowrap">約 71%</td>
               </tr>
               <tr>
                 <td>コンタクト率（スイングして当たる割合）</td>
                 <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
+                <td class="font-mono whitespace-nowrap">約 73%</td>
               </tr>
               <tr>
                 <td>hard_hit%（打球速度95mph以上の比率）</td>
                 <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
+                <td class="font-mono whitespace-nowrap">約 32%</td>
               </tr>
             </tbody>
           </table>
@@ -85,31 +90,35 @@
     <div class="card bg-base-100 shadow-sm mb-6">
       <div class="card-body">
         <h3 class="card-title text-lg">スコアの目安</h3>
-        <div class="overflow-x-auto">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>スコア</th>
-                <th>おおまかな読み方</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="score-great">
-                <td>87以上</td>
-                <td>好調（大谷の平均水準を明確に上回る状態）</td>
-              </tr>
-              <tr>
-                <td>73〜86</td>
-                <td>安定（大谷本来の水準。心配なし）</td>
-              </tr>
-              <tr class="score-watch">
-                <td>73未満</td>
-                <td>要注意（大谷の平均水準を下回っている状態）</td>
-              </tr>
-            </tbody>
-          </table>
+
+        <!-- スコア帯の横バー -->
+        <div class="mt-4 mb-2">
+          <!-- 80平常マーカー -->
+          <div class="relative h-5 mb-1">
+            <div class="absolute text-xs font-bold whitespace-nowrap" style="left: 60%; transform: translateX(-50%);">▼ 80（平常）</div>
+          </div>
+          <!-- バー本体 -->
+          <div class="flex h-12 rounded-lg overflow-hidden border border-base-300">
+            <div class="score-watch flex items-center justify-center text-sm font-medium" style="width: 46%;">要注意</div>
+            <div class="score-good flex items-center justify-center text-sm font-medium" style="width: 28%;">安定</div>
+            <div class="score-great flex items-center justify-center text-sm font-medium" style="width: 26%;">好調</div>
+          </div>
+          <!-- 目盛り -->
+          <div class="relative h-5 mt-1 text-xs text-base-content/60">
+            <span class="absolute left-0">50</span>
+            <span class="absolute" style="left: 46%; transform: translateX(-50%);">73</span>
+            <span class="absolute" style="left: 74%; transform: translateX(-50%);">87</span>
+            <span class="absolute right-0">100</span>
+          </div>
         </div>
-        <p class="leading-relaxed mt-2"><strong>80前後が大谷にとっての「ふつう」のスコアです。</strong>「80点だから特別良い」という意味ではなく、これが平常水準です。</p>
+
+        <ul class="text-sm leading-relaxed mt-4 space-y-1">
+          <li><span class="font-medium">87以上：好調</span>（大谷の平常水準を明確に上回る状態）</li>
+          <li><span class="font-medium">73〜86：安定</span>（大谷本来の水準。心配なし）</li>
+          <li><span class="font-medium">73未満：要注意</span>（大谷の平常水準を下回っている状態）</li>
+        </ul>
+
+        <p class="leading-relaxed mt-3"><strong>80前後が大谷にとっての「ふつう」のスコアです。</strong>「80点だから特別良い」という意味ではなく、これが平常水準です。</p>
       </div>
     </div>
 
