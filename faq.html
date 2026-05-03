@@ -1,147 +1,272 @@
-<!DOCTYPE html>
-<html lang="ja" data-theme="light">
+<!doctype html>
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大谷調子メーター | よくある質問</title>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>大谷調子メーター | FAQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#faf9f6;
+    --ink:#1c1c1c;
+    --ink-2:#5a5a5a;
+    --ink-3:#9a9a9a;
+    --amber:#d4870a;
+    --amber-soft:#f4e8d2;
+    --border:#e4e0d8;
+    --border-2:#efece5;
+    --green:#16a34a;
+    --red:#dc2626;
+    --warn:#c46a14;
+    --footer:#161412;
+    --ink-deep:#1f3a52;
+    --hero-grad: linear-gradient(to bottom, rgba(8,6,4,0.40) 0%, rgba(8,6,4,0.88) 72%, rgba(8,6,4,1) 100%);
+    --jp:'Noto Sans JP', sans-serif;
+    --en:'Montserrat', sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--jp);font-weight:400;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  body{font-size:15px;line-height:1.85;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* Layout helpers */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  .wrap-narrow{max-width:880px;margin:0 auto;padding:0 32px}
+
+  .eyebrow{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber)}
+
+  /* ===== Navbar ===== */
+  .nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1180px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:var(--en);font-weight:800;font-size:13px;color:var(--amber);letter-spacing:0.02em}
+  .brand .jp{font-family:var(--jp);font-weight:900;letter-spacing:0.04em;margin-right:6px}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{font-family:var(--jp);font-weight:700;font-size:11px;letter-spacing:0.06em;color:var(--ink-2)}
+  .nav-links a.active{color:var(--amber)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.active:hover{color:var(--amber)}
+
+  /* ===== Page header ===== */
+  .page-header{position:relative;padding:80px 0 60px;overflow:hidden;background:#0c1219}
+  .page-header-bg{position:absolute;inset:0;background-image:url('assets/stadium-night.jpg');background-size:cover;background-position:center 30%;filter:saturate(0.5) brightness(0.35);z-index:0}
+  .page-header>.wrap{position:relative;z-index:1}
+  .page-header-eyebrow{color:var(--amber);font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .page-header-eyebrow::before{content:"";width:36px;height:1px;background:var(--amber)}
+  .page-header h1{font-family:var(--jp);font-weight:900;font-size:clamp(28px,4vw,48px);line-height:1.25;color:#fff;margin:0 0 16px;letter-spacing:-0.01em}
+  .page-header-lead{font-family:var(--jp);font-size:15px;line-height:1.85;color:rgba(255,255,255,0.65);max-width:580px;margin:0}
+
+  /* ===== Badge ===== */
+  .badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--en);font-weight:700;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:3px 7px 3px 6px;border-radius:2px;vertical-align:middle;line-height:1.2;white-space:nowrap;margin-left:8px}
+  .badge.green{background:rgba(22,163,74,0.10);color:var(--green)}
+  .badge.red{background:rgba(220,38,38,0.10);color:var(--red)}
+  .badge .arrow{font-size:10px;line-height:1}
+
+  /* ===== FAQ items ===== */
+  .faq-list{padding:16px 0 80px}
+  .faq-item{padding:48px 0;border-bottom:1px solid var(--border)}
+  .faq-item:last-child{border-bottom:none}
+  .faq-q{font-family:var(--jp);font-weight:900;font-size:22px;line-height:1.45;color:var(--ink);margin:0 0 20px;letter-spacing:0.005em}
+  .faq-q::before{content:"Q. ";font-family:var(--en);font-weight:700;color:var(--amber)}
+  .faq-a{font-family:var(--jp);font-size:15px;line-height:1.95;color:var(--ink-2)}
+  .faq-a p{margin:0 0 1.2em}
+  .faq-a p:last-child{margin:0}
+  .faq-a strong{color:var(--ink);font-weight:700}
+  .faq-a a{color:var(--amber);text-decoration:underline;text-underline-offset:3px}
+
+  /* ===== Indicator table ===== */
+  .ind-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:14px}
+  .ind-table caption{text-align:left;font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;color:var(--ink-3);text-transform:uppercase;margin-bottom:18px;caption-side:top}
+  .ind-table thead th{text-align:left;font-family:var(--jp);font-weight:700;font-size:11px;color:var(--ink-3);letter-spacing:0.08em;border-bottom:1px solid var(--ink);padding:12px 16px 12px 0;text-transform:uppercase}
+  .ind-table thead th:last-child{text-align:right;padding-right:0}
+  .ind-table tbody td{padding:20px 16px 20px 0;border-bottom:1px solid var(--border);vertical-align:top;font-family:var(--jp);line-height:1.7}
+  .ind-table tbody tr:last-child td{border-bottom:1px solid var(--ink)}
+  .ind-table .metric{font-weight:700;color:var(--ink);width:38%}
+  .ind-table .metric small{display:block;font-weight:400;font-size:12px;color:var(--ink-3);margin-top:2px}
+  .ind-table .view{color:var(--ink-2);font-size:14px}
+  .ind-table .baseline{text-align:right;font-family:var(--en);font-weight:700;font-size:18px;color:var(--ink);padding-right:0;letter-spacing:0.01em}
+  .ind-table .baseline small{display:block;font-family:var(--jp);font-weight:400;font-size:11px;color:var(--ink-3);margin-top:4px;letter-spacing:0}
+
+  /* ===== FAQ footer note ===== */
+  .faq-footer-note{padding:40px 0 80px;font-family:var(--jp);font-size:14px;color:var(--ink-3);line-height:1.85}
+  .faq-footer-note a{color:var(--amber);text-decoration:underline;text-underline-offset:3px}
+
+  /* ===== Footer ===== */
+  footer{background:var(--footer);color:rgba(255,255,255,0.6);padding:48px 0}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+  .foot-left{font-family:var(--jp);font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:0.02em}
+  .foot-right{display:flex;gap:24px}
+  .foot-right a{font-family:var(--en);font-weight:600;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+  .foot-right a:hover{color:var(--amber)}
+
+  /* ===== Responsive ===== */
+  @media (max-width:900px){
+    .nav-inner{padding:0 20px;height:54px}
+    .nav-links{gap:18px}
+    .nav-links a{font-size:9px}
+    .nav-links a{font-size:10px}
+    .wrap,.wrap-narrow{padding:0 20px}
+    .page-header{padding:60px 0 44px}
+    .faq-q{font-size:18px}
+    .ind-table{font-size:13px}
+    .ind-table thead th:nth-child(2){display:none}
+    .ind-table tbody td:nth-child(2){display:none}
+    .ind-table .metric{width:auto}
+    .ind-table .baseline{font-size:16px}
+    .foot{padding:0 4px}
+    .foot-right{gap:18px}
+  }
+  @media (max-width:480px){
+    .nav-links a:not(.active):not(:nth-last-child(-n+2)){display:none}
+  }
+</style>
 </head>
-<body class="bg-base-200 min-h-screen">
+<body>
 
-  <!-- ナビゲーション -->
-  <div class="navbar bg-base-100 shadow-sm sticky top-0 z-10">
-    <div class="navbar-start"></div>
-    <div class="navbar-center gap-6">
-      <a href="index.html" class="btn btn-ghost btn-sm font-normal">About</a>
-      <a href="method.html" class="btn btn-ghost btn-sm font-normal">指標の考え方</a>
-      <a href="case-study.html" class="btn btn-ghost btn-sm font-normal">事例</a>
-      <a href="faq.html" class="btn btn-ghost btn-sm font-normal">よくある質問</a>
+<!-- ============ NAVBAR ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="jp">大谷調子メーター</span></a>
+    <div class="nav-links">
+      <a href="index.html">概要</a>
+      <a href="method.html">指標</a>
+      <a href="case-study.html">事例</a>
+      <a href="faq.html" class="active">FAQ</a>
     </div>
-    <div class="navbar-end"></div>
   </div>
+</nav>
 
-  <!-- メインコンテンツ -->
-  <main class="max-w-3xl mx-auto px-5 py-12">
+<!-- ============ PAGE HEADER ============ -->
+<header class="page-header">
+  <div class="page-header-bg" role="presentation"></div>
+  <div class="wrap">
+    <div class="page-header-eyebrow">FAQ · よくある質問</div>
+    <h1>よくある質問</h1>
+    <p class="page-header-lead">このツールについてよく寄せられる疑問をまとめています。詳しい設計の背景は <a href="method.html" style="color:var(--amber);text-decoration:underline;text-underline-offset:3px">指標の考え方</a> で説明しています。</p>
+  </div>
+</header>
 
-    <h1 class="text-3xl font-bold mb-6 leading-snug">よくある質問</h1>
+<!-- ============ FAQ LIST ============ -->
+<main>
+  <div class="wrap-narrow">
+    <div class="faq-list">
 
-    <p class="mb-8 leading-relaxed text-base-content/70">このツールについてよく寄せられる疑問をまとめています。詳しい設計の背景は <a href="method.html" class="link link-primary">指標の考え方（Method）</a> で説明しています。</p>
-
-    <div class="divider"></div>
-
-    <!-- Q1 -->
-    <section class="mb-8">
-      <h2 class="text-lg font-bold mb-3">スコアはいつ更新されますか？</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <p class="leading-relaxed">試合後に手動で更新しています。更新のタイミングは試合翌日までに行うことを目安にしていますが、多少遅れる場合があります。</p>
-          <p class="leading-relaxed mt-2">スコアは<strong>直近の試合を含んだローリング集計</strong>で計算されているため、更新のたびに過去のスコアも含めて再計算されます。「前に見たときと数字が違う」場合はこの再計算が理由です。</p>
+      <!-- Q1 -->
+      <div class="faq-item">
+        <h2 class="faq-q">スコアはいつ更新されますか？</h2>
+        <div class="faq-a">
+          <p>試合後に手動で更新しています。更新のタイミングは試合翌日までに行うことを目安にしていますが、多少遅れる場合があります。</p>
+          <p>スコアは<strong>直近の試合を含んだローリング集計</strong>で計算されているため、更新のたびに過去のスコアも含めて再計算されます。「前に見たときと数字が違う」場合はこの再計算が理由です。</p>
         </div>
       </div>
-    </section>
 
-    <!-- Q2 -->
-    <section class="mb-8">
-      <h2 class="text-lg font-bold mb-3">Xの投稿のスコアとサイトの数字が違うのはなぜですか？</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <p class="leading-relaxed">投稿した時点のスコアと、サイトに表示されている最新スコアは<strong>一致しないことがあります。</strong></p>
-          <p class="leading-relaxed mt-2">スコアはローリング集計（一定期間の試合データを滑らかに引き継ぎながら計算する方式）で更新されるため、その後の試合データが加わると過去の数字も変化します。Xの投稿は投稿した瞬間のスコアを記録したものです。</p>
-          <p class="leading-relaxed mt-2">最新の状態を知りたい場合は、サイトのスコアを参照してください。</p>
+      <!-- Q2 -->
+      <div class="faq-item">
+        <h2 class="faq-q">Xの投稿のスコアとサイトの数字が違うのはなぜですか？</h2>
+        <div class="faq-a">
+          <p>投稿した時点のスコアと、サイトに表示されている最新スコアは<strong>一致しないことがあります。</strong></p>
+          <p>スコアはローリング集計（一定期間の試合データを滑らかに引き継ぎながら計算する方式）で更新されるため、その後の試合データが加わると過去の数字も変化します。Xの投稿は投稿した瞬間のスコアを記録したものです。</p>
+          <p>最新の状態を知りたい場合は、サイトのスコアを参照してください。</p>
         </div>
       </div>
-    </section>
 
-    <!-- Q3 -->
-    <section class="mb-8">
-      <h2 class="text-lg font-bold mb-3">他の選手には使えませんか？</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <p class="leading-relaxed">このツールは<strong>大谷翔平専用です。</strong>スコアの計算は「大谷本人の2022〜2024年の150球ローリング窓」を基準にしているため、他の選手にそのまま当てはめることはできません。</p>
-          <p class="leading-relaxed mt-2">「80点前後が大谷にとってのふつう」という本人基準の設計にすることで、87点以上なら「好調」、73点を下回れば「要注意」という変化を追えるようにしています。設計の詳細は <a href="method.html" class="link link-primary">指標の考え方</a> をご覧ください。</p>
+      <!-- Q3 -->
+      <div class="faq-item">
+        <h2 class="faq-q">他の選手には使えませんか？</h2>
+        <div class="faq-a">
+          <p>このツールは<strong>大谷翔平専用です。</strong>スコアの計算は「大谷本人の2022〜2024年の150球ローリング窓」を基準にしているため、他の選手にそのまま当てはめることはできません。</p>
+          <p>「80点前後が大谷にとってのふつう」という本人基準の設計にすることで、87点以上なら「好調」、73点を下回れば「要注意」という変化を追えるようにしています。設計の詳細は <a href="method.html">指標の考え方</a> をご覧ください。</p>
         </div>
       </div>
-    </section>
 
-    <!-- Q4 -->
-    <section class="mb-8">
-      <h2 class="text-lg font-bold mb-3">シーズン序盤のスコアはどれくらい信頼できますか？</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <p class="leading-relaxed">サンプル数が少ない序盤（目安として10〜20試合程度）は、スコアの振れ幅が大きく、信頼度が下がります。<strong>序盤の数値は参考程度にとどめる</strong>のが適切です。</p>
-          <p class="leading-relaxed mt-2">試合数が積み上がるほどスコアは安定します。特にシーズン後半（50試合以上）では、スコアの変動が実態をより反映しやすくなります。</p>
-          <p class="leading-relaxed mt-2">信頼性の詳細は <a href="method.html" class="link link-primary">指標の考え方</a> で解説しています。</p>
+      <!-- Q4 -->
+      <div class="faq-item">
+        <h2 class="faq-q">シーズン序盤のスコアはどれくらい信頼できますか？</h2>
+        <div class="faq-a">
+          <p>サンプル数が少ない序盤（目安として10〜20試合程度）は、スコアの振れ幅が大きく、信頼度が下がります。<strong>序盤の数値は参考程度にとどめる</strong>のが適切です。</p>
+          <p>試合数が積み上がるほどスコアは安定します。特にシーズン後半（50試合以上）では、スコアの変動が実態をより反映しやすくなります。</p>
+          <p>信頼性の詳細は <a href="method.html">指標の考え方</a> で解説しています。</p>
         </div>
       </div>
-    </section>
 
-    <!-- Q5 -->
-    <section class="mb-8">
-      <h2 class="text-lg font-bold mb-3">「チェイス率」「コンタクト率」とはどういう指標ですか？</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <div class="overflow-x-auto">
-            <table class="table min-w-[580px]">
+      <!-- Q5 -->
+      <div class="faq-item">
+        <h2 class="faq-q">「チェイス率」「コンタクト率」とはどういう指標ですか？</h2>
+        <div class="faq-a">
+          <div style="overflow-x:auto">
+            <table class="ind-table">
+              <caption>The Four Inputs · 4指標の説明</caption>
               <thead>
                 <tr>
-                  <th class="w-[105px]">指標名</th>
+                  <th>指標名</th>
                   <th>意味</th>
-                  <th class="w-[110px]">良い方向</th>
-                  <th class="w-[100px]">平常水準<span class="block text-xs font-normal text-base-content/60">2022〜24中央値</span></th>
+                  <th>良い方向</th>
+                  <th style="text-align:right">平常水準（2022〜24中央値）</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="font-medium whitespace-nowrap">チェイス率</td>
-                  <td>ストライクゾーン外のボール球に対してスイングした割合</td>
-                  <td><span class="badge badge-error badge-outline whitespace-nowrap">低いほど良い</span></td>
-                  <td class="font-mono whitespace-nowrap">約 28%</td>
+                  <td class="metric">チェイス率<small>Chase Rate</small></td>
+                  <td class="view">ストライクゾーン外のボール球に対してスイングした割合</td>
+                  <td class="view"><span class="badge red"><span class="arrow">↓</span> Lower</span></td>
+                  <td class="baseline">28%<small>中央値</small></td>
                 </tr>
                 <tr>
-                  <td class="font-medium whitespace-nowrap">Z-Swing%</td>
-                  <td>ストライクゾーン内（zone 1〜9）の球に対してスイングした割合（高いほど好球を積極的に振れている）</td>
-                  <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
-                  <td class="font-mono whitespace-nowrap">約 71%</td>
+                  <td class="metric">Z-Swing%<small>Zone Swing</small></td>
+                  <td class="view">ストライクゾーン内の球に対してスイングした割合（高いほど好球を積極的に振れている）</td>
+                  <td class="view"><span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+                  <td class="baseline">71%<small>中央値</small></td>
                 </tr>
                 <tr>
-                  <td class="font-medium whitespace-nowrap">コンタクト率</td>
-                  <td>スイングした球にバットが当たった割合</td>
-                  <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
-                  <td class="font-mono whitespace-nowrap">約 73%</td>
+                  <td class="metric">コンタクト率<small>Contact Rate</small></td>
+                  <td class="view">スイングした球にバットが当たった割合</td>
+                  <td class="view"><span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+                  <td class="baseline">73%<small>中央値</small></td>
                 </tr>
                 <tr>
-                  <td class="font-medium whitespace-nowrap">hard_hit%</td>
-                  <td>打球速度が95mph以上だった打球の比率（高いほど強い当たりが多い）</td>
-                  <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
-                  <td class="font-mono whitespace-nowrap">約 32%</td>
+                  <td class="metric">hard_hit%<small>Hard Hit Rate</small></td>
+                  <td class="view">打球速度が95mph以上だった打球の比率</td>
+                  <td class="view"><span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+                  <td class="baseline">32%<small>中央値</small></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="leading-relaxed mt-3">これら4指標を組み合わせて「スイング内容スコア」を計算しています。詳しくは <a href="index.html" class="link link-primary">About</a> をご覧ください。</p>
+          <p>これら4指標を組み合わせて「スイング内容スコア」を計算しています。詳しくは <a href="index.html">About</a> をご覧ください。</p>
         </div>
       </div>
-    </section>
 
-    <!-- Q6 -->
-    <section class="mb-8">
-      <h2 class="text-lg font-bold mb-3">このデータは公式なものですか？</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <p class="leading-relaxed">公式統計ではありません。Baseball Savant（MLB公式の打球データ）などの一般公開データをもとに、個人で集計・計算した<strong>参考指標</strong>です。</p>
-          <p class="leading-relaxed mt-2">誤りや見落としがある可能性があります。公式の成績・記録は MLB 公式サイトを参照してください。データの出所の詳細は <a href="method.html" class="link link-primary">指標の考え方</a> に記載しています。</p>
+      <!-- Q6 -->
+      <div class="faq-item">
+        <h2 class="faq-q">このデータは公式なものですか？</h2>
+        <div class="faq-a">
+          <p>公式統計ではありません。Baseball Savant（MLB公式の打球データ）などの一般公開データをもとに、個人で集計・計算した<strong>参考指標</strong>です。</p>
+          <p>誤りや見落としがある可能性があります。公式の成績・記録は MLB 公式サイトを参照してください。データの出所の詳細は <a href="method.html">指標の考え方</a> に記載しています。</p>
         </div>
       </div>
-    </section>
 
-    <div class="divider"></div>
+    </div>
 
-    <p class="text-sm text-base-content/60 mt-4">他に疑問があれば、<a href="https://x.com/carterheywood56" class="link" target="_blank" rel="noopener noreferrer">X（Twitter）</a>でお知らせください。</p>
+    <p class="faq-footer-note">他に疑問があれば、<a href="https://x.com/OhtaniMeterLab">X（@OhtaniMeterLab）</a>でお知らせください。</p>
+  </div>
+</main>
 
-  </main>
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-left">大谷調子メーター — 個人分析ツール（非公式）</div>
+      <div class="foot-right">
+        <a href="index.html">About</a>
+        <a href="method.html">Method</a>
+        <a href="case-study.html">Case Study</a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-  <script data-goatcounter="https://ohtani-meter.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://ohtani-meter.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

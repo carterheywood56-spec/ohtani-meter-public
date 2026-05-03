@@ -1,212 +1,590 @@
-<!DOCTYPE html>
-<html lang="ja" data-theme="light">
+<!doctype html>
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大谷調子メーター | About</title>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .score-great { background-color: #dcfce7; }
-    .score-good  { background-color: #f0fdf4; }
-    .score-watch { background-color: #fff7ed; }
-    .score-poor  { background-color: #fef2f2; }
-  </style>
-</head>
-<body class="bg-base-200 min-h-screen">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>大谷調子メーター | 概要</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#faf9f6;
+    --ink:#1c1c1c;
+    --ink-2:#5a5a5a;
+    --ink-3:#9a9a9a;
+    --amber:#d4870a;
+    --amber-soft:#f4e8d2;
+    --border:#e4e0d8;
+    --border-2:#efece5;
+    --green:#16a34a;
+    --red:#dc2626;
+    --warn:#c46a14;
+    --footer:#161412;
+    --ink-deep:#1f3a52;
+    --hero-grad: linear-gradient(to bottom, rgba(8,6,4,0.40) 0%, rgba(8,6,4,0.88) 72%, rgba(8,6,4,1) 100%);
+    --jp:'Noto Sans JP', sans-serif;
+    --en:'Montserrat', sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--jp);font-weight:400;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  body{font-size:15px;line-height:1.85;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
 
-  <!-- ナビゲーション -->
-  <div class="navbar bg-base-100 shadow-sm sticky top-0 z-10">
-    <div class="navbar-start"></div>
-    <div class="navbar-center gap-6">
-      <a href="index.html" class="btn btn-ghost btn-sm font-normal">About</a>
-      <a href="method.html" class="btn btn-ghost btn-sm font-normal">指標の考え方</a>
-      <a href="case-study.html" class="btn btn-ghost btn-sm font-normal">事例</a>
-      <a href="faq.html" class="btn btn-ghost btn-sm font-normal">よくある質問</a>
+  /* Layout helpers */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  .wrap-narrow{max-width:880px;margin:0 auto;padding:0 32px}
+
+  .eyebrow{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber)}
+  .eyebrow .dot{display:inline-block;width:4px;height:4px;background:var(--amber);border-radius:50%;vertical-align:middle;margin:0 10px 2px}
+
+  /* ===== Navbar ===== */
+  .nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1180px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:var(--en);font-weight:800;font-size:13px;color:var(--amber);letter-spacing:0.02em}
+  .brand .jp{font-family:var(--jp);font-weight:900;letter-spacing:0.04em;margin-right:6px}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{font-family:var(--jp);font-weight:700;font-size:11px;letter-spacing:0.06em;color:var(--ink-2)}
+  .nav-links a.active{color:var(--amber)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.active:hover{color:var(--amber)}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;min-height:680px;color:#fff;overflow:hidden;background:#0a0806}
+  .hero-bg{position:absolute;inset:0;background-image:url('assets/hero-ohtani.webp');background-size:cover;background-position:center 28%;filter:saturate(0.95) contrast(1.02)}
+  .hero-overlay{position:absolute;inset:0;background:var(--hero-grad)}
+  .hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,transparent 0%, rgba(0,0,0,0.35) 90%)}
+  .hero-inner{position:relative;max-width:1180px;margin:0 auto;padding:140px 32px 56px;min-height:680px;display:grid;grid-template-rows:1fr auto;gap:48px}
+  .hero-top{align-self:end;max-width:680px}
+  .hero-eyebrow{color:var(--amber);font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:28px}
+  .hero-eyebrow::before{content:"";width:36px;height:1px;background:var(--amber)}
+  .hero h1{font-family:var(--jp);font-weight:900;font-size:clamp(36px,5.4vw,62px);line-height:1.18;letter-spacing:-0.005em;margin:0 0 28px;text-wrap:balance}
+  .hero h1 .accent{color:var(--amber)}
+  .hero-lead{font-family:var(--jp);font-weight:400;font-size:16px;line-height:1.85;color:rgba(255,255,255,0.72);max-width:540px;margin:0;text-wrap:pretty}
+  .hero-bottom{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:end}
+  .hero-meta{font-family:var(--en);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.44);font-weight:600;line-height:1.7}
+  .hero-meta .sep{color:rgba(255,255,255,0.24);margin:0 10px}
+  .concept-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:min(560px,100%)}
+  .ccard{background:rgba(255,255,255,0.06);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.10);padding:22px 22px 24px;border-radius:2px}
+  .ccard .label{font-family:var(--en);font-weight:700;font-size:9px;letter-spacing:0.20em;color:var(--amber);text-transform:uppercase;margin-bottom:14px;display:block}
+  .ccard .name{font-family:var(--jp);font-weight:700;font-size:15px;color:#fff;letter-spacing:0.02em;margin-bottom:6px}
+  .ccard .desc{font-family:var(--jp);font-weight:400;font-size:12px;color:rgba(255,255,255,0.62);line-height:1.7}
+
+  /* Scroll indicator */
+  .scroll-cue{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);font-family:var(--en);font-size:9px;letter-spacing:0.3em;color:rgba(255,255,255,0.5);text-transform:uppercase;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scroll-cue .line{width:1px;height:32px;background:linear-gradient(to bottom, rgba(255,255,255,0.5), transparent)}
+
+  /* ===== Section: Overview (A) ===== */
+  .overview{padding:120px 0 100px;border-bottom:1px solid var(--border)}
+  .overview-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:80px;align-items:start}
+  .overview-eyebrow{margin-bottom:24px}
+  .overview .lede{font-family:var(--jp);font-weight:700;font-size:28px;line-height:1.6;letter-spacing:0.005em;margin:0;color:var(--ink);text-wrap:pretty}
+  .overview .lede em{font-style:normal;background:linear-gradient(transparent 62%, var(--amber-soft) 62%, var(--amber-soft) 92%, transparent 92%);padding:0 2px}
+  .overview .body{color:var(--ink);font-size:15px;line-height:1.95;margin:0;padding-top:8px}
+  .overview .body p{margin:0 0 1.2em}
+  .overview .body p:last-child{margin:0}
+  .overview .body strong{font-weight:700;color:var(--ink)}
+
+  /* ===== Section: Score 01 (B) ===== */
+  .score-section{padding:110px 0;background:#fff;border-bottom:1px solid var(--border)}
+  .score-head{display:grid;grid-template-columns:120px 1fr;gap:48px;margin-bottom:64px;align-items:start}
+  .score-num{font-family:var(--en);font-weight:900;font-size:96px;line-height:0.9;color:var(--amber);letter-spacing:-0.03em}
+  .score-num small{display:block;font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.22em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px;letter-spacing:0.2em}
+  .score-head h2{font-family:var(--jp);font-weight:900;font-size:36px;line-height:1.35;margin:0 0 18px;color:var(--ink);letter-spacing:0.005em}
+  .score-head h2 .range{font-family:var(--en);font-weight:700;color:var(--ink-3);font-size:22px;letter-spacing:0.02em;margin-left:8px}
+  .score-head .tldr{font-family:var(--jp);font-size:16px;line-height:1.85;margin:0 0 6px;color:var(--ink)}
+  .score-head .tldr .pill{display:inline-block;background:var(--ink);color:#fff;font-family:var(--jp);font-weight:700;font-size:11px;padding:3px 10px;border-radius:2px;margin-right:10px;vertical-align:middle;letter-spacing:0.05em}
+  .score-head .body{color:var(--ink-2);font-size:14px;line-height:1.9;margin:18px 0 0;max-width:680px}
+
+  /* Indicator table */
+  .ind-table{width:100%;border-collapse:collapse;margin:0 0 64px;font-size:14px}
+  .ind-table caption{text-align:left;font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;color:var(--ink-3);text-transform:uppercase;margin-bottom:18px;caption-side:top}
+  .ind-table thead th{text-align:left;font-family:var(--jp);font-weight:700;font-size:11px;color:var(--ink-3);letter-spacing:0.08em;border-bottom:1px solid var(--ink);padding:12px 16px 12px 0;text-transform:uppercase}
+  .ind-table thead th:last-child{text-align:right;padding-right:0}
+  .ind-table tbody td{padding:22px 16px 22px 0;border-bottom:1px solid var(--border);vertical-align:top;font-family:var(--jp);line-height:1.7}
+  .ind-table tbody tr:last-child td{border-bottom:1px solid var(--ink)}
+  .ind-table .metric{font-weight:700;color:var(--ink);width:42%}
+  .ind-table .metric small{display:block;font-weight:400;font-size:12px;color:var(--ink-3);margin-top:2px}
+  .ind-table .view{color:var(--ink-2);font-size:14px}
+  .ind-table .baseline{text-align:right;font-family:var(--en);font-weight:700;font-size:18px;color:var(--ink);padding-right:0;letter-spacing:0.01em}
+  .ind-table .baseline small{display:block;font-family:var(--jp);font-weight:400;font-size:11px;color:var(--ink-3);margin-top:4px;letter-spacing:0}
+
+  .badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--en);font-weight:700;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:3px 7px 3px 6px;border-radius:2px;vertical-align:middle;line-height:1.2;white-space:nowrap;margin-left:8px}
+  .badge.green{background:rgba(22,163,74,0.10);color:var(--green)}
+  .badge.red{background:rgba(220,38,38,0.10);color:var(--red)}
+  .badge.warn{background:rgba(196,106,20,0.12);color:var(--warn)}
+  .badge .arrow{font-size:10px;line-height:1}
+
+  /* Spectrum bar */
+  .spectrum-block{margin-top:8px}
+  .spectrum-block h3{font-family:var(--jp);font-weight:700;font-size:18px;margin:0 0 8px;color:var(--ink)}
+  .spectrum-block .sub{font-family:var(--jp);color:var(--ink-2);font-size:14px;margin:0 0 40px;line-height:1.85}
+  .spectrum{position:relative;width:100%;padding-top:60px}
+  .spec-marker{position:absolute;top:0;left:calc((80 - 50)/(100 - 50) * 100%);transform:translateX(-50%);text-align:center}
+  .spec-marker .label{font-family:var(--en);font-weight:700;font-size:9px;letter-spacing:0.2em;color:var(--ink);text-transform:uppercase;margin-bottom:4px}
+  .spec-marker .val{font-family:var(--en);font-weight:800;font-size:22px;color:var(--ink);letter-spacing:-0.01em}
+  .spec-marker .val .jp{font-family:var(--jp);font-size:11px;font-weight:700;color:var(--ink-2);margin-left:4px;letter-spacing:0}
+  .spec-marker .arrow{margin-top:6px;font-size:14px;color:var(--ink);line-height:1}
+  .spec-bar{display:flex;height:46px;border-radius:2px;overflow:hidden}
+  .spec-zone{display:flex;align-items:center;justify-content:center;font-family:var(--jp);font-weight:700;font-size:13px;letter-spacing:0.08em;position:relative}
+  .spec-zone .z-tag{display:flex;align-items:center;gap:8px}
+  .spec-zone .z-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:0.55}
+  .spec-zone.warn{background:#fbe5cd;color:#9a5510;flex:46}
+  .spec-zone.stable{background:#dff0d6;color:#3d7a1f;flex:28}
+  .spec-zone.hot{background:#a7d28a;color:#1f4d0e;flex:26}
+  .spec-ticks{display:flex;justify-content:space-between;margin-top:14px;font-family:var(--en);font-weight:700;font-size:11px;color:var(--ink-3);letter-spacing:0.08em}
+  .spec-ticks span{position:relative}
+  .spec-tick-row{position:relative;height:0;margin-top:6px}
+  .tick{position:absolute;top:-6px;width:1px;height:6px;background:var(--ink-3)}
+  .tick.t-50{left:0}
+  .tick.t-73{left:calc((73 - 50)/(100 - 50) * 100%)}
+  .tick.t-87{left:calc((87 - 50)/(100 - 50) * 100%)}
+  .tick.t-100{left:100%}
+  .tick-label{position:absolute;top:4px;font-family:var(--en);font-weight:700;font-size:11px;color:var(--ink-3);letter-spacing:0.06em;transform:translateX(-50%);white-space:nowrap}
+  .tick-label.t-50{left:0;transform:none}
+  .tick-label.t-73{left:calc((73 - 50)/(100 - 50) * 100%)}
+  .tick-label.t-87{left:calc((87 - 50)/(100 - 50) * 100%)}
+  .tick-label.t-100{left:100%;transform:translateX(-100%)}
+
+  .pull-callout{margin:72px 0 0;padding:32px 0 0;border-top:1px solid var(--border);display:grid;grid-template-columns:140px 1fr;gap:32px;align-items:start}
+  .pull-callout .tag{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;color:var(--amber);text-transform:uppercase;padding-top:8px}
+  .pull-callout p{font-family:var(--jp);font-weight:700;font-size:22px;line-height:1.65;margin:0;color:var(--ink);text-wrap:pretty;letter-spacing:0.005em}
+  .pull-callout p strong{background:linear-gradient(transparent 62%, var(--amber-soft) 62%, var(--amber-soft) 94%, transparent 94%);padding:0 2px;font-weight:700}
+
+  /* ===== Editorial photo break ===== */
+  .photo-break{position:relative;width:100%;height:560px;overflow:hidden;background:#0a0806}
+  .photo-break img{width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:contrast(1.02) saturate(0.98)}
+  .photo-break .caption{position:absolute;left:32px;bottom:24px;color:rgba(255,255,255,0.85);font-family:var(--en);font-weight:600;font-size:10px;letter-spacing:0.20em;text-transform:uppercase;display:flex;align-items:center;gap:14px}
+  .photo-break .caption::before{content:"";width:36px;height:1px;background:var(--amber)}
+  .photo-break.tall{height:640px}
+  .photo-break.tall img{object-position:center 18%}
+
+  /* ===== Section: Score 02 (C) ===== */
+  .score-c{padding:110px 0;border-bottom:1px solid var(--border)}
+  .score-c-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:80px;align-items:start}
+  .score-c-left .num{font-family:var(--en);font-weight:900;font-size:160px;line-height:0.85;color:var(--amber);letter-spacing:-0.04em;margin:0 0 8px}
+  .score-c-left .num small{display:block;font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.22em;color:var(--ink-3);text-transform:uppercase;margin-bottom:14px;letter-spacing:0.2em}
+  .score-c-left h2{font-family:var(--jp);font-weight:900;font-size:36px;line-height:1.35;margin:0 0 18px;color:var(--ink)}
+  .score-c-left h2 .range{font-family:var(--en);font-weight:700;color:var(--ink-3);font-size:22px;margin-left:8px}
+  .score-c-left .tldr{font-family:var(--jp);font-size:16px;line-height:1.85;margin:0;color:var(--ink)}
+  .score-c-left .tldr .pill{display:inline-block;background:var(--ink);color:#fff;font-family:var(--jp);font-weight:700;font-size:11px;padding:3px 10px;border-radius:2px;margin-right:10px;vertical-align:middle;letter-spacing:0.05em}
+  .score-c-right{font-size:15px;line-height:1.95;color:var(--ink)}
+  .score-c-right p{margin:0 0 1.2em}
+  .score-c-right p:last-child{margin:0}
+
+  .glossary{margin-top:32px;padding:24px 26px;border:1px solid var(--border);background:#fff;border-left:3px solid var(--amber)}
+  .glossary .term{font-family:var(--en);font-weight:800;font-size:11px;letter-spacing:0.2em;color:var(--amber);text-transform:uppercase;margin-bottom:8px}
+  .glossary .term .jp{font-family:var(--jp);font-weight:700;font-size:13px;color:var(--ink);margin-left:10px;letter-spacing:0.02em}
+  .glossary .def{font-family:var(--jp);font-size:13px;line-height:1.85;color:var(--ink-2);margin:0}
+
+  /* ===== Section: Combined reading (D) ===== */
+  .combined{padding:120px 0;background:#fff;border-bottom:1px solid var(--border)}
+  .combined-head{text-align:center;max-width:720px;margin:0 auto 72px}
+  .combined-head .eyebrow{display:inline-flex;align-items:center;gap:14px;margin-bottom:24px}
+  .combined-head .eyebrow::before, .combined-head .eyebrow::after{content:"";width:32px;height:1px;background:var(--amber)}
+  .combined-head h2{font-family:var(--jp);font-weight:900;font-size:42px;line-height:1.35;margin:0 0 20px;color:var(--ink);letter-spacing:0.005em}
+  .combined-head h2 strong{color:var(--amber);font-weight:900}
+  .combined-head p{font-family:var(--jp);font-size:15px;line-height:1.85;color:var(--ink-2);margin:0;max-width:580px;margin:0 auto}
+
+  .matrix{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
+  .mcell{background:#fff;padding:36px 32px 34px;display:flex;flex-direction:column;gap:18px;min-height:200px}
+  .mcell .heads{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .mcell .head-pair{display:flex;align-items:center;gap:8px;font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.16em;color:var(--ink-3);text-transform:uppercase}
+  .mcell .read{font-family:var(--jp);font-size:15px;line-height:1.8;color:var(--ink);margin:0;text-wrap:pretty}
+  .mcell .read strong{font-weight:700}
+  .mcell.featured{background:#faf6ee}
+  .mcell.featured::before{content:"";display:block;width:24px;height:2px;background:var(--amber);margin-bottom:-4px}
+  .badge.lg{font-size:10px;padding:4px 9px;letter-spacing:0.14em}
+
+  .combined-foot{margin-top:48px;text-align:center;font-family:var(--jp);font-size:13px;color:var(--ink-3);max-width:600px;margin-left:auto;margin-right:auto;line-height:1.85}
+
+  /* ===== Section: Limitations (E) ===== */
+  .limits{padding:110px 0;border-bottom:1px solid var(--border)}
+  .limits-head{margin-bottom:56px;display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:end}
+  .limits-head h2{font-family:var(--jp);font-weight:900;font-size:32px;line-height:1.35;margin:14px 0 0;color:var(--ink);letter-spacing:0.005em}
+  .limits-head .rule{height:1px;background:var(--ink);margin-bottom:8px}
+  .limits-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .lim-card{padding:0;border-top:2px solid var(--ink)}
+  .lim-card .num{font-family:var(--en);font-weight:800;font-size:11px;letter-spacing:0.22em;color:var(--amber);text-transform:uppercase;padding-top:24px}
+  .lim-card h3{font-family:var(--jp);font-weight:900;font-size:22px;line-height:1.5;margin:14px 0 16px;color:var(--ink);letter-spacing:0.005em}
+  .lim-card p{font-family:var(--jp);font-size:14px;line-height:1.9;color:var(--ink-2);margin:0}
+
+  /* ===== Section: More (F) ===== */
+  .more{padding:96px 0 120px}
+  .more-inner{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;padding-bottom:36px;border-bottom:1px solid var(--border)}
+  .more-inner h2{font-family:var(--jp);font-weight:900;font-size:28px;line-height:1.45;margin:0;color:var(--ink);letter-spacing:0.005em}
+  .more-inner h2 small{display:block;font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.22em;color:var(--amber);text-transform:uppercase;margin-bottom:12px}
+  .more-cta{display:inline-flex;align-items:center;gap:14px;font-family:var(--jp);font-weight:700;font-size:15px;color:var(--ink);padding:18px 26px;border:1px solid var(--ink);transition:all .15s ease;white-space:nowrap}
+  .more-cta:hover{background:var(--ink);color:#fff}
+  .more-cta .arrow{font-family:var(--en);font-weight:700;transition:transform .15s ease}
+  .more-cta:hover .arrow{transform:translateX(4px)}
+  .more-note{margin-top:36px;font-family:var(--jp);font-style:italic;font-size:13px;color:var(--ink-3);line-height:1.85}
+
+  /* ===== Footer ===== */
+  footer{background:var(--footer);color:rgba(255,255,255,0.6);padding:48px 0}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+  .foot-left{font-family:var(--jp);font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:0.02em}
+  .foot-right{display:flex;gap:24px}
+  .foot-right a{font-family:var(--en);font-weight:600;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+  .foot-right a:hover{color:var(--amber)}
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px){
+    .nav-inner{padding:0 20px;height:54px}
+    .nav-links{gap:18px}
+    .nav-links a{font-size:9px}
+    .nav-links a{font-size:10px}
+
+    .wrap, .wrap-narrow{padding:0 20px}
+    .hero{min-height:600px}
+    .hero-inner{padding:110px 20px 40px;min-height:600px;gap:32px}
+    .hero h1{font-size:34px}
+    .hero-lead{font-size:15px}
+    .hero-bottom{grid-template-columns:1fr;gap:28px}
+    .concept-cards{width:100%}
+
+    .overview{padding:72px 0 64px}
+    .overview-grid{grid-template-columns:1fr;gap:32px}
+    .overview .lede{font-size:22px}
+
+    .score-section, .score-c{padding:72px 0}
+    .score-head{grid-template-columns:1fr;gap:24px}
+    .score-num{font-size:72px}
+    .score-head h2{font-size:26px}
+    .score-head h2 .range{font-size:16px}
+
+    .ind-table{font-size:13px}
+    .ind-table thead th:nth-child(2){display:none}
+    .ind-table tbody td:nth-child(2){display:none}
+    .ind-table .metric{width:auto}
+    .ind-table .baseline{font-size:16px}
+
+    .pull-callout{grid-template-columns:1fr;gap:14px;margin-top:48px;padding-top:24px}
+    .pull-callout p{font-size:18px}
+
+    .photo-break{height:360px}
+    .photo-break.tall{height:420px}
+    .photo-break .caption{left:20px;font-size:9px}
+
+    .score-c-grid{grid-template-columns:1fr;gap:40px}
+    .score-c-left .num{font-size:110px}
+    .score-c-left h2{font-size:26px}
+    .score-c-left h2 .range{font-size:16px}
+
+    .combined{padding:72px 0}
+    .combined-head h2{font-size:28px}
+    .matrix{grid-template-columns:1fr}
+    .mcell{padding:28px 22px}
+
+    .limits{padding:72px 0}
+    .limits-head{grid-template-columns:1fr;gap:16px}
+    .limits-head h2{font-size:24px}
+    .limits-grid{grid-template-columns:1fr;gap:24px}
+    .lim-card h3{font-size:18px}
+
+    .more{padding:64px 0 80px}
+    .more-inner{grid-template-columns:1fr;gap:24px}
+    .more-inner h2{font-size:22px}
+
+    .foot{padding:0 4px}
+    .foot-right{gap:18px}
+  }
+
+  @media (max-width: 480px){
+    .nav-links a:not(.active):not(:nth-last-child(-n+2)){display:none}
+    .concept-cards{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="jp">大谷調子メーター</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="active">概要</a>
+      <a href="method.html">指標</a>
+      <a href="case-study.html">事例</a>
+      <a href="faq.html">FAQ</a>
     </div>
-    <div class="navbar-end"></div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg" role="img" aria-label="大谷翔平 — 打席後の姿"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-vignette"></div>
+
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-eyebrow">個人分析ツール · Batting Analytics</div>
+      <h1>打席の内容と結果を、<br />分けて<span class="accent">測る</span>。</h1>
+      <p class="hero-lead">スイングの質と打席の結果を2つのスコアで分けて追跡することで、「運」と「実力」を区別した打撃状態の継続観察を可能にします。</p>
+    </div>
+
+    <div class="hero-bottom">
+      <div class="hero-meta">最終更新 2026-05-03<span class="sep">·</span>対象シーズン 2025</div>
+      <div class="concept-cards">
+        <div class="ccard">
+          <span class="label">Score 01</span>
+          <div class="name">スイング内容スコア</div>
+          <div class="desc">どれだけ正確にスイングできているか</div>
+        </div>
+        <div class="ccard">
+          <span class="label">Score 02</span>
+          <div class="name">打席結果スコア</div>
+          <div class="desc">打席の結果がどれくらい出ているか</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- メインコンテンツ -->
-  <main class="max-w-3xl mx-auto px-5 py-12">
+  <div class="scroll-cue" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="line"></span>
+  </div>
+</section>
 
-    <h1 class="text-3xl font-bold mb-6 leading-snug">打席の内容と結果を、分けて測る。</h1>
+<!-- ============ A · OVERVIEW ============ -->
+<section class="overview">
+  <div class="wrap">
+    <div class="overview-grid">
+      <div>
+        <div class="eyebrow overview-eyebrow">A · ツールの概要 <span class="dot"></span> Overview</div>
+        <p class="lede">大谷翔平の打撃状態を、<em>「スイングの内容」と「打席の結果」の2つのスコアで分けて</em>継続追跡する個人分析ツールです。</p>
+      </div>
+      <div class="body">
+        <p>打率や成績だけを追うと、短期間では「運」の影響を受けやすく、実態とかけ離れた判断になることがあります。</p>
+        <p>このツールは、2つのスコアの<strong>乖離を可視化する</strong>ことで、「内容は維持されているのに結果が出ていない」「逆に内容が崩れているのに結果だけ出ている」という変化を数値で追えるようにしています。</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <p class="mb-4 leading-relaxed">大谷翔平の打撃状態を、<strong>「スイングの内容（どう打っているか）」と「打席の結果（何を打ったか）」の2つのスコアで分けて継続追跡する</strong>個人分析ツールです。</p>
+<!-- ============ B · SCORE 01 ============ -->
+<section class="score-section">
+  <div class="wrap">
+    <div class="score-head">
+      <div class="score-num">
+        <small>Score 01</small>
+        01
+      </div>
+      <div>
+        <h2>スイング内容スコア<span class="range">0—100</span></h2>
+        <p class="tldr"><span class="pill">ざっくり言うと</span>「どれだけ正確にスイングできているか」の目安です。</p>
+        <p class="body">以下の4つの側面を組み合わせて計算しています。大谷本人の2022〜2024年の150球ローリング窓を基準にしたとき、「今の状態が大谷本人の平常水準とどれくらい違うか」を0〜100に変換したものです。</p>
+      </div>
+    </div>
 
-    <p class="mb-8 leading-relaxed">打率や成績だけを追うと、短期間では「運」の影響を受けやすく、実態とかけ離れた判断になることがあります。このツールは、2つのスコアの<strong>乖離を可視化する</strong>ことで、「内容は維持されているのに結果が出ていない」「逆に内容が崩れているのに結果だけ出ている」という変化を数値で追えるようにしています。</p>
+    <table class="ind-table">
+      <caption>The Four Inputs · 4つの入力指標</caption>
+      <thead>
+        <tr>
+          <th>見ている側面</th>
+          <th>見方</th>
+          <th>平常水準（22–24中央値）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="metric">チェイス率<small>ボール球に手を出す割合</small></td>
+          <td class="view">低いほど良い <span class="badge red"><span class="arrow">↓</span> Lower</span></td>
+          <td class="baseline">28%<small>Chase Rate</small></td>
+        </tr>
+        <tr>
+          <td class="metric">Z-Swing%<small>ストライクゾーン内へのスイング率</small></td>
+          <td class="view">高いほど良い <span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+          <td class="baseline">71%<small>Zone Swing</small></td>
+        </tr>
+        <tr>
+          <td class="metric">コンタクト率<small>スイングして当たる割合</small></td>
+          <td class="view">高いほど良い <span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+          <td class="baseline">73%<small>Contact</small></td>
+        </tr>
+        <tr>
+          <td class="metric">hard_hit%<small>打球速度95mph以上の比率</small></td>
+          <td class="view">高いほど良い <span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+          <td class="baseline">32%<small>Hard Hit</small></td>
+        </tr>
+      </tbody>
+    </table>
 
-    <div class="divider"></div>
+    <div class="spectrum-block">
+      <h3>スコアの目安</h3>
+      <p class="sub">3ゾーン構成。中央付近のマーカーが大谷本人の平常水準です。</p>
 
-    <!-- 2つの指標 -->
-    <h2 class="text-xl font-bold mb-6">2つの指標の意味</h2>
-
-    <!-- スイング内容スコア -->
-    <div class="card bg-base-100 shadow-sm mb-6">
-      <div class="card-body">
-        <h3 class="card-title text-lg">スイング内容スコア（0〜100）</h3>
-        <p class="leading-relaxed"><strong>ざっくり言うと：</strong>「どれだけ正確にスイングできているか」の目安です。</p>
-        <p class="leading-relaxed">以下の4つの側面を組み合わせて計算しています。</p>
-
-        <div class="overflow-x-auto mt-2">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>見ている側面</th>
-                <th>見方</th>
-                <th class="whitespace-nowrap">平常水準<span class="block text-xs font-normal text-base-content/60">2022〜24中央値</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>チェイス率（ボール球に手を出す割合）</td>
-                <td><span class="badge badge-error badge-outline whitespace-nowrap">低いほど良い</span></td>
-                <td class="font-mono whitespace-nowrap">約 28%</td>
-              </tr>
-              <tr>
-                <td>Z-Swing%（ストライクゾーン内へのスイング率）</td>
-                <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
-                <td class="font-mono whitespace-nowrap">約 71%</td>
-              </tr>
-              <tr>
-                <td>コンタクト率（スイングして当たる割合）</td>
-                <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
-                <td class="font-mono whitespace-nowrap">約 73%</td>
-              </tr>
-              <tr>
-                <td>hard_hit%（打球速度95mph以上の比率）</td>
-                <td><span class="badge badge-success badge-outline whitespace-nowrap">高いほど良い</span></td>
-                <td class="font-mono whitespace-nowrap">約 32%</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="spectrum">
+        <div class="spec-marker">
+          <div class="label">Baseline</div>
+          <div class="val">80<span class="jp">／平常</span></div>
+          <div class="arrow">▼</div>
         </div>
 
-        <p class="leading-relaxed mt-2">これらの値を大谷本人の2022〜2024年の150球ローリング窓を基準にしたとき、「今の状態が大谷本人の平常水準とどれくらい違うか」を0〜100に変換したものです。</p>
-      </div>
-    </div>
-
-    <!-- スコアの目安 -->
-    <div class="card bg-base-100 shadow-sm mb-6">
-      <div class="card-body">
-        <h3 class="card-title text-lg">スコアの目安</h3>
-
-        <!-- スコア帯の横バー -->
-        <div class="mt-4 mb-2">
-          <!-- 80平常マーカー -->
-          <div class="relative h-5 mb-1">
-            <div class="absolute text-xs font-bold whitespace-nowrap" style="left: 60%; transform: translateX(-50%);">▼ 80（平常）</div>
-          </div>
-          <!-- バー本体 -->
-          <div class="flex h-12 rounded-lg overflow-hidden border border-base-300">
-            <div class="score-watch flex items-center justify-center text-sm font-medium" style="width: 46%;">要注意</div>
-            <div class="score-good flex items-center justify-center text-sm font-medium" style="width: 28%;">安定</div>
-            <div class="score-great flex items-center justify-center text-sm font-medium" style="width: 26%;">好調</div>
-          </div>
-          <!-- 目盛り -->
-          <div class="relative h-5 mt-1 text-xs text-base-content/60">
-            <span class="absolute left-0">50</span>
-            <span class="absolute" style="left: 46%; transform: translateX(-50%);">73</span>
-            <span class="absolute" style="left: 74%; transform: translateX(-50%);">87</span>
-            <span class="absolute right-0">100</span>
-          </div>
+        <div class="spec-bar">
+          <div class="spec-zone warn"><span class="z-tag">要注意</span></div>
+          <div class="spec-zone stable"><span class="z-tag">安定</span></div>
+          <div class="spec-zone hot"><span class="z-tag">好調</span></div>
         </div>
 
-        <ul class="text-sm leading-relaxed mt-4 space-y-1">
-          <li><span class="font-medium">87以上：好調</span>（大谷の平常水準を明確に上回る状態）</li>
-          <li><span class="font-medium">73〜86：安定</span>（大谷本来の水準。心配なし）</li>
-          <li><span class="font-medium">73未満：要注意</span>（大谷の平常水準を下回っている状態）</li>
-        </ul>
-
-        <p class="leading-relaxed mt-3"><strong>80前後が大谷にとっての「ふつう」のスコアです。</strong>「80点だから特別良い」という意味ではなく、これが平常水準です。</p>
-      </div>
-    </div>
-
-    <!-- 打席結果スコア -->
-    <div class="card bg-base-100 shadow-sm mb-8">
-      <div class="card-body">
-        <h3 class="card-title text-lg">打席結果スコア（0〜100）</h3>
-        <p class="leading-relaxed"><strong>ざっくり言うと：</strong>「打席の結果がどれくらい出ているか」の目安です。</p>
-        <p class="leading-relaxed">wOBA（加重出塁率）という指標を使っています。wOBAは、単打・二塁打・本塁打・四球などをそれぞれの価値に応じて重み付けした指標で、OPSより少し精緻に打席の成果を測れます。</p>
-        <p class="leading-relaxed">スイング内容スコアと同じように、大谷本人の過去のデータを基準にして0〜100に変換しています。</p>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- 2つのスコアを並べて読む -->
-    <h2 class="text-xl font-bold mb-4">2つのスコアを並べて読む</h2>
-
-    <div class="card bg-base-100 shadow-sm mb-8">
-      <div class="card-body">
-        <p class="leading-relaxed">このツールの本質は、2つのスコアを<strong>並べて比べること</strong>にあります。</p>
-
-        <div class="overflow-x-auto mt-2">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>内容スコア</th>
-                <th>結果スコア</th>
-                <th>読み方の例</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="score-great">
-                <td><span class="badge badge-success whitespace-nowrap">高い ↑</span></td>
-                <td><span class="badge badge-success whitespace-nowrap">高い ↑</span></td>
-                <td>本当に良い状態のひとつ</td>
-              </tr>
-              <tr class="score-watch">
-                <td><span class="badge badge-success whitespace-nowrap">高い ↑</span></td>
-                <td><span class="badge badge-error whitespace-nowrap">低い ↓</span></td>
-                <td>結果がまだついていない。過去の傾向では改善しやすいケース（参考）</td>
-              </tr>
-              <tr class="score-watch">
-                <td><span class="badge badge-error whitespace-nowrap">低い ↓</span></td>
-                <td><span class="badge badge-success whitespace-nowrap">高い ↑</span></td>
-                <td>結果が先行している。内容の推移を注意して見たい</td>
-              </tr>
-              <tr class="score-poor">
-                <td><span class="badge badge-error whitespace-nowrap">低い ↓</span></td>
-                <td><span class="badge badge-error whitespace-nowrap">低い ↓</span></td>
-                <td>本来の水準を下回っている。立て直しに注目</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="spec-tick-row">
+          <span class="tick t-50"></span>
+          <span class="tick t-73"></span>
+          <span class="tick t-87"></span>
+          <span class="tick t-100"></span>
+          <span class="tick-label t-50">50</span>
+          <span class="tick-label t-73">73</span>
+          <span class="tick-label t-87">87</span>
+          <span class="tick-label t-100">100</span>
         </div>
+      </div>
 
-        <p class="leading-relaxed mt-2">毎回の投稿に添えている補足文は、この組み合わせをわかりやすく言い換えたものです。</p>
+      <div class="pull-callout">
+        <div class="tag">Reading the score</div>
+        <p><strong>80前後が大谷にとっての「ふつう」のスコアです。</strong>「80点だから特別良い」という意味ではなく、これが平常水準です。</p>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="divider"></div>
+<!-- ============ EDITORIAL BREAK 01 ============ -->
+<figure class="photo-break tall" style="margin:0">
+  <img src="assets/break-followthrough.webp" alt="フォロースルー" loading="lazy" />
+  <figcaption class="caption">Follow-through · Dodger Stadium</figcaption>
+</figure>
 
-    <!-- 限界と注意点 -->
-    <h2 class="text-xl font-bold mb-4">この指標の限界と注意点</h2>
-
-    <div class="flex flex-col gap-3 mb-8">
-      <div class="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <span><strong>参考指標です。確定値ではありません。</strong> スコアは傾向を見るためのものであり、公式統計ではありません。誤りや見落としがある可能性があります。</span>
+<!-- ============ C · SCORE 02 ============ -->
+<section class="score-c">
+  <div class="wrap">
+    <div class="score-c-grid">
+      <div class="score-c-left">
+        <div class="num">
+          <small>Score 02</small>
+          02
+        </div>
+        <h2>打席結果スコア<span class="range">0—100</span></h2>
+        <p class="tldr"><span class="pill">ざっくり言うと</span>「打席の結果がどれくらい出ているか」の目安です。</p>
       </div>
-      <div class="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <span><strong>サンプルが少ないと信頼度が下がります。</strong> シーズン序盤（10〜20試合程度）の数値は変動が大きく、参考程度にとどめてください。</span>
+
+      <div class="score-c-right">
+        <p>wOBA（加重出塁率）という指標を使っています。wOBAは、単打・二塁打・本塁打・四球などをそれぞれの価値に応じて重み付けした指標で、OPSより少し精緻に打席の成果を測れます。</p>
+        <p>スイング内容スコアと同じように、大谷本人の過去のデータを基準にして0〜100に変換しています。</p>
+
+        <div class="glossary">
+          <div class="term">wOBA<span class="jp">加重出塁率（Weighted On-Base Average）</span></div>
+          <p class="def">単打・二塁打・本塁打・四球などを、それぞれの得点価値で重み付けした打撃指標。OPSと比べて、各イベントの価値をより正確に反映します。</p>
+        </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="divider"></div>
+<!-- ============ D · COMBINED READING ============ -->
+<section class="combined">
+  <div class="wrap">
+    <div class="combined-head">
+      <div class="eyebrow">D · 2つのスコアを並べて読む</div>
+      <h2>このツールの本質は、2つのスコアを<br /><strong>並べて比べる</strong>ことにあります。</h2>
+      <p>毎回の投稿に添えている補足文は、この組み合わせをわかりやすく言い換えたものです。</p>
+    </div>
 
-    <!-- もう少し詳しく -->
-    <h2 class="text-xl font-bold mb-4">もう少し詳しく知りたい方へ</h2>
+    <div class="matrix">
+      <!-- HH -->
+      <div class="mcell featured">
+        <div class="heads">
+          <span class="head-pair">内容 <span class="badge green lg"><span class="arrow">↑</span> 高い</span></span>
+          <span class="head-pair">結果 <span class="badge green lg"><span class="arrow">↑</span> 高い</span></span>
+        </div>
+        <p class="read"><strong>本当に良い状態のひとつ。</strong>スイングの質も結果も伴っており、シーズン中で最も充実したフェーズ。</p>
+      </div>
+      <!-- HL -->
+      <div class="mcell">
+        <div class="heads">
+          <span class="head-pair">内容 <span class="badge green lg"><span class="arrow">↑</span> 高い</span></span>
+          <span class="head-pair">結果 <span class="badge red lg"><span class="arrow">↓</span> 低い</span></span>
+        </div>
+        <p class="read">結果がまだついていない。<strong>過去の傾向では改善しやすいケース</strong>（参考）。</p>
+      </div>
+      <!-- LH -->
+      <div class="mcell">
+        <div class="heads">
+          <span class="head-pair">内容 <span class="badge red lg"><span class="arrow">↓</span> 低い</span></span>
+          <span class="head-pair">結果 <span class="badge green lg"><span class="arrow">↑</span> 高い</span></span>
+        </div>
+        <p class="read"><strong>結果が先行している。</strong>内容の推移を注意して見たいフェーズ。</p>
+      </div>
+      <!-- LL -->
+      <div class="mcell">
+        <div class="heads">
+          <span class="head-pair">内容 <span class="badge red lg"><span class="arrow">↓</span> 低い</span></span>
+          <span class="head-pair">結果 <span class="badge red lg"><span class="arrow">↓</span> 低い</span></span>
+        </div>
+        <p class="read">本来の水準を下回っている。<strong>立て直しに注目</strong>するフェーズ。</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <p class="mb-4 leading-relaxed">設計の考え方・信頼性の詳細・データの出所については、<a href="method.html" class="btn btn-outline btn-sm">指標の考え方（Method）</a> で説明しています。</p>
+<!-- ============ EDITORIAL BREAK 02 ============ -->
+<figure class="photo-break" style="margin:0">
+  <img src="assets/break-portrait.jpg" alt="ポートレート" loading="lazy" style="object-position:center 30%" />
+  <figcaption class="caption">Photo Day · 2025 Spring Training</figcaption>
+</figure>
 
-    <p class="text-sm text-base-content/60 mt-8"><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
+<!-- ============ E · LIMITATIONS ============ -->
+<section class="limits">
+  <div class="wrap">
+    <div class="limits-head">
+      <div>
+        <div class="rule"></div>
+        <div class="eyebrow">E · この指標の限界と注意点</div>
+      </div>
+      <h2>あくまで傾向を見るための、参考指標です。</h2>
+    </div>
 
-  </main>
+    <div class="limits-grid">
+      <div class="lim-card">
+        <div class="num">01 · Disclaimer</div>
+        <h3>参考指標です。<br />確定値ではありません。</h3>
+        <p>スコアは傾向を見るためのものであり、公式統計ではありません。誤りや見落としがある可能性があります。</p>
+      </div>
+      <div class="lim-card">
+        <div class="num">02 · Sample size</div>
+        <h3>サンプルが少ないと<br />信頼度が下がります。</h3>
+        <p>シーズン序盤（10〜20試合程度）の数値は変動が大きく、参考程度にとどめてください。試合数が積み上がるほど、傾向としての精度は安定します。</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script data-goatcounter="https://ohtani-meter.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+<!-- ============ F · MORE ============ -->
+<section class="more">
+  <div class="wrap">
+    <div class="more-inner">
+      <h2><small>F · もう少し詳しく知りたい方へ</small>設計の考え方・信頼性の詳細・データの出所について。</h2>
+      <a href="method.html" class="more-cta">指標の考え方 <span class="arrow">→</span></a>
+    </div>
+    <p class="more-note">* このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-left">大谷調子メーター — 個人分析ツール（非公式）</div>
+      <div class="foot-right">
+        <a href="index.html">About</a>
+        <a href="method.html">Method</a>
+        <a href="case-study.html">Case Study</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script data-goatcounter="https://ohtani-meter.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

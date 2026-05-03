@@ -1,421 +1,727 @@
-<!DOCTYPE html>
-<html lang="ja" data-theme="light">
+<!doctype html>
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大谷調子メーター | 事例：2025年8月、打球の質は高いのに結果が出なかった10試合</title>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <style>
-    .score-great  { background-color: #dcfce7; }
-    .score-good   { background-color: #f0fdf4; }
-    .score-normal { background-color: #eff6ff; }
-    .score-watch  { background-color: #fff7ed; }
-    .score-poor   { background-color: #fef2f2; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>大谷調子メーター | 事例</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#faf9f6;
+    --ink:#1c1c1c;
+    --ink-2:#5a5a5a;
+    --ink-3:#9a9a9a;
+    --amber:#d4870a;
+    --amber-soft:#f4e8d2;
+    --border:#e4e0d8;
+    --border-2:#efece5;
+    --green:#16a34a;
+    --red:#dc2626;
+    --warn:#c46a14;
+    --footer:#161412;
+    --ink-deep:#1f3a52;
+    --hero-grad: linear-gradient(to bottom, rgba(8,6,4,0.40) 0%, rgba(8,6,4,0.88) 72%, rgba(8,6,4,1) 100%);
+    --jp:'Noto Sans JP', sans-serif;
+    --en:'Montserrat', sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--jp);font-weight:400;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  body{font-size:15px;line-height:1.85;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* Layout helpers */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  .wrap-narrow{max-width:880px;margin:0 auto;padding:0 32px}
+
+  .eyebrow{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber)}
+
+  /* ===== Navbar ===== */
+  .nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1180px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:var(--en);font-weight:800;font-size:13px;color:var(--amber);letter-spacing:0.02em}
+  .brand .jp{font-family:var(--jp);font-weight:900;letter-spacing:0.04em;margin-right:6px}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{font-family:var(--jp);font-weight:700;font-size:11px;letter-spacing:0.06em;color:var(--ink-2)}
+  .nav-links a.active{color:var(--amber)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.active:hover{color:var(--amber)}
+
+  /* ===== Hero (smaller variant) ===== */
+  .hero{position:relative;min-height:440px;color:#fff;overflow:hidden;background:#0a0806}
+  .hero-bg{position:absolute;inset:0;background-image:url('assets/break-followthrough.webp');background-size:cover;background-position:center 22%;filter:saturate(0.95) contrast(1.02)}
+  .hero-overlay{position:absolute;inset:0;background:var(--hero-grad)}
+  .hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,transparent 0%, rgba(0,0,0,0.35) 90%)}
+  .hero-inner{position:relative;max-width:1180px;margin:0 auto;padding:110px 32px 56px;min-height:440px;display:flex;flex-direction:column;justify-content:flex-end;gap:20px}
+  .hero-eyebrow{color:var(--amber);font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .hero-eyebrow::before{content:"";width:36px;height:1px;background:var(--amber)}
+  .hero h1{font-family:var(--jp);font-weight:900;font-size:clamp(26px,4vw,46px);line-height:1.25;letter-spacing:-0.005em;margin:0 0 20px;text-wrap:balance;max-width:700px}
+  .hero-lead{font-family:var(--jp);font-weight:400;font-size:15px;line-height:1.85;color:rgba(255,255,255,0.72);max-width:580px;margin:0 0 12px}
+  .hero-meta{font-family:var(--en);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.44);font-weight:600}
+
+  /* ===== Content sections ===== */
+  .content-section{padding:80px 0;border-bottom:1px solid var(--border)}
+  .content-section:last-of-type{border-bottom:none}
+  .content-section.alt{background:#fff}
+  .section-eyebrow{margin-bottom:12px}
+  .section-title{font-family:var(--jp);font-weight:900;font-size:32px;line-height:1.35;color:var(--ink);margin:0 0 24px;letter-spacing:0.005em}
+  .body-text{font-family:var(--jp);font-size:15px;line-height:1.95;color:var(--ink)}
+  .body-text p{margin:0 0 1.3em}
+  .body-text p:last-child{margin:0}
+  .body-text strong{font-weight:700}
+
+  /* ===== Section lead ===== */
+  .section-lead{font-family:var(--jp);font-size:16px;line-height:1.85;color:var(--ink-2);margin:0 0 32px}
+
+  /* ===== Badge ===== */
+  .badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--en);font-weight:700;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:3px 7px 3px 6px;border-radius:2px;vertical-align:middle;line-height:1.2;white-space:nowrap}
+  .badge.green{background:rgba(22,163,74,0.10);color:var(--green)}
+  .badge.red{background:rgba(220,38,38,0.10);color:var(--red)}
+  .badge.warn{background:rgba(196,106,20,0.12);color:var(--warn)}
+  .badge .arrow{font-size:10px;line-height:1}
+
+  /* ===== Photo break ===== */
+  .photo-break{position:relative;width:100%;height:420px;overflow:hidden;background:#0a0806}
+  .photo-break img{width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:contrast(1.02) saturate(0.92)}
+  .photo-break .caption{position:absolute;left:32px;bottom:24px;color:rgba(255,255,255,0.80);font-family:var(--en);font-weight:600;font-size:10px;letter-spacing:0.20em;text-transform:uppercase;display:flex;align-items:center;gap:14px}
+  .photo-break .caption::before{content:"";width:36px;height:1px;background:var(--amber)}
+  @media (max-width:900px){.photo-break{height:280px}.photo-break .caption{left:20px;font-size:9px}}
+
+  /* ===== Chart card ===== */
+  .chart-card{background:#fff;border:1px solid var(--border);border-radius:3px;padding:24px;margin:0 0 40px}
+  .chart-card canvas{display:block}
+
+  /* ===== Score table ===== */
+  .score-table{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 32px}
+  .score-table caption{text-align:left;font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;color:var(--ink-3);text-transform:uppercase;margin-bottom:18px;caption-side:top}
+  .score-table thead th{text-align:left;font-family:var(--jp);font-weight:700;font-size:11px;color:var(--ink-3);letter-spacing:0.08em;border-bottom:1px solid var(--ink);padding:12px 16px 12px 0}
+  .score-table tbody td{padding:18px 16px 18px 0;border-bottom:1px solid var(--border);vertical-align:top;font-family:var(--jp);line-height:1.6;font-size:14px;color:var(--ink)}
+  .score-table tbody tr:last-child td{border-bottom:1px solid var(--ink)}
+  .score-table .highlight{background:rgba(212,135,10,0.06)}
+  .score-table .content-score{font-family:var(--en);font-weight:700;color:var(--amber)}
+  .score-table .result-score{font-family:var(--en);font-weight:700;color:var(--ink-deep)}
+
+  /* ===== Section D · Reliability table ===== */
+  .data-table{width:100%;border-collapse:collapse;font-size:14px;margin:24px 0 32px}
+  .data-table thead th{text-align:left;font-family:var(--jp);font-weight:700;font-size:11px;color:var(--ink-3);letter-spacing:0.08em;border-bottom:1px solid var(--ink);padding:12px 16px 12px 0}
+  .data-table tbody td{padding:20px 16px 20px 0;border-bottom:1px solid var(--border);vertical-align:top;font-family:var(--jp);line-height:1.7;font-size:14px;color:var(--ink)}
+  .data-table tbody tr:last-child td{border-bottom:1px solid var(--ink)}
+  .data-table .metric{font-weight:700;color:var(--ink);width:40%}
+  .data-table .metric small{display:block;font-weight:400;font-size:12px;color:var(--ink-3);margin-top:2px}
+  .data-table .positive-tint{background:rgba(212,135,10,0.06)}
+  .data-table .warn-tint{background:rgba(220,38,38,0.06)}
+  .data-table .neutral-tint{background:rgba(196,106,20,0.06)}
+
+  /* ===== Pull callout ===== */
+  .pull-callout{margin:48px 0 0;padding:32px 0 0;border-top:1px solid var(--border)}
+  .pull-callout .tag{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;color:var(--amber);text-transform:uppercase;margin-bottom:16px}
+  .pull-callout-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+  .pull-callout-list li{font-family:var(--jp);font-size:17px;line-height:1.7;color:var(--ink);padding:16px 0;border-bottom:1px solid var(--border-2);display:flex;gap:14px;align-items:flex-start}
+  .pull-callout-list li:last-child{border-bottom:none}
+  .pull-callout-list li::before{content:"—";color:var(--amber);font-family:var(--en);font-weight:700;flex-shrink:0;margin-top:2px}
+
+  /* ===== Alert box ===== */
+  .alert-box{display:flex;gap:14px;align-items:flex-start;background:#fff;border-left:3px solid var(--border);padding:16px 20px;border-radius:0 3px 3px 0;margin-bottom:16px}
+  .alert-box .alert-text{font-family:var(--jp);font-size:14px;line-height:1.8;color:var(--ink-2)}
+
+  /* ===== Notes section ===== */
+  .notes-section{padding:56px 0 80px}
+  .notes-title{font-family:var(--jp);font-weight:700;font-size:13px;letter-spacing:0.08em;color:var(--ink-3);text-transform:uppercase;margin:0 0 20px}
+
+  /* ===== Footnote ===== */
+  .footnote{font-style:italic;font-size:13px;color:var(--ink-3);margin-top:16px;line-height:1.85}
+  .footnote a{color:var(--amber);text-decoration:underline;text-underline-offset:3px}
+
+  /* ===== Stats highlight ===== */
+  .stats-highlight{background:#fff;padding:56px 0;border-bottom:1px solid var(--border)}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:28px 0 24px;background:var(--border)}
+  .stats-card{background:#faf9f6;padding:28px 24px 24px;display:flex;flex-direction:column;gap:4px}
+  .stats-card.warn{background:#fff8f3}
+  .stats-card.positive{background:#f6fdf8}
+  .stats-period{font-family:var(--en);font-weight:700;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+  .stats-avg{font-family:var(--en);font-weight:900;font-size:52px;line-height:1;letter-spacing:-0.02em;color:var(--ink)}
+  .stats-card.warn .stats-avg{color:var(--red)}
+  .stats-card.positive .stats-avg{color:var(--green)}
+  .stats-sub{font-family:var(--jp);font-size:12px;color:var(--ink-3);margin-top:6px}
+  .stats-hr{font-family:var(--jp);font-size:12px;font-weight:700;color:var(--ink-2);margin-top:2px}
+  .stats-note{font-family:var(--jp);font-size:14px;line-height:1.85;color:var(--ink-2);margin:0;border-left:3px solid var(--amber);padding-left:16px}
+  @media (max-width:640px){
+    .stats-grid{grid-template-columns:1fr}
+    .stats-avg{font-size:40px}
+  }
+
+  /* ===== Footer ===== */
+  footer{background:var(--footer);color:rgba(255,255,255,0.6);padding:48px 0}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+  .foot-left{font-family:var(--jp);font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:0.02em}
+  .foot-right{display:flex;gap:24px}
+  .foot-right a{font-family:var(--en);font-weight:600;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+  .foot-right a:hover{color:var(--amber)}
+
+  /* ===== Responsive ===== */
+  @media (max-width:900px){
+    .nav-inner{padding:0 20px;height:54px}
+    .nav-links{gap:18px}
+    .nav-links a{font-size:9px}
+    .nav-links a{font-size:10px}
+    .wrap,.wrap-narrow{padding:0 20px}
+    .hero{min-height:380px}
+    .hero-inner{padding:80px 20px 40px;min-height:380px}
+    .hero h1{font-size:clamp(22px,5vw,32px)}
+    .content-section{padding:56px 0}
+    .section-title{font-size:24px}
+    .score-table,.data-table{font-size:13px}
+    .foot{padding:0 4px}
+    .foot-right{gap:18px}
+  }
+  @media (max-width:480px){
+    .nav-links a:not(.active):not(:nth-last-child(-n+2)){display:none}
+    .score-table thead th:nth-child(4){display:none}
+    .score-table tbody td:nth-child(4){display:none}
+  }
+</style>
 </head>
-<body class="bg-base-200 min-h-screen">
+<body>
 
-  <!-- ナビゲーション -->
-  <div class="navbar bg-base-100 shadow-sm sticky top-0 z-10">
-    <div class="navbar-start"></div>
-    <div class="navbar-center gap-6">
-      <a href="index.html" class="btn btn-ghost btn-sm font-normal">About</a>
-      <a href="method.html" class="btn btn-ghost btn-sm font-normal">指標の考え方</a>
-      <a href="case-study.html" class="btn btn-ghost btn-sm font-normal">事例</a>
-      <a href="faq.html" class="btn btn-ghost btn-sm font-normal">よくある質問</a>
+<!-- ============ NAVBAR ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="jp">大谷調子メーター</span></a>
+    <div class="nav-links">
+      <a href="index.html">概要</a>
+      <a href="method.html">指標</a>
+      <a href="case-study.html" class="active">事例</a>
+      <a href="faq.html">FAQ</a>
     </div>
-    <div class="navbar-end"></div>
   </div>
+</nav>
 
-  <!-- メインコンテンツ -->
-  <main class="max-w-3xl mx-auto px-5 py-12">
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg" role="img" aria-label="大谷翔平 — フォロースルー"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Case Study · 事例</div>
+      <h1>打率.211が隠していたもの ——13試合の観察記録</h1>
+      <p class="hero-lead">直前12試合で打率.462を記録した後、2025年8月中旬から打率が.211に急落しました。しかし内容スコアを見ると、同じ期間に「安定〜好調」の水準をおおむね維持していた——という別の景色がありました。</p>
+      <div class="hero-meta">2025年8月13日 — 9月10日</div>
+    </div>
+  </div>
+</section>
 
-    <h1 class="text-3xl font-bold mb-6 leading-snug">事例：打球の質は高いのに、結果が出なかった10試合</h1>
-
-    <p class="mb-4 leading-relaxed">2025年8月下旬、大谷の成績が低迷した時期がありました。<span class="text-base-content/60">（この10試合の打率 .150、OPS .520）</span></p>
-    <p class="mb-8 leading-relaxed">しかしスイング内容スコアを見ると、<strong>同じ期間に「安定〜好調」の水準をおおむね維持していた</strong>という別の景色がありました。打球の質（hard_hit% = 強い当たりの比率）はこの時期、シーズンを通しても上位水準に達していました。</p>
-
-    <div class="divider"></div>
-
-    <!-- 2つのスコアの推移 -->
-    <section class="mb-8">
-      <h2 class="text-xl font-bold mb-4">2つのスコアの推移</h2>
-      <p class="mb-4 leading-relaxed">8月22日から9月10日にかけての内容スコアと結果スコアの動きです。</p>
-
-      <!-- グラフ -->
-      <div class="card bg-base-100 shadow-sm mb-4">
-        <div class="card-body">
-          <div style="height: 320px;">
-            <canvas id="scoreChart"></canvas>
-          </div>
-        </div>
+<!-- ============ STATS HIGHLIGHT ============ -->
+<section class="stats-highlight">
+  <div class="wrap-narrow">
+    <div class="eyebrow" style="margin-bottom:4px">Period Overview · 3つの局面</div>
+    <div class="stats-grid">
+      <div class="stats-card">
+        <div class="stats-period">直前期 8/1 — 8/12</div>
+        <div class="stats-avg">.462</div>
+        <div class="stats-sub">打率（39打数18安打）</div>
+        <div class="stats-hr">5本塁打 · BABIP .684</div>
       </div>
-
-      <!-- スコア推移テーブル -->
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body p-0">
-          <div class="overflow-x-auto">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>日付</th>
-                  <th>内容スコア</th>
-                  <th>結果スコア</th>
-                  <th>状態</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>8/22</td>
-                  <td class="score-good">76点（安定）</td>
-                  <td class="score-good">84点（安定）</td>
-                  <td>結果がやや先行</td>
-                </tr>
-                <tr>
-                  <td>8/23</td>
-                  <td class="score-good">76点（安定）</td>
-                  <td class="score-good">81点（安定）</td>
-                  <td>結果先行が続く</td>
-                </tr>
-                <tr>
-                  <td>8/27</td>
-                  <td class="score-good">82点（安定）</td>
-                  <td class="score-good">78点（安定）</td>
-                  <td>内容が上昇</td>
-                </tr>
-                <tr>
-                  <td>8/29</td>
-                  <td class="score-good">86点（安定）</td>
-                  <td class="score-good">77点（安定）</td>
-                  <td>内容が先行へ</td>
-                </tr>
-                <tr>
-                  <td>8/30</td>
-                  <td class="score-great">88点（好調）</td>
-                  <td class="score-good">76点（安定）</td>
-                  <td>乖離が最大に</td>
-                </tr>
-                <tr>
-                  <td>8/31</td>
-                  <td class="score-good">82点（安定）</td>
-                  <td class="score-good">76点（安定）</td>
-                  <td>乖離が続く</td>
-                </tr>
-                <tr>
-                  <td>9/3</td>
-                  <td class="score-good">80点（安定）</td>
-                  <td class="score-good">78点（安定）</td>
-                  <td>ほぼ拮抗</td>
-                </tr>
-                <tr>
-                  <td>9/7</td>
-                  <td class="score-good">79点（安定）</td>
-                  <td class="score-good">82点（安定）</td>
-                  <td>結果が逆転</td>
-                </tr>
-                <tr>
-                  <td>9/10</td>
-                  <td class="score-good">79点（安定）</td>
-                  <td class="score-good">83点（安定）</td>
-                  <td>安定回復</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <div class="stats-card warn">
+        <div class="stats-period">低迷期 8/13 — 8/31</div>
+        <div class="stats-avg">.211</div>
+        <div class="stats-sub">打率（57打数12安打）</div>
+        <div class="stats-hr">2本塁打 · BABIP .238</div>
       </div>
-
-      <p class="mt-4 leading-relaxed">内容スコアと結果スコアはともに76〜88点（安定〜好調）の範囲で推移しながら、8月後半に内容スコアが先行し8/30に最大12点の乖離が生じ、9月に入ると結果スコアが逆転・回復した動きが分かります。</p>
-
-      <!-- 内容 vs 結果 散布図 -->
-      <div class="card bg-base-100 shadow-sm mt-4">
-        <div class="card-body">
-          <h3 class="font-semibold text-base mb-1">内容スコア vs 結果スコア（散布図）</h3>
-          <p class="text-sm text-base-content/60 mb-3">対角線（点線）より右下 = 内容が結果を上回っている状態。点の色が青 → 橙へ変わるほど時間が進んでいる。</p>
-          <div style="height: 280px;">
-            <canvas id="scatterChart"></canvas>
-          </div>
-        </div>
+      <div class="stats-card positive">
+        <div class="stats-period">回復期 9/1 — 9/10</div>
+        <div class="stats-avg">.344</div>
+        <div class="stats-sub">打率（32打数11安打）</div>
+        <div class="stats-hr">3本塁打 · BABIP .381</div>
       </div>
-    </section>
+    </div>
+    <p class="stats-note">内容スコアは3局面を通じておおむね73〜88点（安定〜好調）の範囲で推移。打率の急落（.462→.211）はBABIPの異常値（.684→.238）による影響が大きく、スイングの質は崩れていなかったことをスコアが示しています。</p>
+  </div>
+</section>
 
-    <div class="divider"></div>
+<!-- ============ A · Score Trend ============ -->
+<section class="content-section">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow">A · Score Trend</div>
+    <h2 class="section-title">2つのスコアの推移</h2>
+    <p class="section-lead">8月13日から9月10日にかけての内容スコアと結果スコアの動きです。前半は結果スコアが先行し、中盤で内容スコアが逆転、後半に収束する3つのフェーズが見えます。</p>
 
-    <!-- 内容スコアは何を示していたか -->
-    <section class="mb-8">
-      <h2 class="text-xl font-bold mb-4">内容スコアは何を示していたか</h2>
-      <p class="mb-4 leading-relaxed">低迷期（8/20〜8/31）のスイング内容を見ると、次のような状態でした。</p>
+    <div class="chart-card">
+      <canvas id="scoreChart" height="320"></canvas>
+    </div>
 
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body p-0">
-          <div class="overflow-x-auto">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>指標</th>
-                  <th>低迷期（8/20〜8/31）</th>
-                  <th>回復期（9/1〜9/10）</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>hard_hit%（打球速度95mph以上の比率）</td>
-                  <td class="score-great"><strong>約43%（シーズンでも上位水準）</strong></td>
-                  <td class="score-good">約37%</td>
-                </tr>
-                <tr>
-                  <td>BABIP（インプレーの打球がヒットになった割合）</td>
-                  <td class="score-poor"><strong>0.185（異常に低い）</strong></td>
-                  <td class="score-good">0.381（通常水準）</td>
-                </tr>
-                <tr>
-                  <td>本塁打数</td>
-                  <td class="score-watch">1本（10試合）</td>
-                  <td class="score-good">3本（9試合）</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <div style="overflow-x:auto">
+      <table class="score-table">
+        <caption>Score Trend · 8/13 – 9/10</caption>
+        <thead>
+          <tr>
+            <th>日付</th>
+            <th>内容スコア</th>
+            <th>結果スコア</th>
+            <th>状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>8/13</td>
+            <td class="content-score">80点（平常）</td>
+            <td class="result-score">87点（安定）</td>
+            <td style="color:var(--ink-2)">結果が先行</td>
+          </tr>
+          <tr>
+            <td>8/15</td>
+            <td class="content-score">77点（安定）</td>
+            <td class="result-score">87点（安定）</td>
+            <td style="color:var(--ink-2)">結果先行が続く</td>
+          </tr>
+          <tr>
+            <td>8/17</td>
+            <td class="content-score">76点（安定）</td>
+            <td class="result-score">88点（安定）</td>
+            <td style="color:var(--ink-2)">結果先行・最大乖離</td>
+          </tr>
+          <tr>
+            <td>8/20</td>
+            <td class="content-score">76点（安定）</td>
+            <td class="result-score">86点（安定）</td>
+            <td style="color:var(--ink-2)">結果先行が続く</td>
+          </tr>
+          <tr>
+            <td>8/22</td>
+            <td class="content-score">76点（安定）</td>
+            <td class="result-score">84点（安定）</td>
+            <td style="color:var(--ink-2)">結果先行・縮小へ</td>
+          </tr>
+          <tr>
+            <td>8/23</td>
+            <td class="content-score">76点（安定）</td>
+            <td class="result-score">81点（安定）</td>
+            <td style="color:var(--ink-2)">差が縮まる</td>
+          </tr>
+          <tr>
+            <td>8/27</td>
+            <td class="content-score">82点（安定）</td>
+            <td class="result-score">78点（安定）</td>
+            <td style="color:var(--ink-2)">内容が上昇</td>
+          </tr>
+          <tr>
+            <td>8/29</td>
+            <td class="content-score">86点（安定）</td>
+            <td class="result-score">77点（安定）</td>
+            <td style="color:var(--ink-2)">内容が先行へ</td>
+          </tr>
+          <tr class="highlight">
+            <td><strong>8/30</strong></td>
+            <td class="content-score"><strong>88点（好調）</strong></td>
+            <td class="result-score"><strong>76点（安定）</strong></td>
+            <td style="color:var(--warn)"><strong>乖離が最大に</strong></td>
+          </tr>
+          <tr>
+            <td>8/31</td>
+            <td class="content-score">82点（安定）</td>
+            <td class="result-score">76点（安定）</td>
+            <td style="color:var(--ink-2)">乖離が続く</td>
+          </tr>
+          <tr>
+            <td>9/3</td>
+            <td class="content-score">80点（安定）</td>
+            <td class="result-score">78点（安定）</td>
+            <td style="color:var(--ink-2)">ほぼ拮抗</td>
+          </tr>
+          <tr>
+            <td>9/7</td>
+            <td class="content-score">79点（安定）</td>
+            <td class="result-score">82点（安定）</td>
+            <td style="color:var(--ink-2)">結果が逆転</td>
+          </tr>
+          <tr>
+            <td>9/10</td>
+            <td class="content-score">79点（安定）</td>
+            <td class="result-score">83点（安定）</td>
+            <td style="color:var(--green)">安定回復</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="body-text">
+      <p>8/13〜8/23は結果スコアが先行（結果>内容）。8/27〜9/3は内容スコアが逆転・先行（内容>結果）し、8/30に最大12点の乖離が生じました。9/7以降は再び結果スコアが内容を上回り、安定した収束を見せています。</p>
+    </div>
+
+    <div class="chart-card" style="margin-top:32px">
+      <canvas id="scatterChart" height="280"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B · What the Content Score Showed ============ -->
+<section class="content-section alt">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow">B · What the Content Score Showed</div>
+    <h2 class="section-title">内容スコアは何を示していたか</h2>
+    <p class="section-lead">低迷期（8/13〜8/31）のスイング内容を見ると、次のような状態でした。</p>
+
+    <div style="overflow-x:auto">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>低迷期（8/13〜8/31）</th>
+            <th>回復期（9/1〜9/10）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="metric">hard_hit%<small>打球速度95mph以上の比率</small></td>
+            <td class="positive-tint"><strong>約40%（シーズンでも上位水準）</strong></td>
+            <td>約37%</td>
+          </tr>
+          <tr>
+            <td class="metric">BABIP<small>インプレーの打球がヒットになった割合</small></td>
+            <td class="warn-tint"><strong>0.238（異常に低い）</strong></td>
+            <td>0.381（通常水準）</td>
+          </tr>
+          <tr>
+            <td class="metric">本塁打数<small>期間内の本数</small></td>
+            <td class="neutral-tint">2本（19試合）</td>
+            <td>3本（10試合）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="body-text">
+      <p>hard_hit%は約40%とシーズンの中でも上位水準にあり、強い打球の割合は十分高い状態でした。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ C · Why No Results ============ -->
+<section class="content-section">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow">C · Why No Results</div>
+    <h2 class="section-title">なぜ結果が出なかったか</h2>
+    <div class="body-text">
+      <p>hard_hit%は上位水準にあったのに、なぜ内容スコアが結果スコアを上回り続けたのか。</p>
+      <p>手がかりになるのが BABIP（0.238）という数字です。BABIPとは、三振・本塁打・四球を除いた「フェアゾーンに飛んだ打球」がヒットになった割合のことです。打率とは違い、長打や本塁打を含まない分、打球が野手の守備範囲に入るかどうか——つまり「運」の影響を受けやすい指標とされています。</p>
+      <p>0.238という数字は異常に低く（リーグ平均は概ね .290〜.310）、鋭い打球を打っても野手の正面に飛び続けていた時期だったことが読み取れます。スイングの質が高く、打球の勢いも十分にある。それでもBABIPという「運」の要素が結果スコアを大きく押し下げていました。なお直前期（8/1〜8/12）のBABIPは .684 という非常に高い値で、あの打率.462は当時の実力値以上に結果が出ていた可能性もあります。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ D · Recovery ============ -->
+<section class="content-section alt">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow">D · Recovery</div>
+    <h2 class="section-title">転換と回復</h2>
+    <div class="body-text">
+      <p>9月3日時点では内容・結果ともに安定水準（78〜80点）でほぼ拮抗する形に戻りました。</p>
+      <p>その後、9月7日・10日には結果スコアが内容スコアを上回り、結果スコア82〜83点・内容スコア79点で安定。内容先行から結果先行へと動きが逆転した形です。</p>
+      <p>回復期（9/1〜9/10）のBABIPは0.381と通常水準に戻り、本塁打も9試合で3本。打球品質に結果が追いついてきた期間でした。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHOTO BREAK ============ -->
+<figure class="photo-break" style="margin:0">
+  <img src="assets/break-stance.webp" alt="大谷翔平 — 打撃フォーム" loading="lazy" />
+  <div class="caption">Batting Stance · 2025 Season</div>
+</figure>
+
+<!-- ============ E · Takeaways ============ -->
+<section class="content-section">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow">E · Takeaways</div>
+    <h2 class="section-title">この事例から読み取れること</h2>
+
+    <div class="pull-callout">
+      <div class="tag">Key Points</div>
+      <ul class="pull-callout-list">
+        <li>8月中旬〜下旬の「打率.211、2本塁打」という低迷は、結果スコアだけを見た場合には正確な評価です。</li>
+        <li>しかし同じ期間、内容スコアは73〜82点（安定〜好調）の水準を維持し、hard_hit%もシーズン上位水準でした。BABIP（.238）の異常な低さが打率を押し下げていました。</li>
+        <li>9月に入り結果スコアは10日以内に安定水準まで回復。直前期（.462）の反動も含め、BABIPが平均回帰した形でした。</li>
+      </ul>
+    </div>
+
+    <div class="body-text" style="margin-top:40px">
+      <p>この時期に「内容スコアが示していたもの」と「結果スコアが示していたもの」は異なっていました。大谷メーターはこの2つを分けて見えるようにするためのツールです。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Notes ============ -->
+<div class="notes-section">
+  <div class="wrap-narrow">
+    <p class="notes-title">Notes</p>
+    <div class="alert-box">
+      <div class="alert-text"><strong>1つの事例です。</strong> 内容スコアが高ければ必ず回復するという保証ではありません。</div>
+    </div>
+    <div class="alert-box">
+      <div class="alert-text"><strong>BABIP は運の影響を強く受ける指標です。</strong> 低いBABIPが「不運の証拠」と断定できるわけではなく、打球傾向や相手守備の影響もあります。</div>
+    </div>
+    <div class="alert-box">
+      <div class="alert-text"><strong>使用データはStatcast（MLB公式）ですが、スコアの設計・計算は個人によるものです。</strong> 指標の解釈や計算に誤りがある可能性があります。</div>
+    </div>
+    <p class="footnote">指標の詳しい仕組みは <a href="method.html">指標の考え方</a> をご覧ください。</p>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-left">大谷調子メーター — 個人分析ツール（非公式）</div>
+      <div class="foot-right">
+        <a href="index.html">About</a>
+        <a href="method.html">Method</a>
+        <a href="case-study.html">Case Study</a>
       </div>
+    </div>
+  </div>
+</footer>
 
-      <p class="mt-4 leading-relaxed">hard_hit%は約43%とシーズンの中でも上位水準にあり、強い打球の割合は十分高い状態でした。</p>
-    </section>
+<script>
+(function() {
+  // ===== Score Line Chart =====
+  const labels = ['8/13','8/15','8/17','8/20','8/22','8/23','8/27','8/29','8/30','8/31','9/3','9/7','9/10'];
+  const contentData = [80,77,76,76,76,76,82,86,88,82,80,79,79];
+  const resultData  = [87,87,88,86,84,81,78,77,76,76,78,82,83];
 
-    <div class="divider"></div>
+  // Custom plugin: draw good/normal/caution bands
+  const bandPlugin = {
+    id: 'bandPlugin',
+    beforeDatasetsDraw(chart) {
+      const {ctx, chartArea: {top, bottom, left, right}, scales: {y}} = chart;
+      ctx.save();
 
-    <!-- なぜ結果が出なかったか -->
-    <section class="mb-8">
-      <h2 class="text-xl font-bold mb-4">なぜ結果が出なかったか</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body gap-3">
-          <p class="leading-relaxed">hard_hit%は上位水準にあったのに、なぜ内容スコアが結果スコアを上回り続けたのか。</p>
-          <p class="leading-relaxed">手がかりになるのが BABIP（0.185）という数字です。BABIPとは、三振・本塁打・四球を除いた「フェアゾーンに飛んだ打球」がヒットになった割合のことです。打率とは違い、長打や本塁打を含まない分、打球が野手の守備範囲に入るかどうか——つまり「運」の影響を受けやすい指標とされています。</p>
-          <p class="leading-relaxed">0.185という数字は異常に低く、鋭い打球を打っても野手の正面に飛び続けていた時期だったことが読み取れます。スイングの質が高く、打球の勢いも十分にある。それでもBABIPという「運」の要素が結果スコアを大きく押し下げていました。</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- 転換と回復 -->
-    <section class="mb-8">
-      <h2 class="text-xl font-bold mb-4">転換と回復</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body gap-3">
-          <p class="leading-relaxed">9月3日時点では内容・結果ともに安定水準（78〜80点）でほぼ拮抗する形に戻りました。</p>
-          <p class="leading-relaxed">その後、9月7日・10日には結果スコアが内容スコアを上回り、結果スコア82〜83点・内容スコア79点で安定。内容先行から結果先行へと動きが逆転した形です。</p>
-          <p class="leading-relaxed">回復期（9/1〜9/10）のBABIPは0.381と通常水準に戻り、本塁打も9試合で3本。打球品質に結果が追いついてきた期間でした。</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- この事例から読み取れること -->
-    <section class="mb-8">
-      <h2 class="text-xl font-bold mb-4">この事例から読み取れること</h2>
-      <div class="card bg-base-100 shadow-sm">
-        <div class="card-body">
-          <ul class="space-y-2">
-            <li class="flex gap-2 leading-relaxed"><span class="text-base-content/40 shrink-0">—</span>8月下旬の「成績が低迷した」という見方は、結果スコアだけを見た場合には正確です。</li>
-            <li class="flex gap-2 leading-relaxed"><span class="text-base-content/40 shrink-0">—</span>しかし同じ期間、内容スコアは安定〜好調の水準を維持しており、強い打球の比率（hard_hit%）もシーズン上位水準でした。</li>
-            <li class="flex gap-2 leading-relaxed"><span class="text-base-content/40 shrink-0">—</span>9月に入り、結果スコアは10日以内に安定水準まで回復しました。</li>
-          </ul>
-          <p class="mt-4 leading-relaxed">この時期に「内容スコアが示していたもの」と「結果スコアが示していたもの」は異なっていました。大谷メーターはこの2つを分けて見えるようにするためのツールです。</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- この事例の注意点 -->
-    <section class="mb-8">
-      <h2 class="text-xl font-bold mb-4">この事例の注意点</h2>
-      <div class="flex flex-col gap-3">
-        <div class="alert">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <span><strong>1つの事例です。</strong>内容スコアが高ければ必ず回復するという保証ではありません。</span>
-        </div>
-        <div class="alert">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <span><strong>BABIP は運の影響を強く受ける指標です。</strong>低いBABIPが「不運の証拠」と断定できるわけではなく、打球傾向や相手守備の影響もあります。</span>
-        </div>
-        <div class="alert">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <span><strong>使用データはStatcast（MLB公式）ですが、スコアの設計・計算は個人によるものです。</strong>指標の解釈や計算に誤りがある可能性があります。</span>
-        </div>
-      </div>
-      <p class="mt-4 leading-relaxed">指標の詳しい仕組みは <a href="method.html" class="link link-primary">指標の考え方</a> をご覧ください。</p>
-    </section>
-
-    <p class="text-sm text-base-content/60 mt-4"><em>このページは草案をもとにした公開用の初版です。今後、表現や説明を調整する場合があります。</em></p>
-
-  </main>
-
-  <script>
-    const bandPlugin = {
-      id: 'bandPlugin',
-      beforeDraw(chart) {
-        const { ctx, chartArea: { top, bottom, left, right }, scales: { y } } = chart;
-        const bands = [
-          { min: 87, max: 100, color: 'rgba(34, 197, 94, 0.10)' },   // 好調
-          { min: 73, max: 87,  color: 'rgba(248, 250, 252, 0.6)' },   // 安定
-          { min: 0,  max: 73,  color: 'rgba(254, 215, 170, 0.18)' },  // 要注意
-        ];
-        bands.forEach(({ min, max, color }) => {
-          const yMin = y.getPixelForValue(min);
-          const yMax = y.getPixelForValue(max);
-          ctx.fillStyle = color;
-          ctx.fillRect(left, yMax, right - left, yMin - yMax);
-        });
+      // helper: fill between two y-values
+      function fillBand(yMin, yMax, color) {
+        const yTop    = Math.max(y.getPixelForValue(yMax), top);
+        const yBottom = Math.min(y.getPixelForValue(yMin), bottom);
+        if (yBottom <= yTop) return;
+        ctx.fillStyle = color;
+        ctx.fillRect(left, yTop, right - left, yBottom - yTop);
       }
-    };
 
-    const ctx = document.getElementById('scoreChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      plugins: [bandPlugin],
-      data: {
-        labels: ['8/22', '8/23', '8/27', '8/29', '8/30', '8/31', '9/3', '9/7', '9/10'],
-        datasets: [
-          {
-            label: '内容スコア',
-            data: [76, 76, 82, 86, 88, 82, 80, 79, 79],
-            borderColor: '#2563eb',
-            backgroundColor: 'rgba(37, 99, 235, 0.08)',
-            borderWidth: 2.5,
-            pointRadius: 5,
-            pointBackgroundColor: '#2563eb',
-            tension: 0.3,
-            fill: false,
-          },
-          {
-            label: '結果スコア',
-            data: [84, 81, 78, 77, 76, 76, 78, 82, 83],
-            borderColor: '#f97316',
-            backgroundColor: 'rgba(249, 115, 22, 0.08)',
-            borderWidth: 2.5,
-            pointRadius: 5,
-            pointBackgroundColor: '#f97316',
-            tension: 0.3,
-            fill: false,
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'top',
-            labels: { font: { size: 13 }, padding: 16 }
-          },
-          tooltip: {
-            callbacks: {
-              label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}点`
-            }
+      fillBand(87, 100, 'rgba(22,163,74,0.06)');     // good (87+)
+      fillBand(73, 87,  'rgba(180,180,180,0.04)');    // normal (73-87)
+      fillBand(50, 73,  'rgba(196,106,20,0.07)');     // caution (<73)
+      ctx.restore();
+    }
+  };
+
+  const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+  new Chart(scoreCtx, {
+    type: 'line',
+    plugins: [bandPlugin],
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '内容スコア',
+          data: contentData,
+          borderColor: '#d4870a',
+          backgroundColor: 'rgba(212,135,10,0.08)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#d4870a',
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          tension: 0.3,
+          fill: false
+        },
+        {
+          label: '結果スコア',
+          data: resultData,
+          borderColor: '#1f3a52',
+          backgroundColor: 'rgba(31,58,82,0.07)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#1f3a52',
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          tension: 0.3,
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          align: 'end',
+          labels: {
+            font: {family: "'Montserrat', sans-serif", size: 11, weight: '600'},
+            color: '#5a5a5a',
+            boxWidth: 14,
+            boxHeight: 2,
+            padding: 16,
+            usePointStyle: false
           }
         },
-        scales: {
-          y: {
-            min: 50,
-            max: 100,
-            ticks: {
-              stepSize: 10,
-              callback: v => `${v}点`
-            },
-            grid: { color: 'rgba(0,0,0,0.06)' }
-          },
-          x: {
-            grid: { color: 'rgba(0,0,0,0.06)' }
+        tooltip: {
+          backgroundColor: '#1c1c1c',
+          titleFont: {family: "'Noto Sans JP', sans-serif", size: 12},
+          bodyFont: {family: "'Montserrat', sans-serif", size: 13, weight: '700'},
+          padding: 12,
+          cornerRadius: 2,
+          callbacks: {
+            label(ctx) { return `  ${ctx.dataset.label}: ${ctx.parsed.y}点`; }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: {color: 'rgba(228,224,216,0.6)', drawBorder: false},
+          ticks: {font: {family: "'Montserrat', sans-serif", size: 11, weight: '600'}, color: '#9a9a9a'}
+        },
+        y: {
+          min: 65,
+          max: 95,
+          grid: {color: 'rgba(228,224,216,0.6)', drawBorder: false},
+          ticks: {
+            stepSize: 5,
+            font: {family: "'Montserrat', sans-serif", size: 11, weight: '600'},
+            color: '#9a9a9a',
+            callback: v => v + '点'
           }
         }
       }
-    });
+    }
+  });
 
-    // 内容 vs 結果 散布図
-    const scatterLabels = ['8/22','8/23','8/27','8/29','8/30','8/31','9/3','9/7','9/10'];
-    const scatterPoints = [
-      {x:76,y:84},{x:76,y:81},{x:82,y:78},{x:86,y:77},{x:88,y:76},
-      {x:82,y:76},{x:80,y:78},{x:79,y:82},{x:79,y:83}
-    ];
-    // 青 → 橙のグラデーション（時系列）
-    const ptColors = [
-      '#1d4ed8','#2563eb','#3b82f6','#60a5fa','#f97316',
-      '#ea580c','#fb923c','#f59e0b','#d97706'
-    ];
-    const ctx2 = document.getElementById('scatterChart').getContext('2d');
-    new Chart(ctx2, {
-      type: 'scatter',
-      data: {
-        datasets: [
-          {
-            label: '日別スコア',
-            data: scatterPoints,
-            backgroundColor: ptColors,
-            pointRadius: 8,
-            pointHoverRadius: 10,
-          },
-          {
-            // 軌跡（細線）
-            type: 'line',
-            data: scatterPoints,
-            borderColor: 'rgba(100,100,100,0.2)',
-            borderWidth: 1.5,
-            borderDash: [],
-            pointRadius: 0,
-            fill: false,
-            tension: 0.2,
-          },
-          {
-            // 拮抗ライン y=x
-            type: 'line',
-            data: [{x:60,y:60},{x:100,y:100}],
-            borderColor: 'rgba(0,0,0,0.12)',
-            borderWidth: 1,
-            borderDash: [5,4],
-            pointRadius: 0,
-            fill: false,
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            filter: item => item.datasetIndex === 0,
-            callbacks: {
-              label: item => {
-                const date = scatterLabels[item.dataIndex];
-                return `${date}：内容 ${item.parsed.x} / 結果 ${item.parsed.y}`;
-              }
-            }
+  // ===== Scatter Chart =====
+  const scatterCtx = document.getElementById('scatterChart').getContext('2d');
+
+  // 3 phases: result-leading (8/13-8/23), content-leading (8/27-9/3), converging (9/7-9/10)
+  const scatterPoints = labels.map((label, i) => ({
+    x: contentData[i],
+    y: resultData[i],
+    label,
+    phase: i <= 5 ? 'early' : (i <= 10 ? 'mid' : 'late')
+  }));
+
+  const earlyPoints = scatterPoints.filter(p => p.phase === 'early');
+  const midPoints   = scatterPoints.filter(p => p.phase === 'mid');
+  const latePoints  = scatterPoints.filter(p => p.phase === 'late');
+
+  // diagonal reference line as a separate dataset
+  const diagMin = 65, diagMax = 95;
+  const diagPlugin = {
+    id: 'diagPlugin',
+    afterDatasetsDraw(chart) {
+      const {ctx, scales: {x, y}} = chart;
+      ctx.save();
+      ctx.strokeStyle = 'rgba(154,154,154,0.4)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.moveTo(x.getPixelForValue(diagMin), y.getPixelForValue(diagMin));
+      ctx.lineTo(x.getPixelForValue(diagMax), y.getPixelForValue(diagMax));
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    }
+  };
+
+  new Chart(scatterCtx, {
+    type: 'scatter',
+    plugins: [diagPlugin],
+    data: {
+      datasets: [
+        {
+          label: '8/13〜8/23（結果先行期）',
+          data: earlyPoints.map(p => ({x: p.x, y: p.y})),
+          backgroundColor: 'rgba(212,135,10,0.70)',
+          borderColor: '#d4870a',
+          borderWidth: 1.5,
+          pointRadius: 7,
+          pointHoverRadius: 9
+        },
+        {
+          label: '8/27〜9/3（内容先行期）',
+          data: midPoints.map(p => ({x: p.x, y: p.y})),
+          backgroundColor: 'rgba(31,58,82,0.75)',
+          borderColor: '#1f3a52',
+          borderWidth: 1.5,
+          pointRadius: 7,
+          pointHoverRadius: 9
+        },
+        {
+          label: '9/7〜9/10（収束期）',
+          data: latePoints.map(p => ({x: p.x, y: p.y})),
+          backgroundColor: 'rgba(22,163,74,0.65)',
+          borderColor: '#16a34a',
+          borderWidth: 1.5,
+          pointRadius: 7,
+          pointHoverRadius: 9
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          align: 'end',
+          labels: {
+            font: {family: "'Montserrat', sans-serif", size: 10, weight: '600'},
+            color: '#5a5a5a',
+            boxWidth: 10,
+            padding: 14
           }
         },
-        scales: {
-          x: {
-            min: 68, max: 95,
-            title: { display: true, text: '内容スコア' },
-            ticks: { stepSize: 5, callback: v => `${v}点` },
-            grid: { color: 'rgba(0,0,0,0.06)' }
-          },
-          y: {
-            min: 68, max: 95,
-            title: { display: true, text: '結果スコア' },
-            ticks: { stepSize: 5, callback: v => `${v}点` },
-            grid: { color: 'rgba(0,0,0,0.06)' }
+        tooltip: {
+          backgroundColor: '#1c1c1c',
+          titleFont: {family: "'Montserrat', sans-serif", size: 11, weight: '700'},
+          bodyFont: {family: "'Noto Sans JP', sans-serif", size: 12},
+          padding: 10,
+          cornerRadius: 2,
+          callbacks: {
+            label(ctx) {
+              const idx = ctx.dataIndex;
+              const phaseArr = [earlyPoints, midPoints, latePoints][ctx.datasetIndex];
+              const pt = phaseArr ? phaseArr[idx] : null;
+              return `  ${pt ? pt.label : ''} 内容:${ctx.parsed.x}点 結果:${ctx.parsed.y}点`;
+            }
           }
         }
+      },
+      scales: {
+        x: {
+          min: 65,
+          max: 95,
+          title: {
+            display: true,
+            text: '内容スコア',
+            font: {family: "'Noto Sans JP', sans-serif", size: 11, weight: '700'},
+            color: '#9a9a9a'
+          },
+          grid: {color: 'rgba(228,224,216,0.6)', drawBorder: false},
+          ticks: {font: {family: "'Montserrat', sans-serif", size: 10, weight: '600'}, color: '#9a9a9a', stepSize: 5}
+        },
+        y: {
+          min: 65,
+          max: 95,
+          title: {
+            display: true,
+            text: '結果スコア',
+            font: {family: "'Noto Sans JP', sans-serif", size: 11, weight: '700'},
+            color: '#9a9a9a'
+          },
+          grid: {color: 'rgba(228,224,216,0.6)', drawBorder: false},
+          ticks: {font: {family: "'Montserrat', sans-serif", size: 10, weight: '600'}, color: '#9a9a9a', stepSize: 5}
+        }
       }
-    });
-  </script>
+    }
+  });
+})();
+</script>
 
-  <script data-goatcounter="https://ohtani-meter.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://ohtani-meter.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
