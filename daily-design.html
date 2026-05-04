@@ -131,6 +131,7 @@ a { color: inherit; }
 .masthead-right { display: flex; justify-content: flex-end; gap: 22px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
 .masthead-right a { text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid transparent; transition: border-color .2s; }
 .masthead-right a:hover { border-bottom-color: var(--accent); }
+.masthead-right a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ============= HERO ============= */
 .hero {
@@ -746,7 +747,7 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
     <a href="index.html">概要</a>
     <a href="method.html">指標</a>
     <a href="case-study.html">事例</a>
-    <a href="daily.html">日別推移</a>
+    <a href="daily.html" class="active">日別推移</a>
     <a href="faq.html">FAQ</a>
     <a href="#" id="open-tweaks">Tweaks</a>
   </nav>
@@ -1607,5 +1608,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script data-goatcounter="https://ohtani-meter.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
