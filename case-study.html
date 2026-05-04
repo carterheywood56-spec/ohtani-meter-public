@@ -193,6 +193,7 @@
       <a href="index.html">概要</a>
       <a href="method.html">指標</a>
       <a href="case-study.html" class="active">事例</a>
+      <a href="daily.html">日別推移</a>
       <a href="faq.html">FAQ</a>
     </div>
   </div>
@@ -206,9 +207,9 @@
   <div class="hero-inner">
     <div>
       <div class="hero-eyebrow">Case Study · 事例</div>
-      <h1>打率.211が隠していたもの ——13試合の観察記録</h1>
-      <p class="hero-lead">直前12試合で打率.462を記録した後、2025年8月中旬から打率が.211に急落しました。しかし内容スコアを見ると、同じ期間に「安定〜好調」の水準をおおむね維持していた——という別の景色がありました。</p>
-      <div class="hero-meta">2025年8月13日 — 9月10日</div>
+      <h1>内容スコアが先に動いていた ——2025年5〜6月の記録</h1>
+      <p class="hero-lead">直前10試合でスイング内容スコアが88〜98点を推移した後、2025年5月下旬からチェイス率が急上昇しスコアが要注意ゾーンへ急落。しかし結果スコアはしばらく72〜81点（安定）を維持し続けました——内容が先に変調を示していた期間の記録です。</p>
+      <div class="hero-meta">2025年5月24日 — 6月11日</div>
     </div>
   </div>
 </section>
@@ -219,25 +220,25 @@
     <div class="eyebrow" style="margin-bottom:4px">Period Overview · 3つの局面</div>
     <div class="stats-grid">
       <div class="stats-card">
-        <div class="stats-period">直前期 8/1 — 8/12</div>
-        <div class="stats-avg">.462</div>
-        <div class="stats-sub">打率（39打数18安打）</div>
-        <div class="stats-hr">5本塁打 · BABIP .684</div>
+        <div class="stats-period">直前好調期 5/10 — 5/23</div>
+        <div class="stats-avg">.294</div>
+        <div class="stats-sub">打率（51打数15安打）</div>
+        <div class="stats-hr">5本塁打 · 内容スコア平均 92点</div>
       </div>
       <div class="stats-card warn">
-        <div class="stats-period">低迷期 8/13 — 8/31</div>
-        <div class="stats-avg">.211</div>
-        <div class="stats-sub">打率（57打数12安打）</div>
-        <div class="stats-hr">2本塁打 · BABIP .238</div>
+        <div class="stats-period">急落乖離期 5/24 — 6/07</div>
+        <div class="stats-avg">.264</div>
+        <div class="stats-sub">打率（53打数14安打）</div>
+        <div class="stats-hr">6本塁打 · 内容スコア 60〜79点</div>
       </div>
-      <div class="stats-card positive">
-        <div class="stats-period">回復期 9/1 — 9/10</div>
-        <div class="stats-avg">.344</div>
-        <div class="stats-sub">打率（32打数11安打）</div>
-        <div class="stats-hr">3本塁打 · BABIP .381</div>
+      <div class="stats-card">
+        <div class="stats-period">収束期 6/08 — 6/11</div>
+        <div class="stats-avg">.235</div>
+        <div class="stats-sub">打率（17打数4安打）</div>
+        <div class="stats-hr">0本塁打 · 内容スコア 62〜65点</div>
       </div>
     </div>
-    <p class="stats-note">内容スコアは3局面を通じておおむね73〜88点（安定〜好調）の範囲で推移。打率の急落（.462→.211）はBABIPの異常値（.684→.238）による影響が大きく、スイングの質は崩れていなかったことをスコアが示しています。</p>
+    <p class="stats-note">急落乖離期（5/24〜6/7）の内容スコアは60〜79点（要注意〜安定）に急落。しかし結果スコアは72〜81点（安定）を維持し続けた。チェイス率（ボール球を振る割合）が直前期の21%から34%に急上昇したことが内容スコア急落の主因。打率は3局面を通じて大きく変わらず（.294→.264→.235）、結果指標だけを追っていた場合には変調を見逃した可能性がある。</p>
   </div>
 </section>
 
@@ -246,7 +247,7 @@
   <div class="wrap-narrow">
     <div class="eyebrow section-eyebrow">A · Score Trend</div>
     <h2 class="section-title">2つのスコアの推移</h2>
-    <p class="section-lead">8月13日から9月10日にかけての内容スコアと結果スコアの動きです。前半は結果スコアが先行し、中盤で内容スコアが逆転、後半に収束する3つのフェーズが見えます。</p>
+    <p class="section-lead">5月24日から6月11日にかけての内容スコアと結果スコアの動きです。5/24〜5/25は内容が先行するも両スコアとも下落、5/26以降は逆転して内容が要注意ゾーンに急落する一方で結果は安定を維持、6/8以降は乖離が縮小へ向かう3つのフェーズが見えます。</p>
 
     <div class="chart-card">
       <canvas id="scoreChart" height="320"></canvas>
@@ -254,7 +255,7 @@
 
     <div style="overflow-x:auto">
       <table class="score-table">
-        <caption>Score Trend · 8/13 – 9/10</caption>
+        <caption>Score Trend · 5/24 – 6/11</caption>
         <thead>
           <tr>
             <th>日付</th>
@@ -265,89 +266,89 @@
         </thead>
         <tbody>
           <tr>
-            <td>8/13</td>
-            <td class="content-score">80点（平常）</td>
-            <td class="result-score">87点（安定）</td>
-            <td style="color:var(--ink-2)">結果が先行</td>
+            <td>5/24</td>
+            <td class="content-score">79点（安定）</td>
+            <td class="result-score">73点（安定）</td>
+            <td style="color:var(--ink-2)">内容先行・下落開始</td>
           </tr>
           <tr>
-            <td>8/15</td>
-            <td class="content-score">77点（安定）</td>
-            <td class="result-score">87点（安定）</td>
-            <td style="color:var(--ink-2)">結果先行が続く</td>
-          </tr>
-          <tr>
-            <td>8/17</td>
+            <td>5/25</td>
             <td class="content-score">76点（安定）</td>
-            <td class="result-score">88点（安定）</td>
-            <td style="color:var(--ink-2)">結果先行・最大乖離</td>
+            <td class="result-score">72点（要注意）</td>
+            <td style="color:var(--ink-2)">両スコアとも下落</td>
           </tr>
           <tr>
-            <td>8/20</td>
-            <td class="content-score">76点（安定）</td>
-            <td class="result-score">86点（安定）</td>
-            <td style="color:var(--ink-2)">結果先行が続く</td>
+            <td>5/26</td>
+            <td class="content-score">71点（安定）</td>
+            <td class="result-score">76点（安定）</td>
+            <td style="color:var(--ink-2)">結果が逆転・先行へ</td>
           </tr>
           <tr>
-            <td>8/22</td>
-            <td class="content-score">76点（安定）</td>
-            <td class="result-score">84点（安定）</td>
-            <td style="color:var(--ink-2)">結果先行・縮小へ</td>
-          </tr>
-          <tr>
-            <td>8/23</td>
-            <td class="content-score">76点（安定）</td>
-            <td class="result-score">81点（安定）</td>
-            <td style="color:var(--ink-2)">差が縮まる</td>
-          </tr>
-          <tr>
-            <td>8/27</td>
-            <td class="content-score">82点（安定）</td>
+            <td>5/27</td>
+            <td class="content-score">70点（安定）</td>
             <td class="result-score">78点（安定）</td>
-            <td style="color:var(--ink-2)">内容が上昇</td>
+            <td style="color:var(--ink-2)">乖離が拡大</td>
           </tr>
           <tr>
-            <td>8/29</td>
-            <td class="content-score">86点（安定）</td>
-            <td class="result-score">77点（安定）</td>
-            <td style="color:var(--ink-2)">内容が先行へ</td>
+            <td>5/30</td>
+            <td class="content-score">72点（安定）</td>
+            <td class="result-score">80点（安定）</td>
+            <td style="color:var(--ink-2)">乖離継続</td>
+          </tr>
+          <tr>
+            <td>5/31</td>
+            <td class="content-score">67点（要注意）</td>
+            <td class="result-score">81点（安定）</td>
+            <td style="color:var(--warn)">内容が要注意ゾーンへ</td>
+          </tr>
+          <tr>
+            <td>6/01</td>
+            <td class="content-score">65点（要注意）</td>
+            <td class="result-score">80点（安定）</td>
+            <td style="color:var(--warn)">乖離さらに拡大</td>
+          </tr>
+          <tr>
+            <td>6/02</td>
+            <td class="content-score">65点（要注意）</td>
+            <td class="result-score">81点（安定）</td>
+            <td style="color:var(--warn)">乖離が続く</td>
           </tr>
           <tr class="highlight">
-            <td><strong>8/30</strong></td>
-            <td class="content-score"><strong>88点（好調）</strong></td>
-            <td class="result-score"><strong>76点（安定）</strong></td>
-            <td style="color:var(--warn)"><strong>乖離が最大に</strong></td>
+            <td><strong>6/03</strong></td>
+            <td class="content-score"><strong>60点（要注意）</strong></td>
+            <td class="result-score"><strong>80点（安定）</strong></td>
+            <td style="color:var(--warn)"><strong>乖離が最大（20点）</strong></td>
           </tr>
           <tr>
-            <td>8/31</td>
-            <td class="content-score">82点（安定）</td>
-            <td class="result-score">76点（安定）</td>
-            <td style="color:var(--ink-2)">乖離が続く</td>
+            <td>6/05</td>
+            <td class="content-score">64点（要注意）</td>
+            <td class="result-score">80点（安定）</td>
+            <td style="color:var(--warn)">乖離が続く</td>
           </tr>
           <tr>
-            <td>9/3</td>
-            <td class="content-score">80点（安定）</td>
+            <td>6/07</td>
+            <td class="content-score">61点（要注意）</td>
             <td class="result-score">78点（安定）</td>
-            <td style="color:var(--ink-2)">ほぼ拮抗</td>
+            <td style="color:var(--warn)">内容の低迷継続</td>
           </tr>
           <tr>
-            <td>9/7</td>
-            <td class="content-score">79点（安定）</td>
-            <td class="result-score">82点（安定）</td>
-            <td style="color:var(--ink-2)">結果が逆転</td>
+            <td>6/08</td>
+            <td class="content-score">62点（要注意）</td>
+            <td class="result-score">73点（安定）</td>
+            <td style="color:var(--ink-2)">結果も下落開始</td>
           </tr>
           <tr>
-            <td>9/10</td>
-            <td class="content-score">79点（安定）</td>
-            <td class="result-score">83点（安定）</td>
-            <td style="color:var(--green)">安定回復</td>
+            <td>6/11</td>
+            <td class="content-score">62点（要注意）</td>
+            <td class="result-score">75点（安定）</td>
+            <td style="color:var(--ink-2)">乖離が縮小傾向</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="body-text">
-      <p>8/13〜8/23は結果スコアが先行（結果>内容）。8/27〜9/3は内容スコアが逆転・先行（内容>結果）し、8/30に最大12点の乖離が生じました。9/7以降は再び結果スコアが内容を上回り、安定した収束を見せています。</p>
+      <p>5/24〜5/25は内容が先行するも両スコアとも下落。5/26に結果が逆転して以降、内容スコアが急落（79→60点）する一方で結果スコアは72〜81点で安定を維持。6/3に乖離が最大（内容60・結果80、差+20点）に達しました。6/8以降は結果スコアも73点付近に下落し、両スコアが収束してきています。</p>
     </div>
 
     <div class="chart-card" style="margin-top:32px">
@@ -360,40 +361,40 @@
 <section class="content-section alt">
   <div class="wrap-narrow">
     <div class="eyebrow section-eyebrow">B · What the Content Score Showed</div>
-    <h2 class="section-title">内容スコアは何を示していたか</h2>
-    <p class="section-lead">低迷期（8/13〜8/31）のスイング内容を見ると、次のような状態でした。</p>
+    <h2 class="section-title">なぜ内容スコアが急落したのか</h2>
+    <p class="section-lead">急落乖離期（5/24〜6/7）のスイング内容を直前好調期と比較すると、次のような変化がありました。</p>
 
     <div style="overflow-x:auto">
       <table class="data-table">
         <thead>
           <tr>
             <th>指標</th>
-            <th>低迷期（8/13〜8/31）</th>
-            <th>回復期（9/1〜9/10）</th>
+            <th>直前好調期（5/10〜5/23）</th>
+            <th>急落乖離期（5/24〜6/07）</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="metric">hard_hit%<small>打球速度95mph以上の比率</small></td>
-            <td class="positive-tint"><strong>約40%（シーズンでも上位水準）</strong></td>
-            <td>約37%</td>
+            <td class="metric">チェイス率<small>ボール球を振る割合</small></td>
+            <td class="positive-tint"><strong>約21%（大谷の平常水準以下）</strong></td>
+            <td class="warn-tint"><strong>約32〜35%（平常水準を大きく上回る）</strong></td>
           </tr>
           <tr>
-            <td class="metric">BABIP<small>インプレーの打球がヒットになった割合</small></td>
-            <td class="warn-tint"><strong>0.238（異常に低い）</strong></td>
-            <td>0.381（通常水準）</td>
+            <td class="metric">hard_hit%<small>フェアボールのうち95mph以上の割合</small></td>
+            <td>約65〜70%</td>
+            <td>約45〜55%（低下）</td>
           </tr>
           <tr>
-            <td class="metric">本塁打数<small>期間内の本数</small></td>
-            <td class="neutral-tint">2本（19試合）</td>
-            <td>3本（10試合）</td>
+            <td class="metric">内容スコア<small>6指標を合成したスコア</small></td>
+            <td class="positive-tint"><strong>88〜98点（好調）</strong></td>
+            <td class="warn-tint"><strong>60〜79点（要注意〜安定）</strong></td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="body-text">
-      <p>hard_hit%は約40%とシーズンの中でも上位水準にあり、強い打球の割合は十分高い状態でした。</p>
+      <p>最も大きな変化はチェイス率です。直前好調期の21%前後から、急落乖離期には32〜35%まで上昇しました。大谷本人の2022〜2024年の平均チェイス率（約28%）を大きく上回る水準で、選球眼の悪化が内容スコア急落の主な要因とスコアは示しています。</p>
     </div>
   </div>
 </section>
@@ -402,11 +403,11 @@
 <section class="content-section">
   <div class="wrap-narrow">
     <div class="eyebrow section-eyebrow">C · Why No Results</div>
-    <h2 class="section-title">なぜ結果が出なかったか</h2>
+    <h2 class="section-title">なぜ結果スコアは維持されたのか</h2>
     <div class="body-text">
-      <p>hard_hit%は上位水準にあったのに、なぜ内容スコアが結果スコアを上回り続けたのか。</p>
-      <p>手がかりになるのが BABIP（0.238）という数字です。BABIPとは、三振・本塁打・四球を除いた「フェアゾーンに飛んだ打球」がヒットになった割合のことです。打率とは違い、長打や本塁打を含まない分、打球が野手の守備範囲に入るかどうか——つまり「運」の影響を受けやすい指標とされています。</p>
-      <p>0.238という数字は異常に低く（リーグ平均は概ね .290〜.310）、鋭い打球を打っても野手の正面に飛び続けていた時期だったことが読み取れます。スイングの質が高く、打球の勢いも十分にある。それでもBABIPという「運」の要素が結果スコアを大きく押し下げていました。なお直前期（8/1〜8/12）のBABIPは .684 という非常に高い値で、あの打率.462は当時の実力値以上に結果が出ていた可能性もあります。</p>
+      <p>内容スコアが急落する中で、なぜ結果スコア（wOBAベース）は72〜81点（安定）を維持し続けたのか。</p>
+      <p>急落乖離期（5/24〜6/7）に大谷は6本塁打を記録しています。本塁打はwOBAへの寄与が大きく（重み係数2.101）、チェイス率の悪化でスイングの質が落ちていても、本塁打が出続ける限り結果スコアは下がりにくい構造があります。</p>
+      <p>つまり、選球眼が崩れ始めた段階ではまだ本塁打の爆発力が結果を支えていたが、スイングの精度低下というリスクサインを内容スコアはすでに拾っていた——という構図です。結果指標だけを追っていれば「HR 6本・打率.264」と見えた期間が、内容スコアでは変調の初期シグナルとして捉えられていました。</p>
     </div>
   </div>
 </section>
@@ -415,11 +416,10 @@
 <section class="content-section alt">
   <div class="wrap-narrow">
     <div class="eyebrow section-eyebrow">D · Recovery</div>
-    <h2 class="section-title">転換と回復</h2>
+    <h2 class="section-title">乖離の収束</h2>
     <div class="body-text">
-      <p>9月3日時点では内容・結果ともに安定水準（78〜80点）でほぼ拮抗する形に戻りました。</p>
-      <p>その後、9月7日・10日には結果スコアが内容スコアを上回り、結果スコア82〜83点・内容スコア79点で安定。内容先行から結果先行へと動きが逆転した形です。</p>
-      <p>回復期（9/1〜9/10）のBABIPは0.381と通常水準に戻り、本塁打も9試合で3本。打球品質に結果が追いついてきた期間でした。</p>
+      <p>6月8日以降、結果スコアも73〜76点に下落し始め、内容スコアとの差が縮小してきました。内容スコアは依然として62〜65点（要注意ゾーン）で低迷しており、この時期は内容・結果ともに安定ゾーン以下への落ち込みとして推移しています。</p>
+      <p>5月下旬から「内容スコアが先に下落し、結果スコアがしばらく遅れて追いかけてくる」という動きが観察されました。内容スコアを見ていれば、打率・本塁打数が安定している段階で変調のシグナルを早期に把握できた可能性があります。</p>
     </div>
   </div>
 </section>
@@ -439,14 +439,14 @@
     <div class="pull-callout">
       <div class="tag">Key Points</div>
       <ul class="pull-callout-list">
-        <li>8月中旬〜下旬の「打率.211、2本塁打」という低迷は、結果スコアだけを見た場合には正確な評価です。</li>
-        <li>しかし同じ期間、内容スコアは73〜82点（安定〜好調）の水準を維持し、hard_hit%もシーズン上位水準でした。BABIP（.238）の異常な低さが打率を押し下げていました。</li>
-        <li>9月に入り結果スコアは10日以内に安定水準まで回復。直前期（.462）の反動も含め、BABIPが平均回帰した形でした。</li>
+        <li>5月下旬〜6月上旬、「打率.264・6本塁打」という結果指標は変調を示していませんでしたが、内容スコアは60〜79点（要注意〜安定）へ急落していました。</li>
+        <li>チェイス率が直前期の21%から34%まで急上昇したことが内容スコア急落の主因。本塁打の爆発力が結果スコアを一時的に支えていたため、結果指標では見逃しやすい変調でした。</li>
+        <li>6月8日以降は結果スコアも73〜76点に下落し、内容スコアとの乖離が縮小。内容スコアが先行して示していたシグナルが、後から結果にも反映されてきた形です。</li>
       </ul>
     </div>
 
     <div class="body-text" style="margin-top:40px">
-      <p>この時期に「内容スコアが示していたもの」と「結果スコアが示していたもの」は異なっていました。大谷メーターはこの2つを分けて見えるようにするためのツールです。</p>
+      <p>この期間に「内容スコアが示していたもの」と「結果スコアが示していたもの」は大きく異なっていました。大谷メーターはこの2つを分けて見えるようにするためのツールです。</p>
     </div>
   </div>
 </section>
@@ -485,9 +485,9 @@
 <script>
 (function() {
   // ===== Score Line Chart =====
-  const labels = ['8/13','8/15','8/17','8/20','8/22','8/23','8/27','8/29','8/30','8/31','9/3','9/7','9/10'];
-  const contentData = [80,77,76,76,76,76,82,86,88,82,80,79,79];
-  const resultData  = [87,87,88,86,84,81,78,77,76,76,78,82,83];
+  const labels = ['5/24','5/25','5/26','5/27','5/28','5/30','5/31','6/01','6/02','6/03','6/04','6/05','6/06','6/07','6/08','6/09','6/10','6/11'];
+  const contentData = [79,76,71,70,72,72,67,65,65,60,62,64,62,61,62,64,65,62];
+  const resultData  = [73,72,76,78,77,80,81,80,81,80,79,80,77,78,73,76,76,75];
 
   // Custom plugin: draw good/normal/caution bands
   const bandPlugin = {
@@ -578,8 +578,8 @@
           ticks: {font: {family: "'Montserrat', sans-serif", size: 11, weight: '600'}, color: '#9a9a9a'}
         },
         y: {
-          min: 65,
-          max: 95,
+          min: 55,
+          max: 85,
           grid: {color: 'rgba(228,224,216,0.6)', drawBorder: false},
           ticks: {
             stepSize: 5,
@@ -595,12 +595,12 @@
   // ===== Scatter Chart =====
   const scatterCtx = document.getElementById('scatterChart').getContext('2d');
 
-  // 3 phases: result-leading (8/13-8/23), content-leading (8/27-9/3), converging (9/7-9/10)
+  // 3 phases: drop-start (5/24-5/25), max-divergence (5/26-6/07), converging (6/08-6/11)
   const scatterPoints = labels.map((label, i) => ({
     x: contentData[i],
     y: resultData[i],
     label,
-    phase: i <= 5 ? 'early' : (i <= 10 ? 'mid' : 'late')
+    phase: i <= 1 ? 'early' : (i <= 13 ? 'mid' : 'late')
   }));
 
   const earlyPoints = scatterPoints.filter(p => p.phase === 'early');
@@ -608,7 +608,7 @@
   const latePoints  = scatterPoints.filter(p => p.phase === 'late');
 
   // diagonal reference line as a separate dataset
-  const diagMin = 65, diagMax = 95;
+  const diagMin = 55, diagMax = 85;
   const diagPlugin = {
     id: 'diagPlugin',
     afterDatasetsDraw(chart) {
@@ -632,7 +632,7 @@
     data: {
       datasets: [
         {
-          label: '8/13〜8/23（結果先行期）',
+          label: '5/24〜5/25（下落開始期）',
           data: earlyPoints.map(p => ({x: p.x, y: p.y})),
           backgroundColor: 'rgba(212,135,10,0.70)',
           borderColor: '#d4870a',
@@ -641,7 +641,7 @@
           pointHoverRadius: 9
         },
         {
-          label: '8/27〜9/3（内容先行期）',
+          label: '5/26〜6/07（乖離最大期）',
           data: midPoints.map(p => ({x: p.x, y: p.y})),
           backgroundColor: 'rgba(31,58,82,0.75)',
           borderColor: '#1f3a52',
@@ -650,7 +650,7 @@
           pointHoverRadius: 9
         },
         {
-          label: '9/7〜9/10（収束期）',
+          label: '6/08〜6/11（収束期）',
           data: latePoints.map(p => ({x: p.x, y: p.y})),
           backgroundColor: 'rgba(22,163,74,0.65)',
           borderColor: '#16a34a',
@@ -692,8 +692,8 @@
       },
       scales: {
         x: {
-          min: 65,
-          max: 95,
+          min: 55,
+          max: 85,
           title: {
             display: true,
             text: '内容スコア',
@@ -704,8 +704,8 @@
           ticks: {font: {family: "'Montserrat', sans-serif", size: 10, weight: '600'}, color: '#9a9a9a', stepSize: 5}
         },
         y: {
-          min: 65,
-          max: 95,
+          min: 55,
+          max: 85,
           title: {
             display: true,
             text: '結果スコア',

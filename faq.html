@@ -132,6 +132,7 @@
       <a href="index.html">概要</a>
       <a href="method.html">指標</a>
       <a href="case-study.html">事例</a>
+      <a href="daily.html">日別推移</a>
       <a href="faq.html" class="active">FAQ</a>
     </div>
   </div>
@@ -192,17 +193,17 @@
 
       <!-- Q5 -->
       <div class="faq-item">
-        <h2 class="faq-q">「チェイス率」「コンタクト率」とはどういう指標ですか？</h2>
+        <h2 class="faq-q">スイング内容スコアはどんな指標で計算されていますか？</h2>
         <div class="faq-a">
           <div style="overflow-x:auto">
             <table class="ind-table">
-              <caption>The Four Inputs · 4指標の説明</caption>
+              <caption>The Six Inputs · 6指標の説明</caption>
               <thead>
                 <tr>
                   <th>指標名</th>
                   <th>意味</th>
                   <th>良い方向</th>
-                  <th style="text-align:right">平常水準（2022〜24中央値）</th>
+                  <th style="text-align:right">平均（22–24 rolling 窓平均）</th>
                 </tr>
               </thead>
               <tbody>
@@ -210,30 +211,42 @@
                   <td class="metric">チェイス率<small>Chase Rate</small></td>
                   <td class="view">ストライクゾーン外のボール球に対してスイングした割合</td>
                   <td class="view"><span class="badge red"><span class="arrow">↓</span> Lower</span></td>
-                  <td class="baseline">28%<small>中央値</small></td>
+                  <td class="baseline">28%<small>平均</small></td>
                 </tr>
                 <tr>
                   <td class="metric">Z-Swing%<small>Zone Swing</small></td>
                   <td class="view">ストライクゾーン内の球に対してスイングした割合（高いほど好球を積極的に振れている）</td>
                   <td class="view"><span class="badge green"><span class="arrow">↑</span> Higher</span></td>
-                  <td class="baseline">71%<small>中央値</small></td>
+                  <td class="baseline">71%<small>平均</small></td>
                 </tr>
                 <tr>
                   <td class="metric">コンタクト率<small>Contact Rate</small></td>
                   <td class="view">スイングした球にバットが当たった割合</td>
                   <td class="view"><span class="badge green"><span class="arrow">↑</span> Higher</span></td>
-                  <td class="baseline">73%<small>中央値</small></td>
+                  <td class="baseline">73%<small>平均</small></td>
                 </tr>
                 <tr>
                   <td class="metric">hard_hit%<small>Hard Hit Rate</small></td>
-                  <td class="view">打球速度が95mph以上だった打球の比率</td>
+                  <td class="view">フェアボールのうち打球速度が95mph以上だった割合</td>
                   <td class="view"><span class="badge green"><span class="arrow">↑</span> Higher</span></td>
-                  <td class="baseline">32%<small>中央値</small></td>
+                  <td class="baseline">55%<small>平均</small></td>
+                </tr>
+                <tr>
+                  <td class="metric">SweetSpot%<small>Sweet Spot Rate</small></td>
+                  <td class="view">フェアボールのうち打球角度が8〜32°（理想角度帯）だった割合</td>
+                  <td class="view"><span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+                  <td class="baseline">38%<small>平均</small></td>
+                </tr>
+                <tr>
+                  <td class="metric">Barrel%<small>Barrel Rate</small></td>
+                  <td class="view">フェアボールのうちバレル（最適な打球速度×角度の組み合わせ）と判定された割合</td>
+                  <td class="view"><span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+                  <td class="baseline">20%<small>平均</small></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p>これら4指標を組み合わせて「スイング内容スコア」を計算しています。詳しくは <a href="index.html">About</a> をご覧ください。</p>
+          <p>これら6指標を組み合わせて「スイング内容スコア」を計算しています。詳しくは <a href="index.html">About</a> をご覧ください。</p>
         </div>
       </div>
 

@@ -306,6 +306,7 @@
       <a href="index.html" class="active">概要</a>
       <a href="method.html">指標</a>
       <a href="case-study.html">事例</a>
+      <a href="daily.html">日別推移</a>
       <a href="faq.html">FAQ</a>
     </div>
   </div>
@@ -325,7 +326,7 @@
     </div>
 
     <div class="hero-bottom">
-      <div class="hero-meta">最終更新 2026-05-03<span class="sep">·</span>対象シーズン 2025</div>
+      <div class="hero-meta">最終更新 2026-05-04<span class="sep">·</span>対象シーズン 2025</div>
       <div class="concept-cards">
         <div class="ccard">
           <span class="label">Score 01</span>
@@ -374,17 +375,17 @@
       <div>
         <h2>スイング内容スコア<span class="range">0—100</span></h2>
         <p class="tldr"><span class="pill">ざっくり言うと</span>「どれだけ正確にスイングできているか」の目安です。</p>
-        <p class="body">以下の4つの側面を組み合わせて計算しています。大谷本人の2022〜2024年の150球ローリング窓を基準にしたとき、「今の状態が大谷本人の平常水準とどれくらい違うか」を0〜100に変換したものです。</p>
+        <p class="body">以下の6つの側面を組み合わせて計算しています。大谷本人の2022〜2024年の150球ローリング窓を基準にしたとき、「今の状態が大谷本人の平常水準とどれくらい違うか」を0〜100に変換したものです。</p>
       </div>
     </div>
 
     <table class="ind-table">
-      <caption>The Four Inputs · 4つの入力指標</caption>
+      <caption>The Six Inputs · 6つの入力指標</caption>
       <thead>
         <tr>
           <th>見ている側面</th>
           <th>見方</th>
-          <th>平常水準（22–24中央値）</th>
+          <th>平均（22–24 rolling 窓平均）</th>
         </tr>
       </thead>
       <tbody>
@@ -404,9 +405,19 @@
           <td class="baseline">73%<small>Contact</small></td>
         </tr>
         <tr>
-          <td class="metric">hard_hit%<small>打球速度95mph以上の比率</small></td>
+          <td class="metric">hard_hit%<small>フェアボールのうち打球速度95mph以上の割合</small></td>
           <td class="view">高いほど良い <span class="badge green"><span class="arrow">↑</span> Higher</span></td>
-          <td class="baseline">32%<small>Hard Hit</small></td>
+          <td class="baseline">55%<small>Hard Hit</small></td>
+        </tr>
+        <tr>
+          <td class="metric">SweetSpot%<small>フェアボールのうち打球角度8〜32°の割合</small></td>
+          <td class="view">高いほど良い <span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+          <td class="baseline">38%<small>Sweet Spot</small></td>
+        </tr>
+        <tr>
+          <td class="metric">Barrel%<small>フェアボールのうちバレル判定の割合</small></td>
+          <td class="view">高いほど良い <span class="badge green"><span class="arrow">↑</span> Higher</span></td>
+          <td class="baseline">20%<small>Barrel</small></td>
         </tr>
       </tbody>
     </table>
