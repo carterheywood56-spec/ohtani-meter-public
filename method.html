@@ -13,13 +13,13 @@
     --ink:#1c1c1c;
     --ink-2:#5a5a5a;
     --ink-3:#9a9a9a;
-    --amber:#d4870a;
-    --amber-soft:#f4e8d2;
+    --amber:#005A9C;
+    --amber-soft:#dbeafe;
     --border:#e4e0d8;
     --border-2:#efece5;
     --green:#16a34a;
     --red:#dc2626;
-    --warn:#c46a14;
+    --warn:#005A9C;
     --footer:#161412;
     --ink-deep:#1f3a52;
     --hero-grad: linear-gradient(to bottom, rgba(8,6,4,0.40) 0%, rgba(8,6,4,0.88) 72%, rgba(8,6,4,1) 100%);
@@ -80,13 +80,13 @@
   .reliability-card .card-label{font-family:var(--en);font-weight:700;font-size:9px;letter-spacing:0.2em;color:var(--amber);text-transform:uppercase;margin-bottom:12px;display:block}
   .reliability-card .card-title{font-family:var(--jp);font-weight:700;font-size:20px;line-height:1.45;color:var(--ink);margin:0 0 18px;letter-spacing:0.005em}
   .reliability-card ul{list-style:none;margin:0;padding:0}
-  .reliability-card li{font-family:var(--jp);font-size:14px;line-height:1.9;color:var(--ink-2);padding:8px 0;border-bottom:1px solid var(--border-2);display:flex;gap:10px}
+  .reliability-card li{font-family:var(--jp);font-size:15px;line-height:1.9;color:var(--ink-2);padding:8px 0;border-bottom:1px solid var(--border-2);display:flex;gap:10px}
   .reliability-card li:last-child{border-bottom:none;padding-bottom:0}
   .reliability-card li::before{content:"—";color:var(--amber);flex-shrink:0;font-family:var(--en);font-weight:700}
 
   /* ===== Alert box ===== */
   .alert-box{display:flex;gap:14px;align-items:flex-start;background:#fff;border-left:3px solid var(--border);padding:16px 20px;border-radius:0 3px 3px 0;margin-top:32px}
-  .alert-box .alert-text{font-family:var(--jp);font-size:14px;line-height:1.8;color:var(--ink-2)}
+  .alert-box .alert-text{font-family:var(--jp);font-size:15px;line-height:1.8;color:var(--ink-2)}
 
   /* ===== Data source ===== */
   .data-source-link{color:var(--amber);text-decoration:underline;text-underline-offset:3px}
@@ -195,7 +195,7 @@
       <svg viewBox="0 0 580 78" width="100%" aria-hidden="true">
         <defs>
           <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
-            <path d="M0,0 L0,8 L8,4 Z" fill="#d4870a"/>
+            <path d="M0,0 L0,8 L8,4 Z" fill="#005A9C"/>
           </marker>
         </defs>
         <line x1="10" y1="27" x2="570" y2="27" stroke="#e4e0d8" stroke-width="1.5"/>
@@ -209,14 +209,14 @@
         <circle cx="245" cy="27" r="9" fill="#e4e0d8"/>
         <circle cx="285" cy="27" r="9" fill="#e4e0d8"/>
         <circle cx="325" cy="27" r="9" fill="#e4e0d8"/>
-        <rect x="352" y="12" width="218" height="30" rx="4" fill="#f4e8d2" stroke="#d4870a" stroke-width="1.5"/>
-        <circle cx="372" cy="27" r="9" fill="#d4870a"/>
-        <circle cx="412" cy="27" r="9" fill="#d4870a"/>
-        <circle cx="452" cy="27" r="9" fill="#d4870a"/>
-        <circle cx="492" cy="27" r="9" fill="#d4870a"/>
-        <circle cx="532" cy="27" r="9" fill="#d4870a"/>
-        <text x="461" y="9" text-anchor="middle" font-size="11" fill="#d4870a" font-weight="600">直近150球</text>
-        <line x1="461" y1="44" x2="461" y2="55" stroke="#d4870a" stroke-width="1.5" marker-end="url(#arrowAmber)"/>
+        <rect x="352" y="12" width="218" height="30" rx="4" fill="#dbeafe" stroke="#005A9C" stroke-width="1.5"/>
+        <circle cx="372" cy="27" r="9" fill="#005A9C"/>
+        <circle cx="412" cy="27" r="9" fill="#005A9C"/>
+        <circle cx="452" cy="27" r="9" fill="#005A9C"/>
+        <circle cx="492" cy="27" r="9" fill="#005A9C"/>
+        <circle cx="532" cy="27" r="9" fill="#005A9C"/>
+        <text x="461" y="9" text-anchor="middle" font-size="11" fill="#005A9C" font-weight="600">直近150球</text>
+        <line x1="461" y1="44" x2="461" y2="55" stroke="#005A9C" stroke-width="1.5" marker-end="url(#arrowAmber)"/>
         <text x="461" y="71" text-anchor="middle" font-size="11" fill="#9a9a9a">6指標を計算 → z-score変換 → 0〜100点に変換</text>
       </svg>
       <p style="font-size:12px;color:var(--ink-3);margin:8px 0 0;font-family:var(--jp)">各丸は試合1試合分。試合が増えるたびに窓が右へスライドし、その時点のスコアが更新される。</p>
