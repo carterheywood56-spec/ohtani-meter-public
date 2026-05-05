@@ -32,5 +32,5 @@ GitHub Pages 等で公開される 4 ページ構成：
 
 - このディレクトリは独立した Git リポジトリ
 - コミット・プッシュは明示的に依頼された場合のみ実行する（下記例外を除く）
-- **例外**: `ohtani-meter/scripts/ohtani_daily.sh` 経由の `daily.html` 自動更新コミット&プッシュは永続的に許可（ユーザーによる明示的合意済み）
+- **例外**: `ohtani-meter/scripts/ohtani_daily.sh` 経由の `daily.html` 自動更新コミットは許可。ただし push はユーザー確認後に実施する
 - 最終更新日は `index.html` の `<div class="hero-meta">` 内に手動記載
