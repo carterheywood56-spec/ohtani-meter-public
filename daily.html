@@ -783,7 +783,7 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
       <div class="hero-scroll-cue">SCROLL · スクロールして詳細を見る</div>
       <div class="hero-game-nav">
         <button id="prev-game" type="button">← PREV</button>
-        <span class="current">GAME <strong id="game-num">29</strong> / <span id="game-total">35</span></span>
+        <span class="current">GAME <strong id="game-num">35</strong> / <span id="game-total">35</span></span>
         <button id="next-game" type="button" disabled>NEXT →</button>
       </div>
     </div>
@@ -1510,7 +1510,8 @@ function renderSparklines() {
 /* ===== Game nav (placeholder — surfaces date/score, no historical jump) ===== */
 let curIdx = records.length - 1;
 function updateGameNav() {
-  document.getElementById('game-num').textContent = curIdx + 1;
+  const isLatestGame = curIdx === records.length - 1;
+  document.getElementById('game-num').textContent = isLatestGame ? season.games : curIdx + 1;
   document.getElementById('prev-game').disabled = curIdx <= 0;
   document.getElementById('next-game').disabled = curIdx >= records.length - 1;
   const r = records[curIdx];
