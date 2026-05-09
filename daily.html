@@ -460,6 +460,7 @@ a { color: inherit; }
 .data-table thead th:first-child { text-align: left; }
 .data-table thead th:last-child { border-right: none; }
 .data-table thead th .ja { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; text-transform: none; color: rgba(243,241,234,0.65); margin-top: 3px; font-family: "Noto Sans JP", sans-serif; }
+.data-table thead th .base-val { display: block; font-family: "Montserrat", sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; color: rgba(243,241,234,0.38); margin-top: 4px; }
 
 .data-table tbody td {
   padding: 12px 10px;
@@ -482,9 +483,21 @@ a { color: inherit; }
 [data-density="loose"] .data-table tbody td { padding: 18px 12px; font-size: 15px; }
 
 .cell-date { font-family: "JetBrains Mono", monospace; }
-.cell-line { font-family: "Montserrat", sans-serif; font-weight: 600; }
+.cell-line { font-family: "Montserrat", sans-serif; font-weight: 600; text-align: left; vertical-align: top; white-space: normal; }
 .cell-line .hr { color: var(--accent); font-weight: 800; }
 .cell-line .k { color: var(--warn); }
+.line-top { font-size: 13px; font-weight: 700; white-space: nowrap; margin-bottom: 5px; }
+.line-top .line-pa { font-weight: 500; color: var(--ink-mute); font-size: 11px; }
+.line-top .line-h-no { color: var(--ink-mute); }
+.line-top .line-extra { font-size: 10px; font-weight: 600; color: var(--ink-mute); margin-left: 5px; }
+.line-dots { display: flex; gap: 3px; flex-wrap: wrap; align-items: center; }
+.pa-dot { display: inline-flex; align-items: center; justify-content: center; height: 16px; min-width: 16px; padding: 0 3px; border-radius: 3px; font-family: "Montserrat", sans-serif; font-size: 8px; font-weight: 800; letter-spacing: 0; box-sizing: border-box; line-height: 1; }
+.pa-dot.d-hr { background: var(--accent); color: #fff; }
+.pa-dot.d-hit { background: rgba(106,208,127,0.82); color: #0a3a14; border-radius: 50%; }
+.pa-dot.d-hit.d-xb { border-radius: 3px; font-size: 7px; }
+.pa-dot.d-k { background: rgba(232,117,104,0.18); color: #e87568; border: 1px solid rgba(232,117,104,0.4); }
+.pa-dot.d-bb { background: transparent; color: var(--ink-mute); border: 1px solid var(--hairline); }
+.pa-dot.d-out { background: rgba(100,100,100,0.1); color: var(--ink-mute); font-size: 11px; }
 .cell-num-display { font-family: "Archivo Black", sans-serif; font-size: 16px; line-height: 1; letter-spacing: -0.01em; }
 
 .score-pill {
@@ -960,12 +973,12 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
             <th>LINE<span class="ja">成績</span></th>
             <th>CONTENT<span class="ja">内容</span></th>
             <th>RESULT<span class="ja">結果</span></th>
-            <th>CHASE%<span class="ja">追ヘ↓</span></th>
-            <th>Z-SW%<span class="ja">ゾーンスイング</span></th>
-            <th>CONTACT%<span class="ja">コンタクト</span></th>
-            <th>HARD%<span class="ja">ハード</span></th>
-            <th>SWEET%<span class="ja">スイート</span></th>
-            <th>BARREL%<span class="ja">バレル</span></th>
+            <th>CHASE%<span class="ja">ゾーン外スイング↓</span><span class="base-val" data-key="chase"></span></th>
+            <th>Z-SW%<span class="ja">ゾーンスイング</span><span class="base-val" data-key="zswing"></span></th>
+            <th>CONTACT%<span class="ja">コンタクト</span><span class="base-val" data-key="contact"></span></th>
+            <th>HARD%<span class="ja">ハード</span><span class="base-val" data-key="hardhit"></span></th>
+            <th>SWEET%<span class="ja">スイート</span><span class="base-val" data-key="sweetspot"></span></th>
+            <th>BARREL%<span class="ja">バレル</span><span class="base-val" data-key="barrel"></span></th>
             <th>cum.OPS<span class="ja">通算OPS</span></th>
           </tr>
         </thead>
@@ -1380,16 +1393,24 @@ function heatColor(value, baseline, inverted) {
   return 'transparent';
 }
 
-function lineString(r) {
-  const parts = [];
-  parts.push(`${r.hits}-${r.pa}`);
-  if (r.hr) parts.push(`<span class="hr">${r.hr}HR</span>`);
-  if (r.b2) parts.push(`${r.b2}2B`);
-  if (r.b3) parts.push(`${r.b3}3B`);
-  if (r.bb) parts.push(`${r.bb}BB`);
-  if (r.k) parts.push(`<span class="k">${r.k}K</span>`);
-  if (r.rbi) parts.push(`${r.rbi}RBI`);
-  return parts.join(' · ');
+function lineCell(r) {
+  const extras = [];
+  if (r.rbi) extras.push(`${r.rbi}打点`);
+  const extraStr = extras.length ? `<span class="line-extra">${extras.join(' ')}</span>` : '';
+  const hClass = r.hits > 0 ? '' : 'line-h-no';
+  const top = `<div class="line-top"><span class="${hClass}">${r.hits}H</span> <span class="line-pa">/ ${r.pa}PA</span>${extraStr}</div>`;
+  const dots = [];
+  for (let i = 0; i < r.hr; i++)           dots.push(`<span class="pa-dot d-hr">HR</span>`);
+  for (let i = 0; i < (r.b3||0); i++)      dots.push(`<span class="pa-dot d-hit d-xb">3B</span>`);
+  for (let i = 0; i < (r.b2||0); i++)      dots.push(`<span class="pa-dot d-hit d-xb">2B</span>`);
+  for (let i = 0; i < (r.b1||0); i++)      dots.push(`<span class="pa-dot d-hit">H</span>`);
+  for (let i = 0; i < (r.k||0); i++)       dots.push(`<span class="pa-dot d-k">K</span>`);
+  const walks = (r.bb||0) + (r.hbp||0);
+  for (let i = 0; i < walks; i++)          dots.push(`<span class="pa-dot d-bb">○</span>`);
+  const ab = r.pa - (r.bb||0) - (r.hbp||0) - (r.sf||0);
+  const otherOuts = ab - (r.hits||0) - (r.k||0);
+  for (let i = 0; i < Math.max(0, otherOuts); i++) dots.push(`<span class="pa-dot d-out">·</span>`);
+  return top + `<div class="line-dots">${dots.join('')}</div>`;
 }
 
 function renderTable(mode) {
@@ -1416,7 +1437,7 @@ function renderTable(mode) {
 
     return `<tr class="${isLatest ? 'latest' : ''}">
       <td class="cell-date">${dStr}<span style="color:var(--ink-mute);font-weight:400;margin-left:6px;">${dow}</span></td>
-      <td class="cell-line">${lineString(r)}</td>
+      <td class="cell-line">${lineCell(r)}</td>
       <td><span class="score-pill ${bandClass(r.p)}">${r.p}</span></td>
       <td><span class="score-pill ${bandClass(r.o)}">${r.o}</span></td>
       ${heatCells}
@@ -1427,7 +1448,7 @@ function renderTable(mode) {
 
 /* ===== Sparklines ===== */
 const METRICS = [
-  { key: 'rl_chase',     en: 'Chase%',    ja: '追ヘ・ボール球追い',     base: baseline.chase,     inverted: true,  desc: 'ゾーン外球へのスイング率' },
+  { key: 'rl_chase',     en: 'Chase%',    ja: 'ゾーン外スイング率',       base: baseline.chase,     inverted: true,  desc: 'ストライクゾーン外の球へのスイング率' },
   { key: 'rl_zswing',    en: 'Z-Swing%',  ja: 'ストライク振り率',       base: baseline.zswing,    inverted: false, desc: 'ゾーン内球を見逃さない率' },
   { key: 'rl_contact',   en: 'Contact%',  ja: 'コンタクト率',           base: baseline.contact,   inverted: false, desc: 'スイング時にバットに当たる率' },
   { key: 'rl_hardhit',   en: 'HardHit%',  ja: '強い打球の割合',         base: baseline.hardhit,   inverted: false, desc: '95mph以上' },
@@ -1656,6 +1677,10 @@ document.addEventListener('DOMContentLoaded', () => {
   applyAnnotations(DATA.annotations || []);
   renderHero();
   renderTable('recent');
+  document.querySelectorAll('.data-table thead th .base-val').forEach(el => {
+    const key = el.dataset.key;
+    if (baseline[key] !== undefined) el.textContent = (baseline[key] * 100).toFixed(1);
+  });
   renderSparklines();
   // Chart needs body styles applied
   setTimeout(renderChart, 50);
