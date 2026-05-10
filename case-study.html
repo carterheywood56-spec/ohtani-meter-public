@@ -158,10 +158,12 @@
   .case-index-inner{max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
   .case-index-label{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-3);flex-shrink:0}
   .case-index-list{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap}
-  .case-index-chip{display:inline-flex;align-items:center;padding:6px 12px;font-family:var(--jp);font-size:12px;font-weight:700;color:var(--ink-2);background:var(--bg);border:1px solid var(--border);border-radius:2px;transition:color 0.15s,border-color 0.15s,background 0.15s}
+  .case-index-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;font-family:var(--jp);font-size:12px;font-weight:700;color:var(--ink-2);background:var(--bg);border:1px solid var(--border);border-radius:2px;transition:color 0.15s,border-color 0.15s,background 0.15s}
   .case-index-chip:hover{color:var(--amber);border-color:var(--amber)}
-  .case-index-chip .num{font-family:var(--en);font-weight:800;font-size:10px;letter-spacing:0.10em;color:var(--amber);margin-right:8px}
-  @media (max-width:640px){.case-index-inner{padding:12px 20px;gap:10px}.case-index-chip{font-size:11px;padding:5px 10px}}
+  .case-index-chip .num{font-family:var(--en);font-weight:800;font-size:10px;letter-spacing:0.10em;color:var(--amber);margin-right:0}
+  .case-index-chip canvas.spark{display:block;width:60px;height:16px;margin-left:4px}
+  .case-index-chip.is-warn .num{color:#dc2626}
+  @media (max-width:640px){.case-index-inner{padding:12px 20px;gap:10px}.case-index-chip{font-size:11px;padding:5px 10px}.case-index-chip canvas.spark{width:48px}}
 
   /* ===== Other Cases (card layout) ===== */
   .case-card{background:#fff;border:1px solid var(--border);border-radius:3px;padding:32px 28px;margin:0 0 24px;scroll-margin-top:80px}
@@ -173,6 +175,14 @@
   .case-body h4{font-family:var(--jp);font-weight:700;font-size:12px;letter-spacing:0.10em;color:var(--ink-3);margin:24px 0 10px;text-transform:uppercase}
   .case-body h4:first-child{margin-top:0}
   .case-body p{font-family:var(--jp);font-size:15px;line-height:1.85;color:var(--ink);margin:0}
+
+  /* ===== Case card with mini chart ===== */
+  .case-card--with-chart .case-card-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:32px;align-items:start}
+  .case-card--with-chart .case-mini-chart{background:var(--bg);border:1px solid var(--border-2);border-radius:3px;padding:14px;position:relative;height:240px}
+  .case-card--with-chart .case-mini-chart canvas{display:block;width:100% !important;height:100% !important}
+  .case-card--with-chart .case-mini-legend{display:flex;gap:14px;font-family:var(--en);font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3);margin-top:10px}
+  .case-card--with-chart .case-mini-legend .swatch{display:inline-block;width:18px;height:2px;vertical-align:middle;margin-right:6px}
+  @media (max-width:760px){.case-card--with-chart .case-card-grid{grid-template-columns:1fr;gap:20px}.case-card--with-chart .case-mini-chart{height:200px}}
   @media (max-width:640px){.case-card{padding:24px 20px}.case-card h3{font-size:19px}}
 
   /* ===== Footer ===== */
@@ -226,8 +236,11 @@
   <div class="case-index-inner">
     <span class="case-index-label">All Cases</span>
     <ul class="case-index-list">
-      <li><a href="#case-01" class="case-index-chip"><span class="num">01</span>内容先行 · 2025/5-6</a></li>
-      <li><a href="#case-02" class="case-index-chip"><span class="num">02</span>結果先行 · 2023/6</a></li>
+      <li><a href="#case-01" class="case-index-chip"><span class="num">01</span>内容先行 · 2025/5-6<canvas class="spark" id="spark-01"></canvas></a></li>
+      <li><a href="#case-02" class="case-index-chip"><span class="num">02</span>結果先行 · 2023/6<canvas class="spark" id="spark-02"></canvas></a></li>
+      <li><a href="#case-03" class="case-index-chip"><span class="num">03</span>同時好調 · 2024/6<canvas class="spark" id="spark-03"></canvas></a></li>
+      <li><a href="#case-04" class="case-index-chip is-warn"><span class="num">04</span>同時悪化 · 2024/5-6<canvas class="spark" id="spark-04"></canvas></a></li>
+      <li><a href="#case-05" class="case-index-chip"><span class="num">05</span>内容先行(極端) · 2022/5-6<canvas class="spark" id="spark-05"></canvas></a></li>
     </ul>
   </div>
 </nav>
@@ -241,8 +254,8 @@
     <div>
       <div class="hero-eyebrow">Case Study · 事例</div>
       <h1>内容スコアが先に動いていた ——2025年5〜6月の記録</h1>
-      <p class="hero-lead">直前10試合でスイング内容スコアが88〜98点を推移した後、2025年5月下旬からチェイス率が急上昇しスコアが要注意ゾーンへ急落。しかし結果スコアはしばらく72〜81点（安定）を維持し続けました——内容が先に変調を示していた期間の記録です。</p>
-      <div class="hero-meta">2025年5月24日 — 6月11日</div>
+      <p class="hero-lead">2025年5月下旬、チェイス率の急上昇とともに内容スコアが要注意ゾーンへ急落。しかし結果スコアはしばらく72〜81点を維持し続けました。その後6月上旬に結果スコアも追従して下落、6/16にチェイス率の改善とともに内容・結果ともに反転回復——内容が先に変調を示し、結果が遅れて追従し、最後に両者が回復した24日間の記録です。</p>
+      <div class="hero-meta">2025年5月24日 — 6月16日</div>
     </div>
   </div>
 </section>
@@ -264,14 +277,14 @@
         <div class="stats-sub">打率（53打数14安打）</div>
         <div class="stats-hr">6本塁打 · 内容スコア 60〜79点</div>
       </div>
-      <div class="stats-card">
-        <div class="stats-period">収束期 6/08 — 6/11</div>
-        <div class="stats-avg">.235</div>
-        <div class="stats-sub">打率（17打数4安打）</div>
-        <div class="stats-hr">0本塁打 · 内容スコア 62〜65点</div>
+      <div class="stats-card positive">
+        <div class="stats-period">収束・回復期 6/08 — 6/16</div>
+        <div class="stats-avg">73→84</div>
+        <div class="stats-sub">結果スコアの推移</div>
+        <div class="stats-hr">内容スコア 62→73点 · 6/16 で結果が反転上昇</div>
       </div>
     </div>
-    <p class="stats-note">急落乖離期（5/24〜6/7）の内容スコアは60〜79点（要注意〜安定）に急落。しかし結果スコアは72〜81点（安定）を維持し続けた。チェイス率（ボール球を振る割合）が直前期の21%から34%に急上昇したことが内容スコア急落の主因。打率は3局面を通じて大きく変わらず（.294→.264→.235）、結果指標だけを追っていた場合には変調を見逃した可能性がある。</p>
+    <p class="stats-note">急落乖離期（5/24〜6/7）の内容スコアは60〜79点（要注意〜安定）に急落。しかし結果スコアは72〜81点（安定）を維持し続けた。チェイス率（ボール球を振る割合）が直前期の21%から34%に急上昇したことが内容スコア急落の主因。<strong>6/8以降は結果スコアも追従下落、6/12からチェイス率の改善（0.32→0.25）とともに内容スコアが回復に転じ、6/16には結果スコアも84点へ反転上昇</strong>。「内容が先に動き、結果が遅れて追従、最後に両者が回復する」という反転ストーリーが完結した。</p>
   </div>
 </section>
 
@@ -280,7 +293,7 @@
   <div class="wrap-narrow">
     <div class="eyebrow section-eyebrow">A · Score Trend</div>
     <h2 class="section-title">2つのスコアの推移</h2>
-    <p class="section-lead">5月24日から6月11日にかけての内容スコアと結果スコアの動きです。5/24〜5/25は内容が先行するも両スコアとも下落、5/26以降は逆転して内容が要注意ゾーンに急落する一方で結果は安定を維持、6/8以降は乖離が縮小へ向かう3つのフェーズが見えます。</p>
+    <p class="section-lead">5月24日から6月16日にかけての内容スコアと結果スコアの動きです。5/24〜5/25は両スコアとも下落、5/26以降は内容が要注意ゾーンに急落する一方で結果は安定を維持、6/8以降は結果も追従下落、6/14以降は両スコアともに回復し6/16に結果が反転上昇——という4局面のストーリーが見えます。</p>
 
     <div class="chart-card">
       <canvas id="scoreChart" height="320"></canvas>
@@ -376,17 +389,38 @@
             <td class="result-score">75点（安定）</td>
             <td style="color:var(--ink-2)">乖離が縮小傾向</td>
           </tr>
+          <tr>
+            <td>6/13</td>
+            <td class="content-score">65点（要注意）</td>
+            <td class="result-score">73点（安定）</td>
+            <td style="color:var(--ink-2)">両スコアとも低位で推移</td>
+          </tr>
+          <tr>
+            <td>6/14</td>
+            <td class="content-score">70点（安定）</td>
+            <td class="result-score">78点（安定）</td>
+            <td style="color:var(--ink-2)">内容スコアが安定ゾーンへ復帰</td>
+          </tr>
+          <tr>
+            <td>6/15</td>
+            <td class="content-score">73点（安定）</td>
+            <td class="result-score">80点（安定）</td>
+            <td style="color:var(--ink-2)">両スコアともに上昇</td>
+          </tr>
+          <tr class="highlight">
+            <td><strong>6/16</strong></td>
+            <td class="content-score"><strong>73点（安定）</strong></td>
+            <td class="result-score"><strong>84点（安定）</strong></td>
+            <td style="color:var(--green)"><strong>結果スコアが反転上昇（+9pt）</strong></td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <div class="body-text">
-      <p>5/24〜5/25は内容が先行するも両スコアとも下落。5/26に結果が逆転して以降、内容スコアが急落（79→60点）する一方で結果スコアは72〜81点で安定を維持。6/3に乖離が最大（内容60・結果80、差+20点）に達しました。6/8以降は結果スコアも73点付近に下落し、両スコアが収束してきています。</p>
+      <p>5/24〜5/25は両スコアとも下落。5/26以降は内容スコアが急落（79→60点）する一方で結果スコアは72〜81点で安定を維持し、6/3に乖離が最大（内容60・結果80、差+20点）に達しました。6/8以降は結果スコアも73点付近に下落し、内容スコアの先行性が結果に反映されはじめます。そして6/14以降、内容スコアが70→73点と安定ゾーンに復帰し、<strong>6/16には結果スコアが84点へ反転上昇</strong>。「内容が先に動いた」変調が、最終的に「結果も追従して回復した」形でストーリーが完結しました。</p>
     </div>
 
-    <div class="chart-card" style="margin-top:32px">
-      <canvas id="scatterChart" height="280"></canvas>
-    </div>
   </div>
 </section>
 
@@ -448,11 +482,12 @@
 <!-- ============ D · Recovery ============ -->
 <section class="content-section alt">
   <div class="wrap-narrow">
-    <div class="eyebrow section-eyebrow">D · Recovery</div>
-    <h2 class="section-title">乖離の収束</h2>
+    <div class="eyebrow section-eyebrow">D · Convergence and Reversal</div>
+    <h2 class="section-title">乖離の収束と回復</h2>
     <div class="body-text">
-      <p>6月8日以降、結果スコアも73〜76点に下落し始め、内容スコアとの差が縮小してきました。内容スコアは依然として62〜65点（要注意ゾーン）で低迷しており、この時期は内容・結果ともに安定ゾーン以下への落ち込みとして推移しています。</p>
-      <p>5月下旬から「内容スコアが先に下落し、結果スコアがしばらく遅れて追いかけてくる」という動きが観察されました。内容スコアを見ていれば、打率・本塁打数が安定している段階で変調のシグナルを早期に把握できた可能性があります。</p>
+      <p>6月8日以降、結果スコアも73〜76点に下落し、内容スコアとの差が縮小しました。内容スコアは依然として62〜65点（要注意ゾーン）で低迷しており、この時期は内容・結果ともに安定ゾーン以下への落ち込みとして推移しています。</p>
+      <p>転機は6月12日以降です。チェイス率が0.32→0.25まで改善し、内容スコアが65→70→73点と段階的に回復。<strong>6/16には結果スコアが84点（前日+4pt）へ反転上昇</strong>し、内容スコアの先行性が結果スコアの回復として最終的に反映される形でストーリーが完結しました。</p>
+      <p>5月下旬から始まったこの24日間は、「内容スコアが先に下落 → 結果スコアが遅れて追従下落 → 両者が回復」という3段階の動きが観察された期間です。内容スコアを早期に確認していれば、打率・本塁打数が安定している段階で変調のシグナルを把握でき、回復の予兆も先取りできた可能性があります。</p>
     </div>
   </div>
 </section>
@@ -474,7 +509,7 @@
       <ul class="pull-callout-list">
         <li>5月下旬〜6月上旬、「打率.264・6本塁打」という結果指標は変調を示していませんでしたが、内容スコアは60〜79点（要注意〜安定）へ急落していました。</li>
         <li>チェイス率が直前期の21%から34%まで急上昇したことが内容スコア急落の主因。本塁打の爆発力が結果スコアを一時的に支えていたため、結果指標では見逃しやすい変調でした。</li>
-        <li>6月8日以降は結果スコアも73〜76点に下落し、内容スコアとの乖離が縮小。内容スコアが先行して示していたシグナルが、後から結果にも反映されてきた形です。</li>
+        <li>6月8日以降は結果スコアも73〜76点に下落し、内容スコアとの乖離が縮小。さらに6/12以降はチェイス率の改善とともに内容スコアが回復し、<strong>6/16には結果スコアが84点へ反転上昇</strong>——内容スコアが先行して示したシグナルが、最終的に結果スコアの回復としても反映される形でストーリーが完結しました。</li>
       </ul>
     </div>
 
@@ -491,7 +526,7 @@
     <h2 class="section-title">他の事例</h2>
     <p class="section-lead">case-01 のような「内容先行」型以外にも、過去シーズンには異なるパターンの乖離が観察されています。ここでは4タイプの代表例を順次掲載していきます。</p>
 
-    <article id="case-02" class="case-card">
+    <article id="case-02" class="case-card case-card--with-chart">
       <span class="case-eyebrow">Case 02 · 結果先行</span>
       <h3>結果が先・内容が後から追いつく ──2023年6月の量産期</h3>
       <div class="case-meta">
@@ -500,15 +535,114 @@
         <span>タイプ: 結果先行</span>
         <span>ピーク差: +14.2pt（6/16）</span>
       </div>
-      <div class="case-body">
-        <h4>観察</h4>
-        <p>2023年6月上旬、結果スコアが先行して急上昇した期間。woBA は6/6の.492 から6/16に.699 まで一気に伸び、本塁打の量産期と一致します。一方で内容スコアは6/13まで76〜82で推移し、結果スコアの上昇に追いついていませんでした。期間中盤までは「結果が先・内容が後」という構図が続き、ピーク差は最大+14.2点に達しています。</p>
+      <div class="case-card-grid">
+        <div>
+          <div class="case-mini-chart"><canvas id="miniChart-02"></canvas></div>
+          <div class="case-mini-legend">
+            <span><span class="swatch" style="background:#005A9C"></span>内容</span>
+            <span><span class="swatch" style="background:#1f3a52;border-top:2px dashed #1f3a52;border-bottom:none;height:0"></span>結果（点線）</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>観察</h4>
+          <p>2023年6月上旬、結果スコアが先行して急上昇した期間。woBA は6/6の.492 から6/16に.699 まで一気に伸び、本塁打の量産期と一致します。一方で内容スコアは6/13まで76〜82で推移し、結果スコアの上昇に追いついていませんでした。期間中盤までは「結果が先・内容が後」という構図が続き、ピーク差は最大+14.2点に達しています。</p>
 
-        <h4>仮説</h4>
-        <p>結果が先に伸びた要因は<strong>バレル率の高さ</strong>です。期間平均0.244、ピーク日0.348と、コンタクトしたボールが長打になる確率が異常に高い水準でした。一方でチェイス率は期間前半0.30前後で、選球眼の改善は遅れていました。「振った球がたまたま長打になり続けた」状態に、ボール球の見極めが後から追いついた──と解釈できます。期間後半（6/17以降）にチェイス率が0.21まで下がり、内容スコアが急速に追いつきました。</p>
+          <h4>仮説</h4>
+          <p>結果が先に伸びた要因は<strong>バレル率の高さ</strong>です。期間平均0.244、ピーク日0.348と、コンタクトしたボールが長打になる確率が異常に高い水準でした。一方でチェイス率は期間前半0.30前後で、選球眼の改善は遅れていました。「振った球がたまたま長打になり続けた」状態に、ボール球の見極めが後から追いついた──と解釈できます。期間後半（6/17以降）にチェイス率が0.21まで下がり、内容スコアが急速に追いつきました。</p>
 
-        <h4>結末</h4>
-        <p>6/21にはピーク差が+14.2 → -2.0まで縮まり、内容スコアが結果スコアを上回る形で乖離が解消しました。結果先行は「幸運か実力か」を判定する材料として、その後数試合の内容スコア追従を見るのが有効です。実際この好調は7月以降も継続し、内容・結果ともに高い水準で推移しました。case-01（2025年5-6月）の「内容先行が結果に遅れて反映」の逆パターンとして対比できます。</p>
+          <h4>結末</h4>
+          <p>6/21にはピーク差が+14.2 → -2.0まで縮まり、内容スコアが結果スコアを上回る形で乖離が解消しました。結果先行は「幸運か実力か」を判定する材料として、その後数試合の内容スコア追従を見るのが有効です。case-01（2025年5-6月）の「内容先行が結果に遅れて反映」の逆パターンとして対比できます。</p>
+        </div>
+      </div>
+    </article>
+
+    <article id="case-03" class="case-card case-card--with-chart">
+      <span class="case-eyebrow">Case 03 · 同時好調</span>
+      <h3>2つのスコアが揃って90+を記録 ──2024年6月の絶頂期</h3>
+      <div class="case-meta">
+        <span>2024-06-13 〜 2024-06-29</span>
+        <span>15試合</span>
+        <span>タイプ: 同時好調</span>
+        <span>ピーク: 内容98 / 結果96(6/22)</span>
+      </div>
+      <div class="case-card-grid">
+        <div>
+          <div class="case-mini-chart"><canvas id="miniChart-03"></canvas></div>
+          <div class="case-mini-legend">
+            <span><span class="swatch" style="background:#005A9C"></span>内容</span>
+            <span><span class="swatch" style="background:#1f3a52;border-top:2px dashed #1f3a52;border-bottom:none;height:0"></span>結果（点線）</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>観察</h4>
+          <p>2024年6月中旬から下旬、内容スコアと結果スコアが<strong>同時にピークに達した</strong>期間。両スコアとも90+で15日連続、最高値はそれぞれ 98 / 96 を記録。woBA は .298 から .653 まで伸び、安打・本塁打・出塁の総合的なバランスが取れた絶頂期です。</p>
+
+          <h4>仮説</h4>
+          <p>主因は<strong>選球眼とコンタクト精度の同時進化</strong>です。チェイス率は 0.27 → 0.13 と半減し、ストライクゾーン外のボールに手を出さなくなりました。一方コンタクト率は 0.74 → 0.82 まで向上し、振りに行った球をほぼ確実に当てられる状態に。ハードヒット率も期間中 0.68〜0.81 で推移し、6指標すべてが同方向に揃った稀な期間です。</p>
+
+          <h4>結末</h4>
+          <p>6/29 以降はハードヒット率が低下しはじめ、内容スコアは 75 まで低下。結果スコアは慣性で 86 をキープしましたが、この時点で「結果先行」型に移行しました。同時好調はベースラインのアップデート要素にもなる稀有な期間で、6指標が同時に最高水準を維持できる時間は短く、いずれ1指標から崩れ始めるのが普通です。</p>
+        </div>
+      </div>
+    </article>
+
+    <article id="case-04" class="case-card case-card--with-chart">
+      <span class="case-eyebrow">Case 04 · 同時悪化</span>
+      <h3>両スコアが谷を作って戻る ──2024年5月下旬〜6月上旬の不振期</h3>
+      <div class="case-meta">
+        <span>2024-05-22 〜 2024-06-09</span>
+        <span>15試合</span>
+        <span>タイプ: 同時悪化</span>
+        <span>最低: 内容59 / 結果68(5/28)</span>
+      </div>
+      <div class="case-card-grid">
+        <div>
+          <div class="case-mini-chart"><canvas id="miniChart-04"></canvas></div>
+          <div class="case-mini-legend">
+            <span><span class="swatch" style="background:#dc2626"></span>内容</span>
+            <span><span class="swatch" style="background:#7a2418;border-top:2px dashed #7a2418;border-bottom:none;height:0"></span>結果（点線）</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>観察</h4>
+          <p>2024年5月下旬から6月上旬の不振期。内容スコアは 71 → 59 まで低下し、結果スコアも 79 → 68 まで連動して下げました。両スコアとも70以下が10試合続く厳しい期間です。</p>
+
+          <h4>仮説</h4>
+          <p>主因は<strong>ボール球追い</strong>。チェイス率が 0.37 → 0.49 まで上昇し、ストライクゾーン外のボールを振る頻度が大幅に増えました。これによりカウント不利→無理なスイング→打球の質低下（ハードヒット率 0.55 → 0.45）の循環に陥っています。コンタクト率自体は 0.76 とほぼ平常で、「当ててはいるが質の悪い打球」というスランプ典型例です。</p>
+
+          <h4>結末</h4>
+          <p>6/5 以降にチェイス率が 0.35 まで低下し、内容スコアが急速に回復。これが直後の case-03（2024年6月中旬の同時好調期）へ繋がる転換点となりました。<strong>同時悪化の脱出は「結果が良くなるより先に内容が良くなる」が典型</strong>で、チェイス率の改善が最も早期のサインです。</p>
+        </div>
+      </div>
+    </article>
+
+    <article id="case-05" class="case-card case-card--with-chart">
+      <span class="case-eyebrow">Case 05 · 内容先行（極端例）</span>
+      <h3>ピーク差 -22.5pt の最大乖離 ──2022年5-6月</h3>
+      <div class="case-meta">
+        <span>2022-05-22 〜 2022-06-05</span>
+        <span>12試合</span>
+        <span>タイプ: 内容先行</span>
+        <span>ピーク差: -22.5pt(6/3・過去5年最大)</span>
+      </div>
+      <div class="case-card-grid">
+        <div>
+          <div class="case-mini-chart"><canvas id="miniChart-05"></canvas></div>
+          <div class="case-mini-legend">
+            <span><span class="swatch" style="background:#005A9C"></span>内容</span>
+            <span><span class="swatch" style="background:#1f3a52;border-top:2px dashed #1f3a52;border-bottom:none;height:0"></span>結果（点線）</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>観察</h4>
+          <p>2022年5月下旬から6月上旬、内容スコアが90以上に急騰したにもかかわらず、結果スコアが70台前半に留まった「<strong>最大級の内容先行</strong>」期間。ピーク差は -22.5pt と case-01 の -20pt を超え、過去5シーズンで最大の乖離を記録しました。</p>
+
+          <h4>仮説</h4>
+          <p>バレル率は 6/2-3 に 0.375 と異常に高く、ハードヒット率も 0.62-0.69。打球の質は申し分ないのに、woBA は .29-.34 と平凡でした。仮説：<strong>当たりが守備正面に集中する不運</strong>もしくは<strong>打球角度がライナー寄りで本塁打にならない</strong>。後者は HR 数の少なさで裏付けが取れる構造です。</p>
+
+          <h4>結末</h4>
+          <p>6/6 以降に内容スコアが 86 → 78 → 74 へ下降し、結果スコアは横ばい（70-78）のまま。乖離は縮まりましたが「結果が伸びる」のではなく「内容が落ちる」形で収束しました。case-01（2025年）が「内容→結果が遅れて回復」だったのに対し、case-05 は「内容が落ちて結果に追従」した負の収束パターンです。</p>
+        </div>
       </div>
     </article>
   </div>
@@ -548,9 +682,9 @@
 <script>
 (function() {
   // ===== Score Line Chart =====
-  const labels = ['5/24','5/25','5/26','5/27','5/28','5/30','5/31','6/01','6/02','6/03','6/04','6/05','6/06','6/07','6/08','6/09','6/10','6/11'];
-  const contentData = [79,76,71,70,72,72,67,65,65,60,62,64,62,61,62,64,65,62];
-  const resultData  = [73,72,76,78,77,80,81,80,81,80,79,80,77,78,73,76,76,75];
+  const labels = ['5/24','5/25','5/26','5/27','5/28','5/30','5/31','6/01','6/02','6/03','6/04','6/05','6/06','6/07','6/08','6/09','6/10','6/11','6/13','6/14','6/15','6/16'];
+  const contentData = [79,76,71,70,72,72,67,65,65,60,62,64,62,61,62,64,65,62,65,70,73,73];
+  const resultData  = [73,72,76,78,77,80,81,80,81,80,79,80,77,78,73,76,76,75,73,78,80,84];
 
   // Custom plugin: draw good/normal/caution bands
   const bandPlugin = {
@@ -575,10 +709,64 @@
     }
   };
 
+  // Custom plugin: vertical phase bands by date-index range
+  const phaseBandPlugin = {
+    id: 'phaseBandPlugin',
+    beforeDatasetsDraw(chart) {
+      const {ctx, chartArea: {top, bottom, left, right}, scales: {x}} = chart;
+      ctx.save();
+      const phases = [
+        {from: 0,  to: 1,  color: 'rgba(154,154,154,0.07)'},  // 5/24-25 下落開始
+        {from: 2,  to: 13, color: 'rgba(196,106,20,0.07)'},   // 5/26-6/7 乖離拡大
+        {from: 14, to: 17, color: 'rgba(0,90,156,0.07)'},     // 6/8-11 結果追従下落
+        {from: 18, to: 21, color: 'rgba(22,163,74,0.10)'}     // 6/13-16 回復
+      ];
+      const halfStep = (right - left) / labels.length / 2;
+      phases.forEach((p, i) => {
+        const x1 = x.getPixelForValue(p.from);
+        const x2 = x.getPixelForValue(p.to);
+        const xLeft  = (i === 0)               ? left  : x1 - halfStep;
+        const xRight = (i === phases.length-1) ? right : x2 + halfStep;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(xLeft, top, xRight - xLeft, bottom - top);
+      });
+      ctx.restore();
+    }
+  };
+
+  // Custom plugin: pin annotations at peak (6/3) and reversal (6/16)
+  const pinPlugin = {
+    id: 'pinPlugin',
+    afterDatasetsDraw(chart) {
+      const {ctx, scales: {x, y}} = chart;
+      const pins = [
+        {idx: 9,  yVal: 80, label: 'ピーク差+20pt', color: '#dc2626'},
+        {idx: 21, yVal: 84, label: '反転 +9pt',     color: '#16a34a'}
+      ];
+      ctx.save();
+      pins.forEach(pin => {
+        const px = x.getPixelForValue(pin.idx);
+        const py = y.getPixelForValue(pin.yVal);
+        ctx.beginPath();
+        ctx.arc(px, py, 7, 0, Math.PI * 2);
+        ctx.fillStyle = pin.color;
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = pin.color;
+        ctx.font = "700 11px 'Noto Sans JP', sans-serif";
+        ctx.textAlign = 'center';
+        ctx.fillText(pin.label, px, py - 14);
+      });
+      ctx.restore();
+    }
+  };
+
   const scoreCtx = document.getElementById('scoreChart').getContext('2d');
   new Chart(scoreCtx, {
     type: 'line',
-    plugins: [bandPlugin],
+    plugins: [bandPlugin, phaseBandPlugin, pinPlugin],
     data: {
       labels,
       datasets: [
@@ -642,7 +830,7 @@
         },
         y: {
           min: 55,
-          max: 85,
+          max: 90,
           grid: {color: 'rgba(228,224,216,0.6)', drawBorder: false},
           ticks: {
             stepSize: 5,
@@ -655,132 +843,146 @@
     }
   });
 
-  // ===== Scatter Chart =====
-  const scatterCtx = document.getElementById('scatterChart').getContext('2d');
+  // ===== Mini chart helper for case-02..05 =====
+  function createMiniChart(canvasId, labels, content, result, opts) {
+    opts = opts || {};
+    const el = document.getElementById(canvasId);
+    if (!el) return;
+    const ctx = el.getContext('2d');
 
-  // 3 phases: drop-start (5/24-5/25), max-divergence (5/26-6/07), converging (6/08-6/11)
-  const scatterPoints = labels.map((label, i) => ({
-    x: contentData[i],
-    y: resultData[i],
-    label,
-    phase: i <= 1 ? 'early' : (i <= 13 ? 'mid' : 'late')
-  }));
-
-  const earlyPoints = scatterPoints.filter(p => p.phase === 'early');
-  const midPoints   = scatterPoints.filter(p => p.phase === 'mid');
-  const latePoints  = scatterPoints.filter(p => p.phase === 'late');
-
-  // diagonal reference line as a separate dataset
-  const diagMin = 55, diagMax = 85;
-  const diagPlugin = {
-    id: 'diagPlugin',
-    afterDatasetsDraw(chart) {
-      const {ctx, scales: {x, y}} = chart;
-      ctx.save();
-      ctx.strokeStyle = 'rgba(154,154,154,0.4)';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([5, 4]);
-      ctx.beginPath();
-      ctx.moveTo(x.getPixelForValue(diagMin), y.getPixelForValue(diagMin));
-      ctx.lineTo(x.getPixelForValue(diagMax), y.getPixelForValue(diagMax));
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.restore();
-    }
-  };
-
-  new Chart(scatterCtx, {
-    type: 'scatter',
-    plugins: [diagPlugin],
-    data: {
-      datasets: [
-        {
-          label: '5/24〜5/25（下落開始期）',
-          data: earlyPoints.map(p => ({x: p.x, y: p.y})),
-          backgroundColor: 'rgba(0,90,156,0.70)',
-          borderColor: '#005A9C',
-          borderWidth: 1.5,
-          pointRadius: 7,
-          pointHoverRadius: 9
-        },
-        {
-          label: '5/26〜6/07（乖離最大期）',
-          data: midPoints.map(p => ({x: p.x, y: p.y})),
-          backgroundColor: 'rgba(31,58,82,0.75)',
-          borderColor: '#1f3a52',
-          borderWidth: 1.5,
-          pointRadius: 7,
-          pointHoverRadius: 9
-        },
-        {
-          label: '6/08〜6/11（収束期）',
-          data: latePoints.map(p => ({x: p.x, y: p.y})),
-          backgroundColor: 'rgba(22,163,74,0.65)',
-          borderColor: '#16a34a',
-          borderWidth: 1.5,
-          pointRadius: 7,
-          pointHoverRadius: 9
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-          align: 'end',
-          labels: {
-            font: {family: "'Montserrat', sans-serif", size: 10, weight: '600'},
-            color: '#5a5a5a',
-            boxWidth: 10,
-            padding: 14
+    // optional pin annotations: [{idx, yVal, label, color}]
+    const pinPlugin = {
+      id: 'miniPin_' + canvasId,
+      afterDatasetsDraw(chart) {
+        if (!opts.pins || !opts.pins.length) return;
+        const {ctx, scales: {x, y}} = chart;
+        ctx.save();
+        opts.pins.forEach(pin => {
+          const px = x.getPixelForValue(pin.idx);
+          const py = y.getPixelForValue(pin.yVal);
+          ctx.beginPath();
+          ctx.arc(px, py, 5, 0, Math.PI * 2);
+          ctx.fillStyle = pin.color || '#dc2626';
+          ctx.fill();
+          ctx.strokeStyle = '#fff';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+          if (pin.label) {
+            ctx.fillStyle = pin.color || '#dc2626';
+            ctx.font = "700 9px 'Noto Sans JP', sans-serif";
+            ctx.textAlign = 'center';
+            ctx.fillText(pin.label, px, py - 10);
           }
-        },
-        tooltip: {
-          backgroundColor: '#1c1c1c',
-          titleFont: {family: "'Montserrat', sans-serif", size: 11, weight: '700'},
-          bodyFont: {family: "'Noto Sans JP', sans-serif", size: 12},
-          padding: 10,
-          cornerRadius: 2,
-          callbacks: {
-            label(ctx) {
-              const idx = ctx.dataIndex;
-              const phaseArr = [earlyPoints, midPoints, latePoints][ctx.datasetIndex];
-              const pt = phaseArr ? phaseArr[idx] : null;
-              return `  ${pt ? pt.label : ''} 内容:${ctx.parsed.x}点 結果:${ctx.parsed.y}点`;
-            }
-          }
-        }
+        });
+        ctx.restore();
+      }
+    };
+
+    return new Chart(ctx, {
+      type: 'line',
+      plugins: [pinPlugin],
+      data: {
+        labels,
+        datasets: [
+          {label:'内容', data:content, borderColor:'#005A9C', backgroundColor:'rgba(0,90,156,0.08)',
+           borderWidth:2, pointRadius:2.5, pointHoverRadius:5, tension:0.3, fill:false},
+          {label:'結果', data:result, borderColor:'#1f3a52', backgroundColor:'rgba(31,58,82,0.06)',
+           borderWidth:2, pointRadius:2.5, pointHoverRadius:5, tension:0.3, fill:false, borderDash:[4,3]}
+        ]
       },
-      scales: {
-        x: {
-          min: 55,
-          max: 85,
-          title: {
-            display: true,
-            text: '内容スコア',
-            font: {family: "'Noto Sans JP', sans-serif", size: 11, weight: '700'},
-            color: '#9a9a9a'
-          },
-          grid: {color: 'rgba(228,224,216,0.6)', drawBorder: false},
-          ticks: {font: {family: "'Montserrat', sans-serif", size: 10, weight: '600'}, color: '#9a9a9a', stepSize: 5}
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{
+            backgroundColor:'#1c1c1c',
+            titleFont:{family:"'Noto Sans JP', sans-serif", size:11},
+            bodyFont:{family:"'Montserrat', sans-serif", size:11, weight:'700'},
+            padding:8, cornerRadius:2,
+            callbacks:{label(c){return `  ${c.dataset.label}: ${c.parsed.y}点`}}
+          }
         },
-        y: {
-          min: 55,
-          max: 85,
-          title: {
-            display: true,
-            text: '結果スコア',
-            font: {family: "'Noto Sans JP', sans-serif", size: 11, weight: '700'},
-            color: '#9a9a9a'
-          },
-          grid: {color: 'rgba(228,224,216,0.6)', drawBorder: false},
-          ticks: {font: {family: "'Montserrat', sans-serif", size: 10, weight: '600'}, color: '#9a9a9a', stepSize: 5}
+        scales:{
+          x:{grid:{display:false}, ticks:{font:{family:"'Montserrat', sans-serif", size:9}, color:'#9a9a9a', maxTicksLimit:6, autoSkip:true}},
+          y:{min: opts.yMin || 55, max: opts.yMax || 100,
+             grid:{color:'rgba(228,224,216,0.6)'},
+             ticks:{font:{family:"'Montserrat', sans-serif", size:9}, color:'#9a9a9a', stepSize:10, callback: v => v}}
         }
       }
-    }
-  });
+    });
+  }
+
+  // ===== Case 02: 結果先行 (2023/6/6-21) =====
+  createMiniChart(
+    'miniChart-02',
+    ['6/6','6/7','6/8','6/9','6/10','6/11','6/12','6/13','6/14','6/15','6/16','6/17','6/18','6/20','6/21'],
+    [78,82,76,76,77,77,81,85,81,82,84,87,89,93,94],
+    [85,87,84,85,89,91,93,96,94,96,98,97,95,94,92],
+    {yMin:70, yMax:100, pins:[{idx:10, yVal:98, label:'+14.2pt', color:'#dc2626'}, {idx:14, yVal:92, label:'反転', color:'#16a34a'}]}
+  );
+
+  // ===== Case 03: 同時好調 (2024/6/13-29) =====
+  createMiniChart(
+    'miniChart-03',
+    ['6/13','6/14','6/15','6/16','6/17','6/18','6/19','6/20','6/21','6/22','6/24','6/25','6/26','6/28','6/29'],
+    [79,79,83,88,89,97,96,95,98,98,96,90,89,88,83],
+    [75,73,72,80,87,92,89,85,94,96,96,93,92,93,92],
+    {yMin:70, yMax:100, pins:[{idx:9, yVal:96, label:'両者90+', color:'#16a34a'}]}
+  );
+
+  // ===== Case 04: 同時悪化 (2024/5/22-6/9) =====
+  createMiniChart(
+    'miniChart-04',
+    ['5/22','5/24','5/25','5/26','5/28','5/29','5/31','6/1','6/2','6/4','6/5','6/6','6/7','6/8','6/9'],
+    [71,68,65,65,59,60,63,67,67,66,75,74,75,75,75],
+    [79,76,73,72,68,69,70,71,69,68,73,73,72,69,70],
+    {yMin:55, yMax:85, pins:[{idx:4, yVal:68, label:'両者最低', color:'#dc2626'}, {idx:10, yVal:73, label:'回復起点', color:'#16a34a'}]}
+  );
+
+  // ===== Case 05: 内容先行(極端例) (2022/5/22-6/5) =====
+  createMiniChart(
+    'miniChart-05',
+    ['5/22','5/24','5/25','5/26','5/27','5/28','5/29','5/31','6/2','6/3','6/4','6/5'],
+    [82,81,88,88,85,82,92,91,95,95,92,89],
+    [78,77,71,71,68,70,80,80,75,73,77,78],
+    {yMin:65, yMax:100, pins:[{idx:9, yVal:73, label:'-22.5pt', color:'#dc2626'}]}
+  );
+
+  // ===== Sparklines for CASE INDEX chips =====
+  function drawSpark(canvasId, points, color) {
+    const el = document.getElementById(canvasId);
+    if (!el) return;
+    const dpr = window.devicePixelRatio || 1;
+    const cw = el.clientWidth, ch = el.clientHeight;
+    el.width = cw * dpr; el.height = ch * dpr;
+    const ctx = el.getContext('2d');
+    ctx.scale(dpr, dpr);
+    const min = Math.min(...points), max = Math.max(...points);
+    const range = max - min || 1;
+    const padX = 1, padY = 2;
+    const w = cw - padX * 2, h = ch - padY * 2;
+    ctx.strokeStyle = color || '#005A9C';
+    ctx.lineWidth = 1.4;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    points.forEach((p, i) => {
+      const x = padX + (i / (points.length - 1)) * w;
+      const y = padY + h - ((p - min) / range) * h;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  }
+
+  // case-01: 内容先行（要注意ゾーンへ落ちて回復）
+  drawSpark('spark-01', [79,76,71,70,72,72,67,65,65,60,62,64,62,61,62,64,65,62,65,70,73,73], '#005A9C');
+  // case-02: 結果先行（内容が後から急上昇）
+  drawSpark('spark-02', [78,82,76,76,77,77,81,85,81,82,84,87,89,93,94], '#005A9C');
+  // case-03: 同時好調（山形ピーク）
+  drawSpark('spark-03', [79,79,83,88,89,97,96,95,98,98,96,90,89,88,83], '#16a34a');
+  // case-04: 同時悪化（谷形・赤）
+  drawSpark('spark-04', [71,68,65,65,59,60,63,67,67,66,75,74,75,75,75], '#dc2626');
+  // case-05: 内容先行極端（高位を維持して下落）
+  drawSpark('spark-05', [82,81,88,88,85,82,92,91,95,95,92,89], '#005A9C');
 })();
 </script>
 
