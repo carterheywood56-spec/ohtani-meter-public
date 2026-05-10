@@ -153,6 +153,18 @@
     .stats-avg{font-size:40px}
   }
 
+  /* ===== Other Cases (card layout) ===== */
+  .case-card{background:#fff;border:1px solid var(--border);border-radius:3px;padding:32px 28px;margin:0 0 24px;scroll-margin-top:80px}
+  .case-card:last-child{margin-bottom:0}
+  .case-eyebrow{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;display:block}
+  .case-card h3{font-family:var(--jp);font-weight:900;font-size:22px;line-height:1.45;color:var(--ink);margin:0 0 16px;letter-spacing:0.005em}
+  .case-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--jp);font-size:12px;color:var(--ink-3);margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border-2)}
+  .case-meta span{font-weight:600}
+  .case-body h4{font-family:var(--jp);font-weight:700;font-size:12px;letter-spacing:0.10em;color:var(--ink-3);margin:24px 0 10px;text-transform:uppercase}
+  .case-body h4:first-child{margin-top:0}
+  .case-body p{font-family:var(--jp);font-size:15px;line-height:1.85;color:var(--ink);margin:0}
+  @media (max-width:640px){.case-card{padding:24px 20px}.case-card h3{font-size:19px}}
+
   /* ===== Footer ===== */
   footer{background:var(--footer);color:rgba(255,255,255,0.6);padding:48px 0}
   .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
@@ -199,8 +211,8 @@
   </div>
 </nav>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
+<!-- ============ HERO (Case 01) ============ -->
+<section class="hero" id="case-01" style="scroll-margin-top:60px">
   <div class="hero-bg" role="img" aria-label="大谷翔平 — フォロースルー"></div>
   <div class="hero-overlay"></div>
   <div class="hero-vignette"></div>
@@ -448,6 +460,36 @@
     <div class="body-text" style="margin-top:40px">
       <p>この期間に「内容スコアが示していたもの」と「結果スコアが示していたもの」は大きく異なっていました。大谷メーターはこの2つを分けて見えるようにするためのツールです。</p>
     </div>
+  </div>
+</section>
+
+<!-- ============ Other Cases ============ -->
+<section class="content-section alt" id="other-cases">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow">Other Cases</div>
+    <h2 class="section-title">他の事例</h2>
+    <p class="section-lead">case-01 のような「内容先行」型以外にも、過去シーズンには異なるパターンの乖離が観察されています。ここでは4タイプの代表例を順次掲載していきます。</p>
+
+    <article id="case-02" class="case-card">
+      <span class="case-eyebrow">Case 02 · 結果先行</span>
+      <h3>結果が先・内容が後から追いつく ──2023年6月の量産期</h3>
+      <div class="case-meta">
+        <span>2023-06-06 〜 2023-06-21</span>
+        <span>15試合</span>
+        <span>タイプ: 結果先行</span>
+        <span>ピーク差: +14.2pt（6/16）</span>
+      </div>
+      <div class="case-body">
+        <h4>観察</h4>
+        <p>2023年6月上旬、結果スコアが先行して急上昇した期間。woBA は6/6の.492 から6/16に.699 まで一気に伸び、本塁打の量産期と一致します。一方で内容スコアは6/13まで76〜82で推移し、結果スコアの上昇に追いついていませんでした。期間中盤までは「結果が先・内容が後」という構図が続き、ピーク差は最大+14.2点に達しています。</p>
+
+        <h4>仮説</h4>
+        <p>結果が先に伸びた要因は<strong>バレル率の高さ</strong>です。期間平均0.244、ピーク日0.348と、コンタクトしたボールが長打になる確率が異常に高い水準でした。一方でチェイス率は期間前半0.30前後で、選球眼の改善は遅れていました。「振った球がたまたま長打になり続けた」状態に、ボール球の見極めが後から追いついた──と解釈できます。期間後半（6/17以降）にチェイス率が0.21まで下がり、内容スコアが急速に追いつきました。</p>
+
+        <h4>結末</h4>
+        <p>6/21にはピーク差が+14.2 → -2.0まで縮まり、内容スコアが結果スコアを上回る形で乖離が解消しました。結果先行は「幸運か実力か」を判定する材料として、その後数試合の内容スコア追従を見るのが有効です。実際この好調は7月以降も継続し、内容・結果ともに高い水準で推移しました。case-01（2025年5-6月）の「内容先行が結果に遅れて反映」の逆パターンとして対比できます。</p>
+      </div>
+    </article>
   </div>
 </section>
 
