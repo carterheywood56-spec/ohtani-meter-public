@@ -153,6 +153,16 @@
     .stats-avg{font-size:40px}
   }
 
+  /* ===== Case Index (navbar 直下のチップ列) ===== */
+  .case-index{background:#fff;border-bottom:1px solid var(--border)}
+  .case-index-inner{max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .case-index-label{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;text-transform:uppercase;color:var(--ink-3);flex-shrink:0}
+  .case-index-list{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap}
+  .case-index-chip{display:inline-flex;align-items:center;padding:6px 12px;font-family:var(--jp);font-size:12px;font-weight:700;color:var(--ink-2);background:var(--bg);border:1px solid var(--border);border-radius:2px;transition:color 0.15s,border-color 0.15s,background 0.15s}
+  .case-index-chip:hover{color:var(--amber);border-color:var(--amber)}
+  .case-index-chip .num{font-family:var(--en);font-weight:800;font-size:10px;letter-spacing:0.10em;color:var(--amber);margin-right:8px}
+  @media (max-width:640px){.case-index-inner{padding:12px 20px;gap:10px}.case-index-chip{font-size:11px;padding:5px 10px}}
+
   /* ===== Other Cases (card layout) ===== */
   .case-card{background:#fff;border:1px solid var(--border);border-radius:3px;padding:32px 28px;margin:0 0 24px;scroll-margin-top:80px}
   .case-card:last-child{margin-bottom:0}
@@ -208,6 +218,17 @@
       <a href="daily.html">日別推移</a>
       <a href="faq.html">FAQ</a>
     </div>
+  </div>
+</nav>
+
+<!-- ============ CASE INDEX ============ -->
+<nav class="case-index" aria-label="事例一覧">
+  <div class="case-index-inner">
+    <span class="case-index-label">All Cases</span>
+    <ul class="case-index-list">
+      <li><a href="#case-01" class="case-index-chip"><span class="num">01</span>内容先行 · 2025/5-6</a></li>
+      <li><a href="#case-02" class="case-index-chip"><span class="num">02</span>結果先行 · 2023/6</a></li>
+    </ul>
   </div>
 </nav>
 
