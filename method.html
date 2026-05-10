@@ -102,6 +102,25 @@
   .photo-break .caption::before{content:"";width:36px;height:1px;background:var(--amber)}
   @media (max-width:900px){.photo-break{height:300px}.photo-break .caption{left:20px;font-size:9px}}
 
+  /* ===== Example box ===== */
+  .example-box{background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:24px 28px;margin:36px 0 0}
+  .example-box .ex-label{font-family:var(--en);font-weight:700;font-size:10px;letter-spacing:0.20em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;display:block}
+  .example-box h3{font-family:var(--jp);font-weight:700;font-size:17px;line-height:1.5;color:var(--ink);margin:0 0 14px}
+  .example-box p{font-family:var(--jp);font-size:14px;line-height:1.85;color:var(--ink);margin:0 0 12px}
+  .example-box p:last-child{margin-bottom:0}
+  .example-box .ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 4px}
+  @media (max-width:640px){.example-box .ex-grid{grid-template-columns:1fr}.example-box{padding:20px 22px}}
+  .example-box .ex-cell{background:#fff;border:1px solid var(--border-2);border-radius:2px;padding:14px 16px}
+  .example-box .ex-cell .ex-cell-head{font-family:var(--en);font-weight:700;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px;display:block}
+  .example-box .ex-cell p{font-size:13px;line-height:1.7;margin:0}
+  .example-box .ex-cell .scores{font-family:var(--jp);font-weight:700;font-size:13px;color:var(--amber);margin-top:8px;display:block}
+  .example-box .ex-table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 0}
+  .example-box .ex-table th{text-align:left;font-family:var(--jp);font-weight:700;font-size:11px;color:var(--ink-3);padding:10px 10px 10px 0;border-bottom:1px solid var(--border)}
+  .example-box .ex-table td{padding:12px 10px 12px 0;border-bottom:1px solid var(--border-2);vertical-align:top;font-family:var(--jp);line-height:1.6}
+  .example-box .ex-table tr:last-child td{border-bottom:none}
+  .example-box .ex-table .metric-name{font-weight:700;color:var(--ink);width:32%}
+  .example-box .ex-foot{font-size:12px;color:var(--ink-3);margin-top:10px}
+
   /* ===== Footer ===== */
   footer{background:var(--footer);color:rgba(255,255,255,0.6);padding:48px 0}
   .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
@@ -163,6 +182,25 @@
       <p>たとえば同じ「打率2割台」でも、鋭い打球を連発しながら野手の正面を突いている月と、スイングが崩れていて当てるだけになっている月とでは、その後の展開が異なります。結果指標だけを見ていると、この違いが見えません。</p>
       <p>スイング内容スコアは、ヒットになったかどうかに依存しない指標で構成することで、結果の影響を切り離しています。2つのスコアのズレを見ることが、このツールの主な使い方です。</p>
     </div>
+
+    <div class="example-box">
+      <span class="ex-label">具体例 · Same Average, Different Swings</span>
+      <h3>同じ打率.250でも、内容と結果のスコアはこう違う</h3>
+      <p>これは概念図ですが、月単位で「同じ打率」が観察された場合に、内容スコアと結果スコアの示唆は大きく分かれます。</p>
+      <div class="ex-grid">
+        <div class="ex-cell">
+          <span class="ex-cell-head">A · 鋭い打球が野手の正面</span>
+          <p>チェイス率 0.21 / hard_hit% 0.62。ボール球を振らず、振った球は速い。野手の正面を突いて打率は伸びないが、打球の質は高い。</p>
+          <span class="scores">内容 90 · 結果 74（差 -16）</span>
+        </div>
+        <div class="ex-cell">
+          <span class="ex-cell-head">B · 当てるだけ、本塁打で結果を支える</span>
+          <p>チェイス率 0.34 / hard_hit% 0.50。ボール球に手を出し、当てるだけの打撃。本塁打が出続ける限り wOBA は維持される。</p>
+          <span class="scores">内容 65 · 結果 80（差 +15）</span>
+        </div>
+      </div>
+      <p class="ex-foot">結果指標だけ見れば「同じ.250」でも、A はその後の反発が期待でき、B は崩れの初期サインです。</p>
+    </div>
   </div>
 </section>
 
@@ -177,6 +215,49 @@
       <p><strong>hard_hit%（フェアボールのうち打球速度95mph以上の割合）</strong>は、コンタクト率を補完するために加えています。コンタクト率が同じでも、強い打球の割合が低ければ「当てただけ」の状態である可能性が高く、その差を区別するためです。母数はフェアボール（インプレー打球）に限定しています。</p>
       <p><strong>SweetSpot%・Barrel%</strong>は打球品質を多角的に捉えるために加えています。SweetSpot%は打球角度8〜32°の理想帯に入った割合、Barrel%は打球速度と角度の組み合わせが最も長打になりやすいゾーンに入った割合です。hard_hit%と同じくフェアボール限定で計算しています。</p>
       <p>逆に使っていないのは、「ヒットになったか」「塁に出られたか」のような最終結果です。それらは内容ではなく運の要素を多く含み、内容スコアに混ぜると目的が崩れるためです。</p>
+    </div>
+
+    <div class="example-box">
+      <span class="ex-label">具体例 · What Each Input Captures</span>
+      <h3>6指標が反映する打席内容</h3>
+      <p>各指標は「打席のどの局面のどの質」を捉えているか。値の方向（高い／低いどちらが良いか）も整理しておきます。</p>
+      <div style="overflow-x:auto">
+        <table class="ex-table">
+          <thead>
+            <tr>
+              <th>指標</th>
+              <th>値が高いとき（or 低いとき）の打席イメージ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="metric-name">チェイス率<br/><span style="font-weight:400;color:var(--ink-3);font-size:11px">低いほど良い</span></td>
+              <td>0.45 → ボール球を見極められず、追って空振り・凡打。<br/>0.20 → ストライクゾーン外をきっちり見送る。</td>
+            </tr>
+            <tr>
+              <td class="metric-name">Z-Swing%<br/><span style="font-weight:400;color:var(--ink-3);font-size:11px">高いほど良い</span></td>
+              <td>0.75 → ストライクをしっかり振りに行ける。<br/>0.55 → ストライクを見逃して追い込まれる。</td>
+            </tr>
+            <tr>
+              <td class="metric-name">コンタクト率<br/><span style="font-weight:400;color:var(--ink-3);font-size:11px">高いほど良い</span></td>
+              <td>0.80 → 振った球にしっかりバットが当たる。<br/>0.60 → 振っても空振り、三振が増える。</td>
+            </tr>
+            <tr>
+              <td class="metric-name">hard_hit%<br/><span style="font-weight:400;color:var(--ink-3);font-size:11px">高いほど良い</span></td>
+              <td>0.65 → フェアボールの大半が95mph以上の鋭い打球。<br/>0.40 → 詰まったゴロや弱いポップフライが目立つ。</td>
+            </tr>
+            <tr>
+              <td class="metric-name">SweetSpot%<br/><span style="font-weight:400;color:var(--ink-3);font-size:11px">高いほど良い</span></td>
+              <td>0.45 → 角度8〜32°の理想帯に多く打球が乗る。<br/>0.25 → 浮きすぎ（フライ）or 叩きつけ（ゴロ）が増える。</td>
+            </tr>
+            <tr>
+              <td class="metric-name">Barrel%<br/><span style="font-weight:400;color:var(--ink-3);font-size:11px">高いほど良い</span></td>
+              <td>0.30 → 速度＋角度ともに長打ゾーン、本塁打が出やすい。<br/>0.10 → 速いけど角度が悪い／角度はいいけど打球速度が出ない。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ex-foot">各指標は単独で「打撃の良し悪し」を決めるものではなく、6つの組み合わせで打席の質を立体的に捉えるための材料です。</p>
     </div>
   </div>
 </section>
