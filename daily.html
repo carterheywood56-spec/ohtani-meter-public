@@ -417,6 +417,21 @@ a { color: inherit; }
 .chart-annotations .ann { flex: 1 1 240px; padding-left: 14px; border-left: 2px solid var(--accent); }
 .chart-annotations .ann strong { display: block; font-family: "Montserrat", sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); margin-bottom: 6px; }
 
+/* ===== Trend pulse (delta_7d / window_30d) ===== */
+.trend-pulse { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--hairline); display: grid; gap: 28px; grid-template-columns: 1fr 1.4fr; font-family: "Noto Sans JP", sans-serif; font-size: 15px; line-height: 1.7; color: var(--ink-mute); }
+@media (max-width: 720px) { .trend-pulse { grid-template-columns: 1fr; } }
+.trend-pulse .pulse-card { padding-left: 14px; border-left: 2px solid var(--accent); }
+.trend-pulse .pulse-label { display: block; font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); margin-bottom: 10px; }
+.trend-pulse .pulse-deltas { display: flex; gap: 6px 10px; flex-wrap: wrap; align-items: center; margin: 4px 0 8px; }
+.trend-pulse .pulse-deltas .role { font-family: "Noto Sans JP", sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); }
+.trend-pulse .sl-delta.flat { background: var(--surface); color: var(--ink-mute); }
+.trend-pulse .pulse-ref { font-size: 13px; color: var(--ink-mute); margin-top: 6px; }
+.trend-pulse .pulse-extreme { margin-bottom: 10px; }
+.trend-pulse .pulse-extreme:last-child { margin-bottom: 0; }
+.trend-pulse .pulse-extreme-label { display: inline-block; font-family: "Montserrat", sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 0.18em; color: var(--ink); margin-right: 8px; padding: 2px 7px; background: var(--surface); border-radius: 2px; }
+.trend-pulse .pulse-extreme .ext-head { font-family: "Noto Sans JP", sans-serif; font-size: 14px; font-weight: 700; color: var(--ink); margin-right: 6px; }
+[data-theme="dark"] .trend-pulse .sl-delta.flat { background: rgba(255,255,255,0.05); color: var(--ink-mute); }
+
 /* ============= TABLE ============= */
 .table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 16px; font-family: "Montserrat", sans-serif; font-size: 13px; }
 .table-toggle {
@@ -917,6 +932,31 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
         <div class="ann" id="annot-3">
           <strong id="annot-3-head">—</strong>
           <span id="annot-3-body">—</span>
+        </div>
+      </div>
+      <div class="trend-pulse" id="trend-pulse" hidden>
+        <div class="pulse-card" id="pulse-7d-card" hidden>
+          <span class="pulse-label">Last 7 Days · 1週間前との比較</span>
+          <div class="pulse-deltas">
+            <span class="role">内容</span>
+            <span class="sl-delta" id="pulse-7d-pdelta">—</span>
+            <span class="role">結果</span>
+            <span class="sl-delta" id="pulse-7d-odelta">—</span>
+          </div>
+          <div class="pulse-ref" id="pulse-7d-ref">—</div>
+        </div>
+        <div class="pulse-card" id="pulse-30d-card" hidden>
+          <span class="pulse-label">Last 30 Days · 直近30日窓</span>
+          <div class="pulse-extreme" id="pulse-30-peak">
+            <span class="pulse-extreme-label">PEAK</span>
+            <span class="ext-head" id="pulse-30-peak-head">—</span>
+            <span id="pulse-30-peak-body">—</span>
+          </div>
+          <div class="pulse-extreme" id="pulse-30-valley">
+            <span class="pulse-extreme-label">VALLEY</span>
+            <span class="ext-head" id="pulse-30-valley-head">—</span>
+            <span id="pulse-30-valley-body">—</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1664,6 +1704,53 @@ function applyAnnotations(annotations) {
   });
 }
 
+/* ===== Trend pulse (delta_7d / window_30d) ===== */
+function applyTrendPulse(delta7d, window30d) {
+  const root = document.getElementById('trend-pulse');
+  if (!root) return;
+  let shown = false;
+
+  if (delta7d) {
+    const card = document.getElementById('pulse-7d-card');
+    if (card) card.hidden = false;
+    const setDelta = (id, v) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const n = Number(v) || 0;
+      const sign = n > 0 ? '+' : '';
+      el.textContent = `${sign}${n}pt`;
+      el.classList.remove('up', 'down', 'flat');
+      el.classList.add(n > 0 ? 'up' : (n < 0 ? 'down' : 'flat'));
+    };
+    setDelta('pulse-7d-pdelta', delta7d.delta_p);
+    setDelta('pulse-7d-odelta', delta7d.delta_o);
+    const ref = document.getElementById('pulse-7d-ref');
+    if (ref) ref.textContent = `${delta7d.ref_label} → ${delta7d.now_label}`;
+    shown = true;
+  }
+
+  if (window30d && window30d.peak) {
+    const card = document.getElementById('pulse-30d-card');
+    if (card) card.hidden = false;
+    const peakHead = document.getElementById('pulse-30-peak-head');
+    const peakBody = document.getElementById('pulse-30-peak-body');
+    if (peakHead) peakHead.textContent = window30d.peak.label;
+    if (peakBody) peakBody.textContent = window30d.peak.body;
+    if (window30d.valley) {
+      const vHead = document.getElementById('pulse-30-valley-head');
+      const vBody = document.getElementById('pulse-30-valley-body');
+      if (vHead) vHead.textContent = window30d.valley.label;
+      if (vBody) vBody.textContent = window30d.valley.body;
+    } else {
+      const vRow = document.getElementById('pulse-30-valley');
+      if (vRow) vRow.hidden = true;
+    }
+    shown = true;
+  }
+
+  if (shown) root.hidden = false;
+}
+
 /* ===== Table toggle count label ===== */
 function updateToggleLabel() {
   const allBtn = document.querySelector('.table-toggle button[data-mode="all"]');
@@ -1675,6 +1762,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSeasonBanner();
   updateToggleLabel();
   applyAnnotations(DATA.annotations || []);
+  applyTrendPulse(DATA.delta_7d || null, DATA.window_30d || null);
   renderHero();
   renderTable('recent');
   document.querySelectorAll('.data-table thead th .base-val').forEach(el => {
