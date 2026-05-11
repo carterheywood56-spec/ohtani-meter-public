@@ -187,20 +187,25 @@ a { color: inherit; }
   filter: blur(40px);
   opacity: 0.75;
   left: -80px; top: 12%;
-  animation: float 18s ease-in-out infinite;
+  animation: float 36s ease-in-out infinite;
 }
 .hero-orb.small {
   width: 220px; height: 220px;
   right: 30%; bottom: 12%;
   left: auto;
   opacity: 0.5;
-  animation-duration: 24s;
-  animation-delay: -8s;
+  animation-duration: 48s;
+  animation-delay: -16s;
   background: radial-gradient(circle at 40% 40%, rgba(239,62,66,0.4) 0%, transparent 70%);
 }
 @keyframes float {
   0%, 100% { transform: translate(0,0) scale(1); }
-  50% { transform: translate(-30px, 20px) scale(1.04); }
+  50% { transform: translate(-20px, 14px) scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb { animation: none; }
+  .masthead-left .live-dot { animation: none; }
+  .fade-up { transition: none; }
 }
 
 .hero-content {
@@ -342,10 +347,7 @@ a { color: inherit; }
 .hero-narrative .eyebrow { color: var(--accent); margin-bottom: 10px; }
 .hero-narrative p { font-size: 15px; line-height: 1.7; color: rgba(243,241,234,0.78); font-family: "Noto Sans JP", sans-serif; }
 
-.hero-bottom { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-top: 32px; flex-wrap: wrap; }
-.hero-scroll-cue { display: flex; align-items: center; gap: 12px; font-family: "Montserrat", sans-serif; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(243,241,234,0.6); }
-.hero-scroll-cue::after { content: ""; width: 60px; height: 1px; background: rgba(243,241,234,0.4); animation: scroll-cue 2s ease-in-out infinite; }
-@keyframes scroll-cue { 0%,100% { transform: scaleX(0.4); transform-origin: left; } 50% { transform: scaleX(1); transform-origin: left; } }
+.hero-bottom { display: flex; justify-content: flex-end; align-items: center; gap: 24px; padding-top: 32px; flex-wrap: wrap; }
 
 .hero-game-nav { display: flex; align-items: center; gap: 8px; font-family: "Montserrat", sans-serif; font-size: 12px; }
 .hero-game-nav button {
@@ -624,6 +626,7 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
 .footer-brand h4 { font-family: "Archivo Black", sans-serif; font-size: 56px; line-height: 0.9; letter-spacing: -0.02em; }
 .footer-brand h4 span { color: var(--accent); }
 .footer-brand p { font-family: "Noto Sans JP", sans-serif; font-size: 15px; line-height: 1.8; color: rgba(243,241,234,0.7); margin-top: 16px; max-width: 380px; }
+.footer-brand .footer-source { font-size: 12px; margin-top: 10px; color: rgba(243,241,234,0.5); letter-spacing: 0.04em; }
 
 .footer-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 32px; align-items: start; }
 .footer-links a {
@@ -738,6 +741,38 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
   .tweaks-panel { right: 12px; bottom: 12px; left: 12px; width: auto; }
 }
 
+/* ===== Mobile compact table (760px 以下) ===== */
+@media (max-width: 760px) {
+  /* LINE (2), Z-SW% (6), CONTACT% (7), SWEET% (9) を非表示 → 7列表示 */
+  .data-table th:nth-child(2),
+  .data-table td:nth-child(2),
+  .data-table th:nth-child(6),
+  .data-table td:nth-child(6),
+  .data-table th:nth-child(7),
+  .data-table td:nth-child(7),
+  .data-table th:nth-child(9),
+  .data-table td:nth-child(9) { display: none; }
+  /* 横スクロール解除＋セルを圧縮 */
+  .data-table { min-width: 0; font-size: 12px; }
+  .data-table thead th { padding: 10px 6px; font-size: 9px; letter-spacing: 0.10em; }
+  .data-table tbody td { padding: 9px 6px; font-size: 12px; }
+  /* 残り列の幅を再配分 */
+  .data-table th:nth-child(1),
+  .data-table td:nth-child(1) { width: 60px; }
+  .data-table th:nth-child(3),
+  .data-table th:nth-child(4),
+  .data-table td:nth-child(3),
+  .data-table td:nth-child(4) { width: 56px; }
+  .data-table th:nth-child(5),
+  .data-table th:nth-child(8),
+  .data-table th:nth-child(10),
+  .data-table th:nth-child(11),
+  .data-table td:nth-child(5),
+  .data-table td:nth-child(8),
+  .data-table td:nth-child(10),
+  .data-table td:nth-child(11) { width: 50px; }
+}
+
 [data-photos="off"] .hero-bg { background: var(--cream-deep); }
 [data-photos="off"] .hero-content { color: var(--ink); }
 [data-photos="off"] .hero-title { color: var(--ink); text-shadow: none; }
@@ -755,7 +790,6 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
 [data-photos="off"] .hero-narrative { border-left-color: var(--hairline-strong); }
 [data-photos="off"] .hero-orb, [data-photos="off"] .hero-photo-stack { display: none; }
 [data-photos="off"] .hero-bg { background-image: none; background: var(--cream-deep); }
-[data-photos="off"] .hero-scroll-cue, [data-photos="off"] .hero-scroll-cue::after { color: var(--ink-mute); background: var(--hairline-strong); }
 [data-photos="off"] .hero-game-nav button { border-color: var(--hairline-strong); color: var(--ink); }
 [data-photos="off"] .hero-scores { border-top-color: var(--hairline); }
 
@@ -787,7 +821,6 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
   <div class="hero-photo-stack">
     <div class="frame f1"><img src="https://images.unsplash.com/photo-1508344928928-7165b67de128?auto=format&fit=crop&w=900&q=80" alt="" /></div>
     <div class="frame f2"><img src="https://images.unsplash.com/photo-1471295253337-3ceaaedca402?auto=format&fit=crop&w=900&q=80" alt="" /></div>
-    <div class="tag">PHOTO · STADIUM ARCHIVE</div>
   </div>
 
   <div class="hero-content">
@@ -795,6 +828,7 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
       <div class="hero-issue">VOL.<strong>---</strong> · GAME -- · LATEST UPDATE</div>
       <div class="hero-meta">
         <div><strong id="hero-date">2026.--.--</strong> <span id="hero-dow">—</span></div>
+        <!-- チーム情報: 移籍時は手動更新 -->
         <div>Los Angeles Dodgers</div>
       </div>
     </div>
@@ -806,11 +840,10 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
     </div>
 
     <div class="hero-bottom">
-      <div class="hero-scroll-cue">SCROLL · スクロールして詳細を見る</div>
       <div class="hero-game-nav">
-        <button id="prev-game" type="button">← PREV</button>
+        <button id="prev-game" type="button">← 前の試合</button>
         <span class="current">GAME <strong id="game-num">—</strong> / <span id="game-total">—</span></span>
-        <button id="next-game" type="button" disabled>NEXT →</button>
+        <button id="next-game" type="button" disabled>次の試合 →</button>
       </div>
     </div>
   </div>
@@ -1087,7 +1120,8 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
     <div class="footer-top">
       <div class="footer-brand">
         <h4 style="font-family:'Noto Sans JP',sans-serif;letter-spacing:0.02em;">大谷調子<span>METER</span></h4>
-        <p>大谷翔平の打撃状態を、内容と結果の2軸で日次追跡する。データソース: MLB Statcast / Baseball Savant。</p>
+        <p>大谷翔平の打撃状態を、内容と結果の2軸で日次追跡する。</p>
+        <p class="footer-source">データソース: MLB Statcast / Baseball Savant</p>
       </div>
       <div class="footer-links">
         <a href="index.html">概要<small>スコア概要・トップ</small></a>
