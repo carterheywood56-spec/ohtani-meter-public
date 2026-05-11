@@ -741,38 +741,6 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
   .tweaks-panel { right: 12px; bottom: 12px; left: 12px; width: auto; }
 }
 
-/* ===== Mobile compact table (760px 以下) ===== */
-@media (max-width: 760px) {
-  /* LINE (2), Z-SW% (6), CONTACT% (7), SWEET% (9) を非表示 → 7列表示 */
-  .data-table th:nth-child(2),
-  .data-table td:nth-child(2),
-  .data-table th:nth-child(6),
-  .data-table td:nth-child(6),
-  .data-table th:nth-child(7),
-  .data-table td:nth-child(7),
-  .data-table th:nth-child(9),
-  .data-table td:nth-child(9) { display: none; }
-  /* 横スクロール解除＋セルを圧縮 */
-  .data-table { min-width: 0; font-size: 12px; }
-  .data-table thead th { padding: 10px 6px; font-size: 9px; letter-spacing: 0.10em; }
-  .data-table tbody td { padding: 9px 6px; font-size: 12px; }
-  /* 残り列の幅を再配分 */
-  .data-table th:nth-child(1),
-  .data-table td:nth-child(1) { width: 60px; }
-  .data-table th:nth-child(3),
-  .data-table th:nth-child(4),
-  .data-table td:nth-child(3),
-  .data-table td:nth-child(4) { width: 56px; }
-  .data-table th:nth-child(5),
-  .data-table th:nth-child(8),
-  .data-table th:nth-child(10),
-  .data-table th:nth-child(11),
-  .data-table td:nth-child(5),
-  .data-table td:nth-child(8),
-  .data-table td:nth-child(10),
-  .data-table td:nth-child(11) { width: 50px; }
-}
-
 [data-photos="off"] .hero-bg { background: var(--cream-deep); }
 [data-photos="off"] .hero-content { color: var(--ink); }
 [data-photos="off"] .hero-title { color: var(--ink); text-shadow: none; }
