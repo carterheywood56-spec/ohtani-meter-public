@@ -478,12 +478,12 @@ a { color: inherit; }
   letter-spacing: 0.18em;
   text-transform: uppercase;
   padding: 14px 10px;
-  text-align: right;
+  text-align: center;
+  vertical-align: bottom;
   border-right: 1px solid rgba(243,241,234,0.15);
   white-space: nowrap;
   position: sticky; top: 0;
 }
-.data-table thead th:first-child { text-align: left; }
 .data-table thead th:last-child { border-right: none; }
 .data-table thead th .ja { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.05em; text-transform: none; color: rgba(243,241,234,0.65); margin-top: 3px; font-family: "Noto Sans JP", sans-serif; }
 .data-table thead th .base-val { display: block; font-family: "Montserrat", sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; color: rgba(243,241,234,0.38); margin-top: 4px; }
@@ -591,53 +591,6 @@ a { color: inherit; }
 
 [data-theme="dark"] .sl-delta.up { background: rgba(106,208,127,0.15); color: #6ad07f; }
 [data-theme="dark"] .sl-delta.down { background: rgba(232,117,104,0.15); color: #e87568; }
-
-/* ============= BREAKER ============= */
-.breaker { position: relative; height: 60vh; min-height: 360px; overflow: hidden; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-.breaker-bg {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(135deg, rgba(0,42,92,0.85) 0%, rgba(0,12,32,0.92) 100%),
-    url("https://images.unsplash.com/photo-1508344928-5c01c34e0e8a?auto=format&fit=crop&w=2000&q=80");
-  background-size: cover;
-  background-position: center;
-}
-.breaker-bg::before { content: ""; position: absolute; inset: 0; background-image: var(--grain); opacity: 1.4; mix-blend-mode: overlay; }
-.breaker-bg::after {
-  content: "";
-  position: absolute; inset: 0;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 40px, rgba(243,241,234,0.03) 40px 41px);
-}
-.breaker-content { position: relative; z-index: 2; height: 100%; display: flex; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; color: #f3f1ea; }
-.breaker-content blockquote {
-  font-family: "Noto Sans JP", sans-serif;
-  font-weight: 600;
-  font-size: clamp(18px, 2.8vw, 38px);
-  line-height: 1.35;
-  max-width: 1100px;
-  letter-spacing: -0.01em;
-}
-.breaker-content blockquote em { font-style: normal; color: var(--accent); }
-.breaker-attribution { font-family: "Montserrat", sans-serif; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(243,241,234,0.6); margin-top: 24px; font-weight: 600; }
-.breaker-baseball {
-  position: absolute;
-  width: 280px; height: 280px;
-  border-radius: 50%;
-  right: -60px; bottom: -60px;
-  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e8e0c8 50%, #6b5a3a 100%);
-  opacity: 0.25;
-  animation: float 14s ease-in-out infinite;
-}
-.breaker-baseball::before {
-  content: "";
-  position: absolute;
-  inset: 20%;
-  border: 2px solid rgba(184,36,42,0.4);
-  border-radius: 50%;
-  border-top: none; border-bottom: none;
-  transform: rotate(25deg);
-}
 
 /* ============= GUIDE ============= */
 .guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0; border: 1px solid var(--ink); }
@@ -805,9 +758,6 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
 [data-photos="off"] .hero-scroll-cue, [data-photos="off"] .hero-scroll-cue::after { color: var(--ink-mute); background: var(--hairline-strong); }
 [data-photos="off"] .hero-game-nav button { border-color: var(--hairline-strong); color: var(--ink); }
 [data-photos="off"] .hero-scores { border-top-color: var(--hairline); }
-[data-photos="off"] .breaker-bg { background-image: none; background: var(--cream-deep); }
-[data-photos="off"] .breaker-content { color: var(--ink); }
-[data-photos="off"] .breaker-baseball { display: none; }
 
 </style>
 </head>
@@ -842,9 +792,9 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
 
   <div class="hero-content">
     <div class="hero-top">
-      <div class="hero-issue">VOL.<strong>035</strong> · GAME 35 · LATEST UPDATE</div>
+      <div class="hero-issue">VOL.<strong>---</strong> · GAME -- · LATEST UPDATE</div>
       <div class="hero-meta">
-        <div><strong id="hero-date">2026.05.03</strong> <span id="hero-dow">日</span></div>
+        <div><strong id="hero-date">2026.--.--</strong> <span id="hero-dow">—</span></div>
         <div>Los Angeles Dodgers</div>
       </div>
     </div>
@@ -907,16 +857,66 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
   </div>
 </section>
 
+<!-- ============= GUIDE ============= -->
+<section class="section" id="guide">
+  <div class="section-inner">
+    <div class="section-head fade-up">
+      <div class="section-num">02</div>
+      <div class="title-block">
+        <h2>HOW TO<br/>READ.</h2>
+        <div class="ja">読み方ガイド</div>
+        <div class="desc">2つのスコアと帯ラベル判定基準。データの読み解き方を共有する。</div>
+      </div>
+    </div>
+
+    <div class="guide fade-up" data-delay="1">
+      <div class="guide-card">
+        <div class="num">01</div>
+        <h4>CONTENT SCORE</h4>
+        <div class="ja">内容スコア</div>
+        <p>スイング判断・コンタクト・打球の質を統合した、<strong>過程の指標</strong>。打球がライナーで野手正面に飛んでも、スイングの内容が良ければ高いスコアが出る。「実力」に近い数字。</p>
+        <div class="badges">
+          <span class="badge b-good">好調 ≥87</span>
+          <span class="badge b-warn">安定 73-86</span>
+          <span class="badge b-bad">要注意 <73</span>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="num">02</div>
+        <h4>RESULT SCORE</h4>
+        <div class="ja">結果スコア</div>
+        <p>打率・出塁率・長打率の構成要素を統合した、<strong>結果の指標</strong>。打席で起きたことそのもの。BABIP（運）の影響を受けるため、内容との乖離が継続したらレギュラー化を疑う。</p>
+        <div class="badges">
+          <span class="badge b-good">好調 ≥87</span>
+          <span class="badge b-warn">安定 73-86</span>
+          <span class="badge b-bad">要注意 <73</span>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="num">03</div>
+        <h4>GAP · 差分</h4>
+        <div class="ja">ギャップの読み方</div>
+        <p>RESULT − CONTENT の差。<strong>+10以上</strong>なら結果が内容を上回る幸運期、<strong>−10以下</strong>なら内容が結果に追いつかない不運期。継続するほど平均回帰の余地が大きい。</p>
+        <div class="badges">
+          <span class="badge b-good">+10↑ 幸運</span>
+          <span class="badge b-warn">±10 整合</span>
+          <span class="badge b-bad">-10↓ 不運</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============= SEASON BANNER ============= -->
 <section class="season-banner" id="season">
   <div class="season-banner-inner">
     <div class="season-banner-head fade-up">
       <h3>
-        <small>02 · Season Cumulative · シーズン累計</small>
+        <small>03 · Season Cumulative · シーズン累計</small>
         2026.<br/>SEASON.
       </h3>
       <div class="right">
-        <div>Through <strong id="season-through">May 03</strong></div>
+        <div>Through <strong id="season-through">—</strong></div>
         <div id="season-games-pa">— GAMES · — PA</div>
       </div>
     </div>
@@ -938,7 +938,7 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
 <section class="section" id="chart">
   <div class="section-inner">
     <div class="section-head fade-up">
-      <div class="section-num">03</div>
+      <div class="section-num">04</div>
       <div class="title-block">
         <h2>FORM<br/>TRAJECTORY.</h2>
         <div class="ja">スコア推移</div>
@@ -1011,26 +1011,11 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
   </div>
 </section>
 
-<!-- ============= BREAKER ============= -->
-<section class="breaker">
-  <div class="breaker-bg parallax" data-speed="0.3"></div>
-  <div class="breaker-baseball"></div>
-  <div class="breaker-content">
-    <div>
-      <blockquote>
-        スイングの<em>「内容」</em>が<em>「結果」</em>を<br/>
-        超え始めるとき、次のホットゾーンの輪郭が見えてくる。
-      </blockquote>
-      <div class="breaker-attribution" id="breaker-attr">— 大谷調子METER · 2026.05.03</div>
-    </div>
-  </div>
-</section>
-
 <!-- ============= TABLE ============= -->
 <section class="section" id="table">
   <div class="section-inner">
     <div class="section-head fade-up">
-      <div class="section-num">04</div>
+      <div class="section-num">05</div>
       <div class="title-block">
         <h2>GAME<br/>LOG.</h2>
         <div class="ja">試合別データ · ローリング窓150球</div>
@@ -1057,17 +1042,17 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
       <table class="data-table">
         <thead>
           <tr>
-            <th>DATE<span class="ja">日付</span></th>
-            <th>LINE<span class="ja">成績</span></th>
-            <th>CONTENT<span class="ja">内容</span></th>
-            <th>RESULT<span class="ja">結果</span></th>
+            <th>DATE<span class="ja">日付</span><span class="base-val">&nbsp;</span></th>
+            <th>LINE<span class="ja">成績</span><span class="base-val">&nbsp;</span></th>
+            <th>CONTENT<span class="ja">内容</span><span class="base-val">&nbsp;</span></th>
+            <th>RESULT<span class="ja">結果</span><span class="base-val">&nbsp;</span></th>
             <th>CHASE%<span class="ja">ゾーン外スイング↓</span><span class="base-val" data-key="chase"></span></th>
             <th>Z-SW%<span class="ja">ゾーンスイング</span><span class="base-val" data-key="zswing"></span></th>
             <th>CONTACT%<span class="ja">コンタクト</span><span class="base-val" data-key="contact"></span></th>
             <th>HARD%<span class="ja">ハード</span><span class="base-val" data-key="hardhit"></span></th>
             <th>SWEET%<span class="ja">スイート</span><span class="base-val" data-key="sweetspot"></span></th>
             <th>BARREL%<span class="ja">バレル</span><span class="base-val" data-key="barrel"></span></th>
-            <th>cum.OPS<span class="ja">通算OPS</span></th>
+            <th>cum.OPS<span class="ja">通算OPS</span><span class="base-val">&nbsp;</span></th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
@@ -1080,7 +1065,7 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
 <section class="section" style="background: var(--cream-deep); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);" id="metrics">
   <div class="section-inner">
     <div class="section-head fade-up">
-      <div class="section-num">05</div>
+      <div class="section-num">06</div>
       <div class="title-block">
         <h2>PLATE<br/>METRICS.</h2>
         <div class="ja">6指標の個別推移 · ローリング窓150球</div>
@@ -1093,56 +1078,6 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
     </div>
 
     <div class="sparkline-grid fade-up" data-delay="1" id="sparkline-grid"></div>
-  </div>
-</section>
-
-<!-- ============= GUIDE ============= -->
-<section class="section" id="guide">
-  <div class="section-inner">
-    <div class="section-head fade-up">
-      <div class="section-num">06</div>
-      <div class="title-block">
-        <h2>HOW TO<br/>READ.</h2>
-        <div class="ja">読み方ガイド</div>
-        <div class="desc">2つのスコアと帯ラベル判定基準。データの読み解き方を共有する。</div>
-      </div>
-    </div>
-
-    <div class="guide fade-up" data-delay="1">
-      <div class="guide-card">
-        <div class="num">01</div>
-        <h4>CONTENT SCORE</h4>
-        <div class="ja">内容スコア</div>
-        <p>スイング判断・コンタクト・打球の質を統合した、<strong>過程の指標</strong>。打球がライナーで野手正面に飛んでも、スイングの内容が良ければ高いスコアが出る。「実力」に近い数字。</p>
-        <div class="badges">
-          <span class="badge b-good">好調 ≥87</span>
-          <span class="badge b-warn">安定 73-86</span>
-          <span class="badge b-bad">要注意 <73</span>
-        </div>
-      </div>
-      <div class="guide-card">
-        <div class="num">02</div>
-        <h4>RESULT SCORE</h4>
-        <div class="ja">結果スコア</div>
-        <p>打率・出塁率・長打率の構成要素を統合した、<strong>結果の指標</strong>。打席で起きたことそのもの。BABIP（運）の影響を受けるため、内容との乖離が継続したらレギュラー化を疑う。</p>
-        <div class="badges">
-          <span class="badge b-good">好調 ≥87</span>
-          <span class="badge b-warn">安定 73-86</span>
-          <span class="badge b-bad">要注意 <73</span>
-        </div>
-      </div>
-      <div class="guide-card">
-        <div class="num">03</div>
-        <h4>GAP · 差分</h4>
-        <div class="ja">ギャップの読み方</div>
-        <p>RESULT − CONTENT の差。<strong>+10以上</strong>なら結果が内容を上回る幸運期、<strong>−10以下</strong>なら内容が結果に追いつかない不運期。継続するほど平均回帰の余地が大きい。</p>
-        <div class="badges">
-          <span class="badge b-good">+10↑ 幸運</span>
-          <span class="badge b-warn">±10 整合</span>
-          <span class="badge b-bad">-10↓ 不運</span>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1270,8 +1205,6 @@ function renderHero() {
   const cja = document.querySelector('#chart .title-block .ja');
   if (cja) cja.textContent = `スコア推移 · ${season.games}試合`;
   document.getElementById('season-through').textContent = `${dt.toLocaleString('en-US',{month:'short'})} ${d}`;
-  const ba = document.getElementById('breaker-attr');
-  if (ba) ba.textContent = `— 大谷調子METER · 2026.${m}.${d}`;
   const vi = document.querySelector('.hero-issue');
   if (vi) vi.innerHTML = `VOL.<strong>${String(season.games).padStart(3,'0')}</strong> · GAME ${season.games} · LATEST UPDATE`;
 }
