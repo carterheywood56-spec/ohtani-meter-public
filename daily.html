@@ -324,6 +324,9 @@ a { color: inherit; }
 
 /* ===== Score hero banner（独立した #scores セクション専用） ===== */
 .hero-scores--banner { display: grid; grid-template-columns: 1fr auto 1fr; gap: 48px; }
+.hero-scores--banner .hero-score-block .label { color: var(--ink-mute); font-size: 12px; letter-spacing: 0.20em; }
+.hero-scores--banner .hero-score-block .label strong { color: var(--ink); font-weight: 800; }
+.hero-scores--banner .hero-score-meta .max { color: var(--ink-mute); }
 .hero-scores--banner .hero-score-block.is-right { text-align: right; }
 .hero-scores--banner .hero-score-block.is-right .label { text-align: right; }
 .hero-scores--banner .hero-score-block.is-right .hero-score-row { justify-content: flex-end; }
@@ -748,9 +751,10 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
   .hero-scores--banner .hero-score-block.is-right,
   .hero-scores--banner .hero-score-block.is-right .label,
   .hero-scores--banner .hero-score-block.is-right .desc-text { text-align: left; }
-  .hero-scores--banner .hero-score-block.is-right .hero-score-row { justify-content: flex-start; }
+  .hero-scores--banner .hero-score-block.is-right .hero-score-row { justify-content: flex-start; flex-direction: row-reverse; }
   .hero-scores--banner .hero-score-block.is-right .desc-text { margin-left: 0; }
   .hero-scores--banner .hero-score-num { font-size: clamp(72px, 22vw, 120px); }
+  .hero-photo-stack { display: none; }
   .hero-narrative { padding-left: 0; border-left: none; max-width: none; }
   .season-grid { grid-template-columns: repeat(2, 1fr); }
   .sparkline-grid { grid-template-columns: 1fr; }
