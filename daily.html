@@ -425,6 +425,7 @@ a { color: inherit; }
 .chart-legend .swatch { width: 14px; height: 14px; border-radius: 2px; }
 .chart-legend .dashed { width: 22px; height: 0; border-top: 2px dashed currentColor; }
 
+.chart-canvas-outer { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .chart-canvas-wrap { position: relative; height: 460px; }
 .chart-annotations { display: flex; gap: 24px; flex-wrap: wrap; padding-top: 24px; margin-top: 24px; border-top: 1px solid var(--hairline); font-family: "Noto Sans JP", sans-serif; font-size: 15px; line-height: 1.7; color: var(--ink-mute); }
 .chart-annotations .ann { flex: 1 1 240px; padding-left: 14px; border-left: 2px solid var(--accent); }
@@ -966,8 +967,16 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
           <div class="item" style="color:#c44a2c;"><span class="dashed"></span>73 要注意</div>
         </div>
       </div>
-      <div class="chart-canvas-wrap">
-        <canvas id="score-chart"></canvas>
+      <div class="table-controls" style="margin-bottom:16px;">
+        <div class="table-toggle" id="chart-toggle">
+          <button class="active" data-mode="recent" type="button">直近30日</button>
+          <button data-mode="all" type="button">全期間</button>
+        </div>
+      </div>
+      <div class="chart-canvas-outer" id="chart-canvas-outer">
+        <div class="chart-canvas-wrap" id="chart-canvas-wrap">
+          <canvas id="score-chart"></canvas>
+        </div>
       </div>
       <div class="chart-annotations">
         <div class="ann" id="annot-1">
@@ -1030,7 +1039,7 @@ footer.site { background: var(--ink); color: #f3f1ea; padding: 80px 32px 40px; b
     </div>
 
     <div class="table-controls fade-up" data-delay="1">
-      <div class="table-toggle">
+      <div class="table-toggle" id="table-mode-toggle">
         <button class="active" data-mode="recent" type="button">最新10試合</button>
         <button data-mode="all" type="button">全試合</button>
       </div>
@@ -1234,35 +1243,66 @@ function animateCountUp(el) {
 }
 
 /* ===== Chart ===== */
-function renderChart() {
+let scoreChart = null;
+const CHART_PX_PER_POINT = 12; // 全期間モードでの横スクロール時、1試合あたりの最低幅
+
+function getChartRecords(mode) {
+  if (mode === 'all') return records;
+  const latestDt = new Date(records[records.length - 1].d + 'T00:00:00');
+  const threshold = new Date(latestDt);
+  threshold.setDate(threshold.getDate() - 29); // 直近30日（当日含む）
+  return records.filter(r => new Date(r.d + 'T00:00:00') >= threshold);
+}
+
+function renderChart(mode) {
+  mode = mode || 'recent';
   const ctx = document.getElementById('score-chart').getContext('2d');
   const ink = getCSS('--ink');
   const inkMute = getCSS('--ink-mute');
   const hairline = getCSS('--hairline');
   const fontFamily = "'Montserrat', 'Noto Sans JP', sans-serif";
 
-  // Build labels from season_start to latest, with null data before first scored record
+  const chartRecords = getChartRecords(mode);
+
+  // 全期間モードのみ、season_start〜最初のスコア試合までの空白ラベルを付与する
   const fmtLabel = d => `${d.getMonth()+1}/${d.getDate()}`;
-  const startDt = new Date(DATA.season_start + 'T00:00:00');
-  const firstDt = new Date(records[0].d + 'T00:00:00');
   const preLabels = [];
-  for (let d = new Date(startDt); d < firstDt; d.setDate(d.getDate() + 1)) {
-    preLabels.push(fmtLabel(d));
+  if (mode === 'all') {
+    const startDt = new Date(DATA.season_start + 'T00:00:00');
+    const firstDt = new Date(chartRecords[0].d + 'T00:00:00');
+    for (let d = new Date(startDt); d < firstDt; d.setDate(d.getDate() + 1)) {
+      preLabels.push(fmtLabel(d));
+    }
   }
-  const recLabels = records.map(r => fmtLabel(new Date(r.d + 'T00:00:00')));
+  const recLabels = chartRecords.map(r => fmtLabel(new Date(r.d + 'T00:00:00')));
   const labels = [...preLabels, ...recLabels];
   const nulls = preLabels.map(() => null);
-  const processData = [...nulls, ...records.map(r => r.p)];
-  const resultData  = [...nulls, ...records.map(r => r.o)];
+  const processData = [...nulls, ...chartRecords.map(r => r.p)];
+  const resultData  = [...nulls, ...chartRecords.map(r => r.o)];
 
-  // Dynamic Y range based on actual data
-  const allScores = records.flatMap(r => [r.p, r.o]);
+  // Dynamic Y range based on actual data（表示中の窓のみで算出）
+  const allScores = chartRecords.flatMap(r => [r.p, r.o]);
   const dataMin = Math.min(...allScores);
   const dataMax = Math.max(...allScores);
   const yMin = Math.max(0, Math.floor((dataMin - 10) / 10) * 10);
   const yMax = Math.min(100, Math.ceil((dataMax + 8) / 10) * 10);
 
-  new Chart(ctx, {
+  // 全期間モードは1試合あたりの幅を確保して横スクロール可能にする（直近30日は container 幅にフィット）
+  const wrapEl = document.getElementById('chart-canvas-wrap');
+  const outerEl = document.getElementById('chart-canvas-outer');
+  if (mode === 'all') {
+    const neededWidth = labels.length * CHART_PX_PER_POINT;
+    wrapEl.style.width = Math.max(outerEl.clientWidth, neededWidth) + 'px';
+  } else {
+    wrapEl.style.width = '';
+  }
+
+  if (scoreChart) {
+    scoreChart.destroy();
+    scoreChart = null;
+  }
+
+  scoreChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels,
@@ -1639,11 +1679,22 @@ function initGameNav() {
 
 /* ===== Table toggle ===== */
 function initTableToggle() {
-  document.querySelectorAll('.table-toggle button').forEach(btn => {
+  document.querySelectorAll('#table-mode-toggle button').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.table-toggle button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#table-mode-toggle button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderTable(btn.dataset.mode);
+    });
+  });
+}
+
+/* ===== Chart toggle ===== */
+function initChartToggle() {
+  document.querySelectorAll('#chart-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#chart-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderChart(btn.dataset.mode);
     });
   });
 }
@@ -1736,7 +1787,7 @@ function applyTrendPulse(delta7d, window30d) {
 
 /* ===== Table toggle count label ===== */
 function updateToggleLabel() {
-  const allBtn = document.querySelector('.table-toggle button[data-mode="all"]');
+  const allBtn = document.querySelector('#table-mode-toggle button[data-mode="all"]');
   if (allBtn) allBtn.textContent = `全${season.games}試合`;
 }
 
@@ -1754,13 +1805,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderSparklines();
   // Chart needs body styles applied
-  setTimeout(renderChart, 50);
+  setTimeout(() => renderChart('recent'), 50);
   initScrollAnims();
   initParallax();
   initTweaks();
   initGameNav();
   updateGameNav();
   initTableToggle();
+  initChartToggle();
 });
 </script>
 
